@@ -55,7 +55,7 @@ def help():
 	print "\t-e <file>\tEnable SMTP user enumeration testing and imports email list."
 	print "\t-l <1|2|3>\tSpecifies enumeration type (1 = VRFY, 2 = RCPT TO, 3 = all).\n\t\t\t(Default is 3.)"
 	print colors.green + "\n SMTP relay:\n" + colors.normal
-	print "\t-i <isa email>\t\tThe ISA's email address."
+	print "\t-i <isa email>\t\tThe tester's email address."
 	print "\t-x\t\t\tEnables SMTP external relay testing."
 	print colors.green + "\n Misc:\n" + colors.normal
 	print "\t-t <secs>\tThe timeout value. (Default is 10.)"
@@ -468,7 +468,7 @@ def start(argv):
 	# assign required parameters depending on the test being conducted (for error checking as well)
 	spoof_options = {'SMTP Port':smtp_port,'sender email address':sndr_email,'recipient email address':rcpt_email,'sender name':sndr_name,'recipient name':rcpt_name}
 	enum_options = {'email list':email_list,'SMTP port':smtp_port}
-	relay_options = {'ISA email address':isa_email,'SMTP port':smtp_port}
+	relay_options = {'tester email address':isa_email,'SMTP port':smtp_port}
 
 	# checks for errors before processing arguments
 	if smtp_host == "" and smtp_list == False:
