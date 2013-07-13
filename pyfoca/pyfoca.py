@@ -40,7 +40,7 @@ try:
 	from pyPdf import PdfFileReader
 except Exception, err:
 	print colors.red + "\n Error: You will need to install the pyPDF module for this script to work properly."
-	print " Please refer to the pyfoca wiki page to complete this process." + colors.normal
+	print " pyPDF can be downloaded from http://pybrary.net/pyPdf/" + colors.normal
 	exit()
 
 banner = '\n ' + "-" * 79 + colors.white + '\n  pyfoca v1.6 - Document Metadata Extractor, Alton Johnson (alton.jx@gmail.com)\n ' + colors.normal + "-" * 79 + "\n"
