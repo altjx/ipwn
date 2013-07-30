@@ -317,6 +317,7 @@ class metaparser:
 			totalFiles += 1
 		elif self.domainName != "":
 			print " Attempting to gather links from google searches..."
+			print " Domain name: " + self.domainName
 			conn = httplib.HTTPConnection('www.google.com')
 			total_count = 0
 			for e in self.exts:
@@ -383,7 +384,6 @@ class metaparser:
 							  print colors.red + " [-] " + short_file, "-" * (spaces-len(short_file)), "fail", "[%s of %s]" % (str(files.index(f)+1),str(len(files))) + colors.normal
 					totalFiles -= 1
 					continue
-			print
 			for e in files:
 				pdf_name = e[e.rfind("/")+1:]
 				self.processFile('pyfoca-downloads/%s' % pdf_name)
@@ -466,10 +466,11 @@ class metaparser:
 				print
 
 		print " " + "--" * 5
+		if self.del_files:
+			print " Deleting pyfoca-downloads folder..."
+			commands.getoutput('rm pyfoca-downloads/ -r')
+			commands.getoutput('rm pyfoca-downloads/ -r')
 		if self.report_dir == "":
-			if self.del_files:
-				print " Deleting pyfoca-downloads folder..."
-				commands.getoutput('rm pyfoca-downloads/ -rf')
 			print " Extracted data from %s file(s)." % str(totalFiles)
 		else:
 			print " Extracted data from %s file(s)." % self.foca_files
