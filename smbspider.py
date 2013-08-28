@@ -28,13 +28,20 @@ class colors:
 	norm = "\033[0;00m"
 	green = "\033[1;32m"
 
-banner = "\n " + "-" * 68 + "\n"
-banner += "\t SMB Spider v1.0, Alton Johnson (alton.jx@gmail.com)" + "\n"
-banner += " " + "-" * 68 + "\n"
+banner = "\n " + "*" * 56
+banner += "\n *     		        _     				*"
+banner += "\n *    		       | |       //  \\\\			* "
+banner += "\n *	  ___ _ __ ___ | |__    _\\\\()//_		*"
+banner += "\n *	 / __| '_ ` _ \| '_ \  / //  \\\\ \ 		*"
+banner += "\n *	 \__ \ | | | | | |_) |   |\__/|			*"
+banner += "\n *	 |___/_| |_| |_|_.__/				*"
+banner += "\n *							*"
+banner += "\n * SMB Spider v1.0, Alton Johnson (alton.jx@gmail.com) 	*"
+banner += "\n " + "*" * 56
 
 def help():
 	print banner
-	print " Usage: %s <OPTIONS>" % argv[0]
+	print "\n Usage: %s <OPTIONS>" % argv[0]
 	print colors.red + "\n Credentials (required): \n" + colors.norm
 	print "\t -u <user>\t Specify a valid username to authenticate to the system(s)."
 	print "\t -p <pass>\t Specify the password which goes with the username."
