@@ -41,7 +41,7 @@ def help():
 	print "\t -d <domain>\t If using a domain account, provide domain name."
 	print colors.red + "\n Target(s) (required): \n" + colors.norm
 	print "\t -h <host>\t Provide IP address or a text file containing IPs."
-	print colors.green + "\n Shares:\n" + colors.norm
+	print colors.green + "\n Shares (optional):\n" + colors.norm
 	print "\t -s <share>\t Specify shares (separate by comma) or specify \"profile\" to spider profiles."
 	print "\t -f <file>\t Specify a list of shares from a file."
 	print
@@ -112,7 +112,8 @@ def parse_result(result, smb_host, smb_share):
 	############################################################
 	# this small section removes all of the unnecessary crap. yes, i know it's ugly.
 	errors = ["STATUS_NO_SUCH_FILE","STATUS_ACCESS_DENIED",\
-"STATUS_OBJECT_NAME_INVALID", "STATUS_INVALID_NETWORK_RESPONSE"] # these are "weird" error messages that appear with smbclient. Prior checks exist to ensure shares/files are accessible.
+"STATUS_OBJECT_NAME_INVALID", "STATUS_INVALID_NETWORK_RESPONSE"\
+] # these are "weird" error messages that appear with smbclient. Prior checks exist to ensure shares/files are accessible.
 	result = result.split('\n')
 	purge = []
 	for num in range(0,len(result)):
@@ -178,7 +179,8 @@ def spider_host(credentials, smb_host, smb_share):
 			users = find_users(result)
 			for user in users:
 				for folder in folders:
-					result = commands.getoutput("smbclient -c \"recurse;ls \\\"Documents and Settings\\%s\\%s\" //%s/C$ -U %s" % (user, folder, smb_host, credentials))
+					result = commands.getoutput("smbclient -c \"recurse;ls \\\"Documents and Settings\\%s\\%s\" //%s/C$ -U %s"\
+ % (user, folder, smb_host, credentials))
 					parse_result(result, smb_host, "C$")
 		else:
 			folders = ['Documents','Desktop','Music','Videos','Downloads','Pictures']
