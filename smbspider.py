@@ -42,7 +42,7 @@ def help():
 	print colors.red + "\n Target(s) (required): \n" + colors.norm
 	print "\t -h <host>\t Provide IP address or a text file containing IPs."
 	print colors.green + "\n Shares:\n" + colors.norm
-	print "\t -s <share>\t Specify shares (separate by comma). Specify \"profile\" to spider profiles."
+	print "\t -s <share>\t Specify shares (separate by comma) or specify \"profile\" to spider profiles."
 	print "\t -f <file>\t Specify a list of shares from a file."
 	print
 	exit()
