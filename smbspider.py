@@ -192,7 +192,7 @@ def spider_host(credentials, smb_host, smb_share):
 		else:
 			folders = ['Documents','Desktop','Music','Videos','Downloads','Pictures']
 			result = commands.getoutput("smbclient -c \"ls \\\"Users\\*\" //%s/C$ -U %s" % (smb_host, credentials))
-			if "UNREACHABLE" in result or "UNSUCCESSFUL" in result:
+			if "UNREACHABLE" in result or "UNSUCCESSFUL" in result or "TIMEOUT" in result:
 				print colors.red + "Error contacting system %s. Check to ensure that host is online." % smb_host + colors.norm
 				return
 			users = find_users(result)
