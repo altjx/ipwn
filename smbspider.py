@@ -37,11 +37,11 @@ banner += "\n *	 \__ \ | | | | | |_) |   |\__/|			*"
 banner += "\n *	 |___/_| |_| |_|_.__/				*"
 banner += "\n *							*"
 banner += "\n * SMB Spider v1.0, Alton Johnson (alton.jx@gmail.com) 	*"
-banner += "\n " + "*" * 56
+banner += "\n " + "*" * 56 + "\n"
 
 def help():
 	print banner
-	print "\n Usage: %s <OPTIONS>" % argv[0]
+	print " Usage: %s <OPTIONS>" % argv[0]
 	print colors.red + "\n Credentials (required): \n" + colors.norm
 	print "\t -u <user>\t Specify a valid username to authenticate to the system(s)."
 	print "\t -p <pass>\t Specify the password which goes with the username."
@@ -89,7 +89,7 @@ def start(argv):
 
 	#check options before proceeding
 	if (not smb_user or not smb_pass or not smb_host):
-		print colors.red + "\n Error: Please check to ensure that all required options are provided." + colors.norm
+		print colors.red + "\nError: Please check to ensure that all required options are provided." + colors.norm
 		help()
 
 	#make smb_domain, smb_user, and smb_pass one variable
@@ -104,10 +104,10 @@ def start(argv):
 	else:
 		result = commands.getoutput("smbclient -c ls //%s/%s -U %s" % (smb_host[0], smb_share[0], credentials))
 	if "NT_STATUS_LOGON_FAILURE" in result:
-		print colors.red + "\n Error: Invalid credentials. Please correct credentials and try again.\n" + colors.norm
+		print colors.red + "\nError: Invalid credentials. Please correct credentials and try again.\n" + colors.norm
 		exit()
 	elif "NT_STATUS_ACCESS_DENIED" in result:
-		print colors.red + "\n Error: Valid credentials, but no access. Try another account.\n" + colors.norm
+		print colors.red + "\nError: Valid credentials, but no access. Try another account.\n" + colors.norm
 		exit()
 	#start spidering
 	print banner
@@ -192,7 +192,7 @@ def spider_host(credentials, smb_host, smb_share):
 		else:
 			folders = ['Documents','Desktop','Music','Videos','Downloads','Pictures']
 			result = commands.getoutput("smbclient -c \"ls \\\"Users\\*\" //%s/C$ -U %s" % (smb_host, credentials))
-			if "UNREACHABLE" in result:
+			if "UNREACHABLE" in result or "UNSUCCESSFUL" in result:
 				print colors.red + "Error contacting system %s. Check to ensure that host is online." % smb_host + colors.norm
 				return
 			users = find_users(result)
