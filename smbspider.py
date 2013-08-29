@@ -98,120 +98,145 @@ def start(argv):
 	else:
 		credentials = smb_user + " " + smb_pass
 	
-	#check credentials to avoid locking this account out.
-	if smb_share[0] == "profile":
-		result = commands.getoutput("smbclient -c ls //%s/C$ -U %s" % (smb_host[0], credentials))
-	else:
-		result = commands.getoutput("smbclient -c ls //%s/%s -U %s" % (smb_host[0], smb_share[0], credentials))
-	if "NT_STATUS_LOGON_FAILURE" in result:
-		print colors.red + "\nError: Invalid credentials. Please correct credentials and try again.\n" + colors.norm
-		exit()
-	elif "NT_STATUS_ACCESS_DENIED" in result:
-		print colors.red + "\nError: Valid credentials, but no access. Try another account.\n" + colors.norm
-		exit()
 	#start spidering
 	print banner
-	for host in smb_host:
-		for share in smb_share:
-			spider_host(credentials, host, share)
+	print "Spidering %s system(s)...\n" % len(smb_host)
+	begin = spider(credentials, smb_host, smb_share)
+	begin.start_spidering()
 
-def parse_result(result, smb_host, smb_share):
-	############################################################
-	# this small section removes all of the unnecessary crap. yes, i know it's ugly.
-	errors = ["STATUS_NO_SUCH_FILE","STATUS_ACCESS_DENIED",\
-"STATUS_OBJECT_NAME_INVALID", "STATUS_INVALID_NETWORK_RESPONSE"\
-] # these are "weird" error messages that appear with smbclient. Prior checks exist to ensure shares/files are accessible.
-	result = result.split('\n')
-	purge = []
-	for num in range(0,len(result)):
-		if "  .  " in result[num] or "  ..  " in result[num] or "Domain=" in result[num]\
- or "    D" in result[num] or len(result[num]) < 2 or "blocks of size" in result[num]:
-			purge.append(num)
-	purge = sorted(purge, reverse=True)
-	for i in purge:
-		del result[i]	
-	############################################################
-	directory = ""
-	filename = ""
-	for x in result:
-		if x[0] == "\\":
-			directory = x
-		else:
-			filename = x[2:]
-			filename = filename[:filename.find("    ")]
-		fail = 0
-		for error in errors:
-			if error in filename:
-				fail = 1
-		if "BAD_NETWORK" in filename:
-			print colors.red + "Error: Invalid share -> smb://%s/%s" % (smb_host,smb_share) + colors.norm
-			return
-		if fail == 0 and len(filename) > 0:
-			print "Spider\t \\\\%s\%s" % (smb_host,smb_share) + directory + "\\" + filename
+class spider:
+	def __init__(self, credentials, hosts, shares):
+		self.list_of_hosts = hosts
+		self.list_of_shares = shares
+		self.credentials = credentials
+		self.smb_host = ""
+		self.smb_share = ""
+		self.skip_host = ""
+	
+	def start_spidering(self):
+		for host in self.list_of_hosts:
+			print "Attempting to spider %s. Please wait..." % host
+			for share in self.list_of_shares:
+				if self.skip_host == host:
+					break
+				self.smb_host = host
+				self.smb_share = share
+				self.spider_host()
 
-def fingerprint_fs(smb_host, credentials):
-	result = commands.getoutput("smbclient -c \"ls Users\\*\" //%s/C$ -U %s" % (smb_host, credentials)).split()
-	if "NT_STATUS_OBJECT_NAME_NOT_FOUND" in result:
-		return "old"
-	else:
-		return "new"
-
-def find_users(result):
-	result = result.split('\n')
-	purge = []
-	users = []
-	for num in range(0,len(result)):
-		if "  .  " in result[num] or "  ..  " in result[num] or "Domain=" in result[num]\
- or len(result[num]) < 2 or "blocks of size" in result[num]:
-			purge.append(num)
-	purge = sorted(purge, reverse=True)
-	for i in purge:
-		del result[i]
-
-	#clean up users list a little bit
-	for i in result:
-		user = i[:i.find("   D")]
-		user = user[2:user.rfind(re.sub(r'\W+', '', user)[-1])+1]
-		users.append(user)
-	return users
-
-def spider_host(credentials, smb_host, smb_share):
-	if smb_share.lower() == "profile":
-		if fingerprint_fs(smb_host, credentials) == "old":
-			folders = ['My Documents','Desktop']
-			result = commands.getoutput("smbclient -c \"ls \\\"Documents and Settings\\*\" //%s/C$ -U %s" % (smb_host, credentials))
-			if "UNREACHABLE" in result:
-				print colors.red + "Error contacting system %s. Check to ensure that host is online." % smb_host + colors.norm
+	def parse_result(self, result):
+		############################################################
+		# this small section removes all of the unnecessary crap. yes, i know it's ugly.
+		errors = ["STATUS_NO_SUCH_FILE","STATUS_ACCESS_DENIED",
+"STATUS_OBJECT_NAME_INVALID", "STATUS_INVALID_NETWORK_RESPONSE"
+	] # these are "weird" error messages that appear with smbclient. Prior checks exist to ensure shares/files are accessible.
+		result = result.split('\n')
+		purge = []
+		for num in range(0,len(result)):
+			if "  .  " in result[num] or "  ..  " in result[num] or "Domain=" in result[num]\
+	 or "    D" in result[num] or len(result[num]) < 2 or "blocks of size" in result[num]:
+				purge.append(num)
+		purge = sorted(purge, reverse=True)
+		for i in purge:
+			del result[i]	
+		############################################################
+		directory = ""
+		filename = ""
+		for x in result:
+			if x[0] == "\\":
+				directory = x
+			else:
+				filename = x[2:]
+				filename = filename[:filename.find("    ")]
+			fail = 0
+			for error in errors:
+				if error in filename:
+					fail = 1
+			if "BAD_NETWORK" in filename:
+				print colors.red + "Error: Invalid share -> smb://%s/%s" % (self.smb_host,self.smb_share) + colors.norm
 				return
-			users = find_users(result)
-			for user in users:
-				for folder in folders:
-					result = commands.getoutput("smbclient -c \"recurse;ls \\\"Documents and Settings\\%s\\%s\" //%s/C$ -U %s"\
- % (user, folder, smb_host, credentials))
-					parse_result(result, smb_host, "C$")
+			if fail == 0 and len(filename) > 0:
+				print "Spider\t \\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
+
+	def fingerprint_fs(self):
+		result = commands.getoutput("smbclient -c \"ls Users\\*\" //%s/C$ -U %s" % (self.smb_host, self.credentials)).split()
+		if "NT_STATUS_OBJECT_NAME_NOT_FOUND" in result:
+			return "old"
 		else:
-			folders = ['Documents','Desktop','Music','Videos','Downloads','Pictures']
-			result = commands.getoutput("smbclient -c \"ls \\\"Users\\*\" //%s/C$ -U %s" % (smb_host, credentials))
-			if "UNREACHABLE" in result or "UNSUCCESSFUL" in result or "TIMEOUT" in result:
-				print colors.red + "Error contacting system %s. Check to ensure that host is online." % smb_host + colors.norm
+			return "new"
+
+	def find_users(self, result):
+		result = result.split('\n')
+		purge = []
+		users = []
+		for num in range(0,len(result)):
+			if "  .  " in result[num] or "  ..  " in result[num] or "Domain=" in result[num]\
+	 or len(result[num]) < 2 or "blocks of size" in result[num]:
+				purge.append(num)
+		purge = sorted(purge, reverse=True)
+		for i in purge:
+			del result[i]
+
+		#clean up users list a little bit
+		for i in result:
+			user = i[:i.find("   D")]
+			user = user[2:user.rfind(re.sub(r'\W+', '', user)[-1])+1]
+			users.append(user)
+		return users
+	
+	def check_errors(self, result):
+		access_error = {
+"UNREACHABLE":"Error [%s]: Check to ensure that host is online." % self.smb_host,
+"UNSUCCESSFUL":"Error [%s]: Check to ensure that host is online." % self.smb_host,
+"TIMEOUT":"Error [%s]: Check to ensure that host is online." % self.smb_host,
+}
+		for err in access_error:
+			if err in result:
+				print colors.red + access_error[err] + colors.norm
+				self.skip_host = self.smb_host
+				return True
+		
+		if "LOGON_FAIL" in result.split()[-1]:
+			print colors.red + "Error [%s]: Invalid credentials. Please correct credentials and try again." % self.smb_host + colors.norm
+			exit()
+		elif "ACCESS_DENIED" in result.split()[-1]:
+			print colors.red + "Error [%s]: Valid credentials, but no access. Try another account." % self.smb_host + colors.norm
+			exit()
+	
+	def spider_host(self):
+		if self.smb_share.lower() == "profile":
+			self.smb_share = "C$"
+			if self.fingerprint_fs() == "old":
+				folders = ['My Documents','Desktop']
+				result = commands.getoutput("smbclient -c \"ls \\\"Documents and Settings\\*\" //%s/C$ -U %s" % (self.smb_host, self.credentials))
+				if self.check_errors(result):
+					return
+				users = self.find_users(result)
+				for user in users:
+					for folder in folders:
+						result = commands.getoutput("smbclient -c \"recurse;ls \\\"Documents and Settings\\%s\\%s\" //%s/C$ -U %s"\
+	 % (user, folder, self.smb_host, self.credentials))
+						self.parse_result(result)
+			else:
+				folders = ['Documents','Desktop','Music','Videos','Downloads','Pictures']
+				result = commands.getoutput("smbclient -c \"ls \\\"Users\\*\" //%s/C$ -U %s" % (self.smb_host, self.credentials))
+				if self.check_errors(result):
+					return
+				users = self.find_users(result)
+				for user in users:
+					for folder in folders:
+						result = commands.getoutput("smbclient -c \"recurse;ls \\\"Users\\%s\\%s\" //%s/C$ -U %s" % (user, folder, self.smb_host, self.credentials))
+						self.parse_result(result)
+		else:
+			result = commands.getoutput("smbclient -c \"recurse;ls\" //%s/%s -U %s" % (self.smb_host, self.smb_share, self.credentials))
+			if self.check_errors(result):
 				return
-			users = find_users(result)
-			for user in users:
-				for folder in folders:
-					result = commands.getoutput("smbclient -c \"recurse;ls \\\"Users\\%s\\%s\" //%s/C$ -U %s" % (user, folder, smb_host, credentials))
-					parse_result(result, smb_host, "C$")
-	else:
-		result = commands.getoutput("smbclient -c \"recurse;ls\" //%s/%s -U %s" % (smb_host, smb_share, credentials))
-		if "UNREACHABLE" in result:
-			print colors.red + "Error contacting system %s. Check to ensure that host is online." % smb_host + colors.norm
-			return
-		parse_result(result, smb_host,smb_share)
+			self.parse_result(result)
 
 if __name__ == "__main__":
 	try:
 		start(argv[1:])
 	except KeyboardInterrupt:
-		print "\n Exiting. Interrupted by user (ctrl-c)."
+		print "\nExiting. Interrupted by user (ctrl-c)."
 		exit()
 	except Exception, err:
 		print err
