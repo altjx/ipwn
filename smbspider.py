@@ -21,7 +21,6 @@ import commands, time, getopt, re
 from sys import argv
 
 start_time = time.time()
-
 class colors:
 	red = "\033[1;31m"
 	blue = "\033[1;34m"
