@@ -50,6 +50,8 @@ def help():
 	print colors.green + "\n Shares (optional):\n" + colors.norm
 	print "\t -s <share>\t Specify shares (separate by comma) or specify \"profile\" to spider profiles."
 	print "\t -f <file>\t Specify a list of shares from a file."
+	print colors.green + "\n Other (optional):\n" + colors.norm
+	print "\t -w <filename>\t Avoid verbose output. Output successful spider results to file." + colors.norm
 	print
 	exit()
 
@@ -57,7 +59,7 @@ def start(argv):
 	if len(argv) < 1:
 		help()
 	try:
-		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:P:")
+		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:P:w:")
 	except getopt.GetoptError, err:
 		print colors.red + "\n Error: " + err + colors.normal
 	
@@ -68,6 +70,7 @@ def start(argv):
 	smb_host = []
 	smb_share = ["profile"]
 	pth = False
+	filename = ""
 
 	#parse through arguments
 	for opt, arg in opts:
@@ -91,6 +94,8 @@ def start(argv):
 				arg = arg[:-3]
 			smb_pass = arg
 			pth = True
+		elif opt == "-w":
+			filename = arg
 
 	#check options before proceeding
 	if (not smb_user or not smb_pass or not smb_host):
@@ -112,11 +117,11 @@ def start(argv):
 	#start spidering
 	print banner
 	print "Spidering %s system(s)...\n" % len(smb_host)
-	begin = spider(credentials, smb_host, smb_share, pth)
+	begin = spider(credentials, smb_host, smb_share, pth, filename)
 	begin.start_spidering()
 
 class spider:
-	def __init__(self, credentials, hosts, shares,pth):
+	def __init__(self, credentials, hosts, shares, pth, filename):
 		self.list_of_hosts = hosts
 		self.list_of_shares = shares
 		self.credentials = credentials
@@ -124,6 +129,7 @@ class spider:
 		self.smb_share = ""
 		self.skip_host = ""
 		self.pth = pth
+		self.filename = filename
 	
 	def start_spidering(self):
 		for host in self.list_of_hosts:
@@ -139,7 +145,7 @@ class spider:
 		############################################################
 		# this small section removes all of the unnecessary crap. a bit ugly, i know! :x
 		errors = ["STATUS_NO_SUCH_FILE","STATUS_ACCESS_DENIED",
-"STATUS_OBJECT_NAME_INVALID", "STATUS_INVALID_NETWORK_RESPONSE"
+"STATUS_OBJECT_NAME_INVALID", "STATUS_INVALID_NETWORK_RESPONSE", "OBJECT_NAME_NOT"
 	]
 		result = result.split('\n')
 		purge = []
@@ -166,11 +172,15 @@ class spider:
 			for error in errors:
 				if error in filename:
 					fail = 1
-			if "BAD_NETWORK" in filename:
-				print colors.red + "Error: Invalid share -> smb://%s/%s" % (self.smb_host,self.smb_share) + colors.norm
-				return
 			if fail == 0 and len(filename) > 0:
-				print "Spider\t \\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
+				if self.filename == "":
+					print "Spider\t \\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
+				else:
+					output = open(self.filename, 'a')
+					output.write("Spider\t \\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename + "\n")
+					output.close()
+			if x == result[-1]:
+				print "Completed spidering %s." % self.smb_host
 
 	def fingerprint_fs(self):
 		result = commands.getoutput("%s -c \"ls Users\\*\" //%s/C$ -U %s" % (self.smbclient(), self.smb_host, self.credentials)).split()
@@ -212,11 +222,16 @@ class spider:
 				self.skip_host = self.smb_host
 				return True
 		
+		
 		if "LOGON_FAIL" in result.split()[-1]:
 			print colors.red + "Error [%s]: Invalid credentials. Please correct credentials and try again." % self.smb_host + colors.norm
 			exit()
 		elif "ACCESS_DENIED" in result.split()[-1]:
 			print colors.red + "Error [%s]: Valid credentials, but no access. Try another account." % self.smb_host + colors.norm
+		elif "BAD_NETWORK" in result.split()[-1]:
+			print colors.red + "Error: Invalid share -> smb://%s/%s" % (self.smb_host,self.smb_share) + colors.norm
+			return True
+
 		
 	def smbclient(self):
 		if self.pth:
