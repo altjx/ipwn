@@ -187,7 +187,7 @@ class spider:
 		result = result.split('\n')
 		purge = []
 		users = []
-		for num in range(0,len(result)):
+		for num in range(0,len(result)): # cleans some stuff up a bit.
 			if "  .  " in result[num] or "  ..  " in result[num] or "Domain=" in result[num]\
 	 or len(result[num]) < 2 or "blocks of size" in result[num]:
 				purge.append(num)
