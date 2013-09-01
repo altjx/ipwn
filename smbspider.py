@@ -48,7 +48,7 @@ def help():
 	print colors.red + "\n Target(s) (required): \n" + colors.norm
 	print "\t -h <host>\t Provide IP address or a text file containing IPs."
 	print colors.green + "\n Shares (optional):\n" + colors.norm
-	print "\t -s <share>\t Specify shares (separate by comma) or specify \"profile\" to spider profiles."
+	print "\t -s <share>\t Specify shares (separate by comma) or specify \"profile\" to spider user profiles."
 	print "\t -f <file>\t Specify a list of shares from a file."
 	print colors.green + "\n Other (optional):\n" + colors.norm
 	print "\t -w <filename>\t Avoid verbose output. Output successful spider results to file." + colors.norm
@@ -140,6 +140,8 @@ class spider:
 				self.smb_host = host
 				self.smb_share = share
 				self.spider_host()
+			if self.filename != "":
+				print "Finished with %s." % host
 
 	def parse_result(self, result):
 		############################################################
@@ -179,8 +181,6 @@ class spider:
 					output = open(self.filename, 'a')
 					output.write("Spider\t \\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename + "\n")
 					output.close()
-			if x == result[-1]:
-				print "Completed spidering %s." % self.smb_host
 
 	def fingerprint_fs(self):
 		result = commands.getoutput("%s -c \"ls Users\\*\" //%s/C$ -U %s" % (self.smbclient(), self.smb_host, self.credentials)).split()
