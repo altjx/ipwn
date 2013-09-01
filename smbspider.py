@@ -217,7 +217,6 @@ class spider:
 			exit()
 		elif "ACCESS_DENIED" in result.split()[-1]:
 			print colors.red + "Error [%s]: Valid credentials, but no access. Try another account." % self.smb_host + colors.norm
-			exit()
 		
 	def smbclient(self):
 		if self.pth:
