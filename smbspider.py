@@ -45,6 +45,7 @@ def help():
 	print colors.red + "\n Credentials (required): \n" + colors.norm
 	print "\t -u <user>\t Specify a valid username to authenticate to the system(s)."
 	print "\t -p <pass>\t Specify the password which goes with the username."
+	print "\t -P <hash>\t Use -P to provide password hashes if cleartext pw isn't known."
 	print "\t -d <domain>\t If using a domain account, provide domain name."
 	print colors.red + "\n Target(s) (required): \n" + colors.norm
 	print "\t -h <host>\t Provide IP address or a text file containing IPs."
@@ -58,7 +59,7 @@ def start(argv):
 	if len(argv) < 1:
 		help()
 	try:
-		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:")
+		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:P:")
 	except getopt.GetoptError, err:
 		print colors.red + "\n Error: " + err + colors.normal
 	
@@ -68,6 +69,7 @@ def start(argv):
 	smb_domain = ""
 	smb_host = []
 	smb_share = ["profile"]
+	pth = False
 
 	#parse through arguments
 	for opt, arg in opts:
@@ -86,11 +88,22 @@ def start(argv):
 			smb_share = open(arg).read().split()
 		elif opt == "-s":
 			smb_share = arg.split(',')
+		elif opt == "-P":
+			if arg[-3:] == ":::":
+				arg = arg[:-3]
+			smb_pass = arg
+			pth = True
 
 	#check options before proceeding
 	if (not smb_user or not smb_pass or not smb_host):
 		print colors.red + "\nError: Please check to ensure that all required options are provided." + colors.norm
 		help()
+	if pth:
+		result = commands.getoutput("pth-smbclient")
+		if "not found" in result.lower():
+			print colors.red + "\nError: The passing-the-hash package was not found. Therefore, you cannot pass hashes."
+			print "Please run \"apt-get install passing-the-hash\" to fix this error and try running the script again.\n" + colors.norm
+			exit()
 
 	#make smb_domain, smb_user, and smb_pass one variable
 	if smb_domain:
@@ -101,17 +114,18 @@ def start(argv):
 	#start spidering
 	print banner
 	print "Spidering %s system(s)...\n" % len(smb_host)
-	begin = spider(credentials, smb_host, smb_share)
+	begin = spider(credentials, smb_host, smb_share, pth)
 	begin.start_spidering()
 
 class spider:
-	def __init__(self, credentials, hosts, shares):
+	def __init__(self, credentials, hosts, shares,pth):
 		self.list_of_hosts = hosts
 		self.list_of_shares = shares
 		self.credentials = credentials
 		self.smb_host = ""
 		self.smb_share = ""
 		self.skip_host = ""
+		self.pth = pth
 	
 	def start_spidering(self):
 		for host in self.list_of_hosts:
@@ -131,10 +145,13 @@ class spider:
 	] # these are "weird" error messages that appear with smbclient. Prior checks exist to ensure shares/files are accessible.
 		result = result.split('\n')
 		purge = []
+		trash = ["  .  ", "  ..  ", "Domain=", "    D", "blocks of size",
+"wrapper called", "Substituting user supplied"]
 		for num in range(0,len(result)):
-			if "  .  " in result[num] or "  ..  " in result[num] or "Domain=" in result[num]\
-	 or "    D" in result[num] or len(result[num]) < 2 or "blocks of size" in result[num]:
-				purge.append(num)
+			for d in trash:
+				if d in result[num] or len(result[num]) < 2:
+					purge.append(num)
+		purge = list(set(purge))
 		purge = sorted(purge, reverse=True)
 		for i in purge:
 			del result[i]	
@@ -158,7 +175,7 @@ class spider:
 				print "Spider\t \\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
 
 	def fingerprint_fs(self):
-		result = commands.getoutput("smbclient -c \"ls Users\\*\" //%s/C$ -U %s" % (self.smb_host, self.credentials)).split()
+		result = commands.getoutput("%s -c \"ls Users\\*\" //%s/C$ -U %s" % (self.smbclient(), self.smb_host, self.credentials)).split()
 		if "NT_STATUS_OBJECT_NAME_NOT_FOUND" in result:
 			return "old"
 		else:
@@ -201,33 +218,39 @@ class spider:
 		elif "ACCESS_DENIED" in result.split()[-1]:
 			print colors.red + "Error [%s]: Valid credentials, but no access. Try another account." % self.smb_host + colors.norm
 			exit()
+		
+	def smbclient(self):
+		if self.pth:
+			return "pth-smbclient"
+		else:
+			return "smbclient"
 	
 	def spider_host(self):
 		if self.smb_share.lower() == "profile":
 			self.smb_share = "C$"
 			if self.fingerprint_fs() == "old":
 				folders = ['My Documents','Desktop']
-				result = commands.getoutput("smbclient -c \"ls \\\"Documents and Settings\\*\" //%s/C$ -U %s" % (self.smb_host, self.credentials))
+				result = commands.getoutput("%s -c \"ls \\\"Documents and Settings\\*\" //%s/C$ -U %s" % (self.smbclient(), self.smb_host, self.credentials))
 				if self.check_errors(result):
 					return
 				users = self.find_users(result)
 				for user in users:
 					for folder in folders:
-						result = commands.getoutput("smbclient -c \"recurse;ls \\\"Documents and Settings\\%s\\%s\" //%s/C$ -U %s"\
-	 % (user, folder, self.smb_host, self.credentials))
+						result = commands.getoutput("%s -c \"recurse;ls \\\"Documents and Settings\\%s\\%s\" //%s/C$ -U %s"\
+	 % (self.smbclient(), user, folder, self.smb_host, self.credentials))
 						self.parse_result(result)
 			else:
 				folders = ['Documents','Desktop','Music','Videos','Downloads','Pictures']
-				result = commands.getoutput("smbclient -c \"ls \\\"Users\\*\" //%s/C$ -U %s" % (self.smb_host, self.credentials))
+				result = commands.getoutput("%s -c \"ls \\\"Users\\*\" //%s/C$ -U %s" % (self.smbclient(), self.smb_host, self.credentials))
 				if self.check_errors(result):
 					return
 				users = self.find_users(result)
 				for user in users:
 					for folder in folders:
-						result = commands.getoutput("smbclient -c \"recurse;ls \\\"Users\\%s\\%s\" //%s/C$ -U %s" % (user, folder, self.smb_host, self.credentials))
+						result = commands.getoutput("%s -c \"recurse;ls \\\"Users\\%s\\%s\" //%s/C$ -U %s" % (self.smbclient(), user, folder, self.smb_host, self.credentials))
 						self.parse_result(result)
 		else:
-			result = commands.getoutput("smbclient -c \"recurse;ls\" //%s/%s -U %s" % (self.smb_host, self.smb_share, self.credentials))
+			result = commands.getoutput("%s -c \"recurse;ls\" //%s/%s -U %s" % (self.smbclient(), self.smb_host, self.smb_share, self.credentials))
 			if self.check_errors(result):
 				return
 			self.parse_result(result)
