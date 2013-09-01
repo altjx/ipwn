@@ -139,10 +139,10 @@ class spider:
 
 	def parse_result(self, result):
 		############################################################
-		# this small section removes all of the unnecessary crap. yes, i know it's ugly.
+		# this small section removes all of the unnecessary crap. a bit ugly, i know! :x
 		errors = ["STATUS_NO_SUCH_FILE","STATUS_ACCESS_DENIED",
 "STATUS_OBJECT_NAME_INVALID", "STATUS_INVALID_NETWORK_RESPONSE"
-	] # these are "weird" error messages that appear with smbclient. Prior checks exist to ensure shares/files are accessible.
+	]
 		result = result.split('\n')
 		purge = []
 		trash = ["  .  ", "  ..  ", "Domain=", "    D", "blocks of size",
@@ -176,6 +176,8 @@ class spider:
 
 	def fingerprint_fs(self):
 		result = commands.getoutput("%s -c \"ls Users\\*\" //%s/C$ -U %s" % (self.smbclient(), self.smb_host, self.credentials)).split()
+		if self.check_errors(result[-1]):
+			return "error"
 		if "NT_STATUS_OBJECT_NAME_NOT_FOUND" in result:
 			return "old"
 		else:
@@ -227,7 +229,9 @@ class spider:
 	def spider_host(self):
 		if self.smb_share.lower() == "profile":
 			self.smb_share = "C$"
-			if self.fingerprint_fs() == "old":
+			if self.fingerprint_fs() == "error":
+				return
+			elif self.fingerprint_fs() == "old":
 				folders = ['My Documents','Desktop']
 				result = commands.getoutput("%s -c \"ls \\\"Documents and Settings\\*\" //%s/C$ -U %s" % (self.smbclient(), self.smb_host, self.credentials))
 				if self.check_errors(result):
