@@ -245,7 +245,7 @@ class spider:
 			if self.fingerprint_fs() == "error":
 				return
 			elif self.fingerprint_fs() == "old":
-				folders = ['My Documents','Desktop']
+				folders = ['My Documents','Desktop','Documents']
 				result = commands.getoutput("%s -c \"ls \\\"Documents and Settings\\*\" //%s/C$ -U %s" % (self.smbclient(), self.smb_host, self.credentials))
 				if self.check_errors(result):
 					return
