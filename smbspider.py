@@ -125,7 +125,7 @@ class spider:
 		self.smb_host = ""
 		self.smb_share = ""
 		self.skip_host = ""
-	self.pth = pth
+		self.pth = pth
 	
 	def start_spidering(self):
 		for host in self.list_of_hosts:
