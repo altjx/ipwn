@@ -20,7 +20,7 @@ Tools
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider.png <br />
 	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider%201.png <br />
 	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider%202.png <br />
-	- Usage video: http://www.youtube.com/watch?v=TaXoaqprQ1o <br />
+	- Usage video: http://www.youtube.com/watch?v=skVZwynHECw <br />
 <br />
 <b>smsspam</b> - This was my first python script. I created this simple script when someone pissed me off by continuously playing on my phone. They quickly revealed their identity after approximately 50 text messages in about 10 seconds :).<br />
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/smsspam.png <br />
