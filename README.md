@@ -1,7 +1,7 @@
 Introduction
 ===
-Here you will find some tools that I've created which may help you out on your next pentest. Nothing exciting as of yet, but useful. :)<br />
-Unfortunately, I was too lazy to capture screenshots while using these tools, so I've just uploaded the help menu for the ones I don't have live examples for.<br />
+Here you will find some tools that I've created which may help you out on your next pentest. Nothing exciting as of yet, but useful. :)<br /><br>
+Unfortunately, I wasn't able to capture screenshots of me using some of these tools in networks other than my home. However, I've tried to demonstrate how they're used via screenshots and videos as much as I can.
 
 Tools
 ===
@@ -20,6 +20,7 @@ Tools
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider.png <br />
 	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider%201.png <br />
 	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider%202.png <br />
+	- Usage video: http://www.youtube.com/watch?v=TaXoaqprQ1o
 <br />
 <b>smsspam</b> - This was my first python script. I created this simple script when someone pissed me off by continuously playing on my phone. They quickly revealed their identity after approximately 50 text messages in about 10 seconds :).<br />
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/smsspam.png <br />
