@@ -35,9 +35,9 @@ class colors:
 
 # Prints out the help function, which guides users how to use the script.
 def help():
-	print "\n", "-" * 85
+	print "\n", "-" * 78
 	print colors.white, "iWebAudit v1.0 - Web Page Title Analyzer, Alton Johnson (alton.jx@gmail.com) ", colors.normal
-	print "-" * 85, "\n"
+	print "-" * 78, "\n"
 	print " Usage: iWebAudit -f <file> -o <output_file> -v -h -t 5\n"
 	print "\t-f <file>\tSupports list of IPs and/or http[s]:// formatted IPs."
 	print "\t-o <file>\tOutputs the results to a file of your choice."
