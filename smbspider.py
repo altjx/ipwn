@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
-# This script can be used to spider remote systems during post-exploitation.
-# It is extremely beneficial when you need to spider numerous systems	
-# to identify  for "sensitive" and/or "confidential" data. A great way to use	
-# this script is to redir stdout to a file and grep for suspicious files such
-# as "assw", "member", "visa", "salary", etc.
+#
+# This post-exploitation script can be used to spider numerous systems
+# to identify sensitive and/or confidential data. While this script is
+# extremely simple, the data residing on the targeted systems may 
+# significantly increase your chances of expanding your attacks.
 #
 # Author: Alton Johnson
 # Contact: alton.jx@gmail.com
