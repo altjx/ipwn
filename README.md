@@ -39,7 +39,6 @@ This was my first python script. I created this simple script when someone pisse
 ---------- <br />
 My FUD meterpreter payload creator.<br />
 	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/pymsf.png <br />
-<br />
 Credits: <br />
 ===
 Josh Stone - inspiration for writing smbspider <br />
