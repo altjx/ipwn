@@ -24,7 +24,7 @@ If you're familiar with the Windows FOCA application, this is basically a python
 <br />
 <b>smbspider</b><br />
 ---------- <br />
-Smbspider is a pretty smart when it comes to spidering Windows systems on internal networks. Once you get your hands on some credentials, you can pass them around with smbspider to try spidering systems that the user account has access to. In many cases, you'll end up quickly finding all types of sensitive data hanging out on employees' workstations.
+Smbspider is a pretty smart when it comes to spidering Windows systems on internal networks. Once you get your hands on some credentials, you can pass them around with smbspider to try spidering systems that the user account has access to. In many cases, you'll end up quickly finding all types of sensitive data hanging out on employees' workstations. <br />
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider.png <br />
 	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider%201.png <br />
 	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider%202.png <br />
@@ -38,4 +38,9 @@ This was my first python script. I created this simple script when someone pisse
 <b>pymsf</b><br />
 ---------- <br />
 My FUD meterpreter payload creator.<br />
-	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/pymsf.png
+	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/pymsf.png <br />
+<br />
+Credits: <br />
+=== <br />
+Josh Stone - inspiration for smbspider
+Victor Mata - inspiration for iWebAudit
