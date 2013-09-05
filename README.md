@@ -14,7 +14,7 @@ This is a script that I've made while pentesting at a company I worked for. Many
 <br />
 <b>iWebAudit</b><br>
 ---------- <br>
-When you're on an internal pentest, many times you run across numerous printers and other useless web-based applications. Inspired by a former coworker of mine (Victor Mata), I've decided to write my own tool to simply pull back the titles from these pages. I found it to be significantly helpful with helping me more easily prioritize the web applications I wanted to target. <br />
+When you're on an internal pentest, many times you run across numerous printers and other useless web-based applications. Inspired by a former coworker of mine (Victor Mata), I've decided to write my own tool to simply pull back the titles from all web pages. I found it to be significantly helpful with helping me more easily prioritize the web applications I wanted to target. <br />
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/iWebAudit.png <br />
 <br />
 <b>pyFoca</b><br>
