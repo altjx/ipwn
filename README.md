@@ -42,5 +42,5 @@ My FUD meterpreter payload creator.<br />
 <br />
 Credits: <br />
 ===
-Josh Stone - inspiration for smbspider
-Victor Mata - inspiration for iWebAudit
+Josh Stone - inspiration for writing smbspider <br />
+Victor Mata - inspiration for writing iWebAudit
