@@ -6,36 +6,36 @@ Unfortunately, I wasn't able to capture screenshots of me using some of these to
 Tools
 ===
 <br />
-<b>iSMTP</b><br>
----------- <br>
-This is a script that I've made while pentesting at a company I worked for. Many tools will simply either do SMTP user enumeration, relay testing, or internal spoofing. I've never found any tool that did all three with flexible options. A former coworker of mine (Josh Stone) initially wrote a Ruby SMTP tester that initially made me jump on this. <br />
+<b>iSMTP</b><br />
+---------- <br />
+There's been countless times when I've needed to test for SMTP user enumeration (RCPT TO and VRFY), internal spoofing, and relay. I've never found a tool that tested for all three and with great flexibility. iSMTP does just that, making it much easier to knock that process out of the way. <br />
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/iSMTP/iSMTP.png <br />
 	- Usage screenshot #1 (user enumeration): https://dl.dropboxusercontent.com/u/2526790/iSMTP/SMTP%20User%20Enumeration.png <br />
 <br />
-<b>iWebAudit</b><br>
----------- <br>
-When you're on an internal pentest, many times you run across numerous printers and other useless web-based applications. Inspired by a former coworker of mine (Victor Mata), I've decided to write my own tool to simply pull back the titles from all web pages. I found it to be significantly helpful with helping me more easily prioritize the web applications I wanted to target. <br />
+<b>iWebAudit</b><br />
+---------- <br />
+Many times, on an internal penetration test, you run across numerous web servers that you don't care about. As opposed to opening up every web server to see what they are, iWebAudit will scan a list of web servers and grab all their titles. By only reading a little bit from each server's response, this makes reporting only the titles much faster. <br />
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/iWebAudit.png <br />
 <br />
-<b>pyFoca</b><br>
----------- <br>
-Inspired by the Windows FOCA application, I've decided to recreate this into a python version. One minor issue I've found while using the FOCA application for Information Gathering is that I've had to take multiple screenshots to represent the Users, Folders, etc. that I've identified with the tool. Therefore, I've written a python version which displays all of its findings into a nice table.<br />
+<b>pyFoca</b><br />
+---------- <br />
+If you're familiar with the Windows FOCA application, this is basically a python version of it. Pyfoca will use Google to discover files with extensions such as .pdf, .xls, .doc, etc. and download them. Once downloaded, it will extract all metadata which, in many cases, include usernames you can use for password attacks. <br />
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/pyfoca.png <br />
 <br />
-<b>smbspider</b><br>
----------- <br>
-Inspired by a similar tool written by Josh Stone, I wanted to basically rewrite my own version of his tool so that I could add/remove features according to my preference. This is a script that you can use during post-exploitation to identify sensitive/confidential data laying around on users' workstations. You've probably already won on the pentest by the time you consider using this tool, but identifying more passwords, SSNs, salary info, etc. makes the pentest a bit more fun :).<br />
+<b>smbspider</b><br />
+---------- <br />
+Smbspider is a pretty smart when it comes to spidering Windows systems on internal networks. Once you get your hands on some credentials, you can pass them around with smbspider to try spidering systems that the user account has access to. In many cases, you'll end up quickly finding all types of sensitive data hanging out on employees' workstations.
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider.png <br />
 	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider%201.png <br />
 	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider%202.png <br />
 	- Usage video: http://www.youtube.com/watch?v=skVZwynHECw <br />
 <br />
-<b>smsspam</b><br>
----------- <br>
+<b>smsspam</b><br />
+---------- <br />
 This was my first python script. I created this simple script when someone pissed me off by continuously playing on my phone. They quickly revealed their identity after approximately 50 text messages in about 10 seconds :).<br />
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/smsspam.png <br />
 <br />
-<b>pymsf</b><br>
----------- <br>
-My FUD meterpreter payload creator. You can't have it, but you can see it.<br />
+<b>pymsf</b><br />
+---------- <br />
+My FUD meterpreter payload creator.<br />
 	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/pymsf.png
