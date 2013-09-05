@@ -6,7 +6,9 @@ Unfortunately, I wasn't able to capture screenshots of me using some of these to
 Tools
 ===
 <br />
-<b>iSMTP</b> - This is a script that I've made while pentesting at a company I worked for. Many tools will simply either do SMTP user enumeration, relay testing, or internal spoofing. I've never found any tool that did all three with flexible options. A former coworker of mine (Josh Stone) initially wrote a Ruby SMTP tester that initially made me jump on this. <br />
+<b>iSMTP</b><br>
+---------- <br>
+This is a script that I've made while pentesting at a company I worked for. Many tools will simply either do SMTP user enumeration, relay testing, or internal spoofing. I've never found any tool that did all three with flexible options. A former coworker of mine (Josh Stone) initially wrote a Ruby SMTP tester that initially made me jump on this. <br />
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/iSMTP/iSMTP.png <br />
 	- Usage screenshot #1 (user enumeration): https://dl.dropboxusercontent.com/u/2526790/iSMTP/SMTP%20User%20Enumeration.png <br />
 <br />
