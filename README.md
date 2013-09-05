@@ -41,6 +41,6 @@ My FUD meterpreter payload creator.<br />
 	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/pymsf.png <br />
 <br />
 Credits: <br />
-=== <br />
+===
 Josh Stone - inspiration for smbspider
 Victor Mata - inspiration for iWebAudit
