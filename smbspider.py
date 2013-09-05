@@ -1,19 +1,15 @@
 #!/usr/bin/python
-#
-#																										
+
 # This script can be used to spider remote systems during post-exploitation.
-# It is extremely beneficial when you need to spider numerous systems			
+# It is extremely beneficial when you need to spider numerous systems	
 # to identify  for "sensitive" and/or "confidential" data. A great way to use	
-# this script is to redir stdout to a file and grep for suspicious files such	
-# as "assw", "member", "visa", "salary", etc.											
-# 																										
-# Thanks to Josh Stone (www.josho.org) for allowing me to rewrite and expand	
-# on his idea																						
-#																										
-# Author: Alton Johnson																			
-# Contact: alton.jx@gmail.com																	
-# Version: 1.0																						
-#																										
+# this script is to redir stdout to a file and grep for suspicious files such
+# as "assw", "member", "visa", "salary", etc.
+#
+# Author: Alton Johnson
+# Contact: alton.jx@gmail.com
+# Version: 1.0
+#
 
 import commands, time, getopt, re
 from sys import argv
