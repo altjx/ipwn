@@ -86,7 +86,7 @@ if $0 == __FILE__
 	#spit out error if these options aren't provided with the script.
 	fail "No host or filename was provided with -h." unless opt["h"]
 	start_time = Time.now
-	#Abegin the script while passing arguments
+	#begin the script while passing arguments
 	begin
 		start(opt["h"], opt["t"].to_i)
 	rescue Exception => err
