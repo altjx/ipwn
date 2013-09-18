@@ -45,6 +45,12 @@ My FUD meterpreter payload creator.<br />
 If you have tons of nmap results and want to look at them in a pretty table, check out this nmap result parser. <br />
 	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/nmap_parser.png <br />
 	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/nmap_parser1.png <br />
+<br />
+<b>Nmap Scrape</b><br />
+---------- <br />
+This script will take the nmap grepable output format and create text files (filename = port number) with a list of IP addresses in these text files. For example, it'll create an 80.txt file with all IPs with port 80 open. See screenshots for a better understanding. <br />
+	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/nmapscrape.png <br />
+	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/nmapscrape1.png <br />
 
 Credits:
 ===
