@@ -38,7 +38,13 @@ This was my first python script. I created this simple script when someone pisse
 <b>pymsf</b><br />
 ---------- <br />
 My FUD meterpreter payload creator.<br />
-	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/pymsf.png
+	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/pymsf.png <br />
+<br />
+<b>Nmap Parser</b><br />
+---------- <br />
+If you have tons of nmap results and want to look at them in a pretty table, check out this nmap result parser. <br />
+	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/nmap_parser.png <br />
+	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/nmap_parser1.png <br />
 
 Credits:
 ===
