@@ -1,6 +1,13 @@
 #!/usr/bin/ruby
 ['thread','open-uri','hpricot',
-'timeout','getopt/std','time'].each(&method(:require))
+'timeout','time'].each(&method(:require))
+begin
+	require 'getopt/std'
+rescue Exception => e
+	puts "Looks like the getopt ruby gem isn't installed."
+	puts "Install it by typing \"gem install getopt\""
+	exit()
+end
 
 def help_menu
 	puts """Usage: %s -h <host or file> -t <thread>
