@@ -143,7 +143,8 @@ class spider:
 		############################################################
 		# this small section removes all of the unnecessary crap. a bit ugly, i know! :x
 		errors = ["STATUS_NO_SUCH_FILE","STATUS_ACCESS_DENIED",
-"STATUS_OBJECT_NAME_INVALID", "STATUS_INVALID_NETWORK_RESPONSE", "OBJECT_NAME_NOT"
+"STATUS_OBJECT_NAME_INVALID", "STATUS_INVALID_NETWORK_RESPONSE", "OBJECT_NAME_NOT",
+"not present"
 	]
 		result = result.split('\n')
 		purge = []
