@@ -15,8 +15,12 @@ def help_menu
 	exit()
 end
 
-def get_title(url,offset)	
-	doc = Hpricot(open(url))
+def get_title(url,offset)
+	if url.include? "http"
+		doc = Hpricot(open(url))
+	else
+		doc = Hpricot(open("http://" + url))
+	end
 	title = (doc/"title").inner_text #this grabs text in between <title> and </title> tags.
 title = title.delete("\n").delete("\r")
 	if title.length >= 50
