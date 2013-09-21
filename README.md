@@ -51,6 +51,12 @@ If you have tons of nmap results and want to look at them in a pretty table, che
 This script will take the nmap grepable output format and create text files (filename = port number) with a list of IP addresses in these text files. For example, it'll create an 80.txt file with all IPs with port 80 open. See screenshots for a better understanding. <br />
 	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/nmapscrape.png <br />
 	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/nmapscrape1.png <br />
+<br />
+<b>IOS 7 Backup Parser</b><br />
+---------- <br />
+As of now, this script only parses the contacts and phone numbers from an iOS 7 backup folder. Just happened to stumble upon a guide in the Violent Python book that sparked my interest in this. Not a must-have script, but I enjoyed toying with it, so here it is. <br />
+	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/ios_parser1.png <br />
+	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/ios_parser.png <br />
 
 Credits:
 ===
