@@ -54,7 +54,7 @@ This script will take the nmap grepable output format and create text files (fil
 <br />
 <b>IOS 7 Backup Parser</b><br />
 ---------- <br />
-As of now, this script only parses the contacts and phone numbers from an iOS 7 backup folder. Just happened to stumble upon a guide in the Violent Python book that sparked my interest in this. Not a must-have script, but I enjoyed toying with it, so here it is. <br />
+As of now, this script only parses the contacts and phone numbers from an iOS 7 backup folder. Just happened to stumble upon a tutorial in the Violent Python book that sparked my interest in this. Not a must-have script, but I enjoyed toying with it, so here it is. <br />
 	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/ios_parser1.png <br />
 	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/ios_parser.png <br />
 
