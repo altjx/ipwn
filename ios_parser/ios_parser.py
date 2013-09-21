@@ -99,7 +99,7 @@ class parser:
 				except Exception, err:
 					pass
 		print contact.get_string(sortby="Name")
-		print "\n Total contacts: %s\n" % str(len(contacts))
+		print "\n Total contacts: %s" % str(len(contacts))
 
 if __name__ == "__main__":
 	try:
