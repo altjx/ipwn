@@ -2,9 +2,11 @@
 
 #
 # This post-exploitation script can be used to spider numerous systems
-# to identify sensitive and/or confidential data. While this script is
-# extremely simple, the data residing on the targeted systems may 
-# significantly increase your chances of expanding your attacks.
+# to identify sensitive and/or confidential data. A good scenario to 
+# use this script is when you have admin credentials to tons of 
+# Windows systems, and you want to look for files containing data such 
+# as PII, network password documents, etc. For the most part,
+# this script uses smbclient and parses the results neatly for you.
 #
 # Author: Alton Johnson
 # Contact: alton.jx@gmail.com
