@@ -31,7 +31,7 @@ extractedFrom = 0
 class colors:
 	white = "\033[1;37m"
 	normal = "\033[0;00m"
-	red = "\033[1;31m"
+	red = "\033[1;31m" 
 	blue = "\033[1;34m"
 	green = "\033[1;32m"
 
