@@ -19,7 +19,7 @@ class bcolors:
 	ENDC = '\033[0m'
 
 	def disable(self):
-		self.OKBLUE = ''
+		self.OKBLUE = '' 
 		self.ENDC = ''
 
 print '\n' + '=' * 60
