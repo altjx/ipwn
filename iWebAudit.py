@@ -25,7 +25,7 @@ container = list()
 spaces = [0,0,0]
 
 # Defines the colors which can be called later. Can identify colors using echo -e "\033[x;nnm"
-# from terminal. x = 1 (bold) or 0 (non-bold). n = numbers from 01 = 99 (must be two digits).
+# from terminal. x = 1 (bold) or 0 (non-bold). n = numbers from 01 = 99 (must be two digits). 
 class colors:
 	lightblue = '\033[1;36m'
 	blue = '\033[1;34m'
