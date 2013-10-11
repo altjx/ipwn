@@ -20,7 +20,7 @@ start_time = time.time()
 
 class colors:
 	red = "\033[1;31m"
-	blue = "\033[1;34m" 
+	blue = "\033[1;34m"
 	norm = "\033[0;00m"
 	green = "\033[1;32m"
 
