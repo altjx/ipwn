@@ -13,7 +13,7 @@
 # Version: 1.0
 #
 
-import commands, time, getopt, re
+import commands, time, getopt, re, os
 from sys import argv
 
 start_time = time.time()
@@ -38,18 +38,18 @@ banner += "\n " + "*" * 56 + "\n"
 def help():
 	print banner
 	print " Usage: %s <OPTIONS>" % argv[0]
+	print colors.red + "\n Target(s) (required): \n" + colors.norm
+	print "\t -h <host>\t Provide IP address or a text file containing IPs."
 	print colors.red + "\n Credentials (required): \n" + colors.norm
 	print "\t -u <user>\t Specify a valid username to authenticate to the system(s)."
 	print "\t -p <pass>\t Specify the password which goes with the username."
 	print "\t -P <hash>\t Use -P to provide password hashes if cleartext pw isn't known."
 	print "\t -d <domain>\t If using a domain account, provide domain name."
-	print colors.red + "\n Target(s) (required): \n" + colors.norm
-	print "\t -h <host>\t Provide IP address or a text file containing IPs."
 	print colors.green + "\n Shares (optional):\n" + colors.norm
 	print "\t -s <share>\t Specify shares (separate by comma) or specify \"profile\" to spider user profiles."
 	print "\t -f <file>\t Specify a list of shares from a file."
 	print colors.green + "\n Other (optional):\n" + colors.norm
-	print "\t -w <filename>\t Avoid verbose output. Output successful spider results to file." + colors.norm
+	print "\t -w \t\t Avoid verbose output. Output successful spider results to smbspider_host_share." + colors.norm
 	print
 	exit()
 
@@ -57,7 +57,7 @@ def start(argv):
 	if len(argv) < 1:
 		help()
 	try:
-		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:P:w:")
+		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:P:w")
 	except getopt.GetoptError, err:
 		print colors.red + "\n Error: " + err + colors.normal
 	
@@ -68,7 +68,7 @@ def start(argv):
 	smb_host = []
 	smb_share = ["profile"]
 	pth = False
-	filename = ""
+	filename = False
 
 	#parse through arguments
 	for opt, arg in opts:
@@ -93,7 +93,7 @@ def start(argv):
 			smb_pass = arg
 			pth = True
 		elif opt == "-w":
-			filename = arg
+			filename = True
 
 	#check options before proceeding
 	if (not smb_user or not smb_pass or not smb_host):
@@ -111,7 +111,7 @@ def start(argv):
 		credentials = smb_domain + "\\\\" + smb_user + " " + smb_pass
 	else:
 		credentials = smb_user + " " + smb_pass
-	
+
 	#start spidering
 	print banner
 	print "Spidering %s system(s)...\n" % len(smb_host)
@@ -128,23 +128,47 @@ class spider:
 		self.skip_host = ""
 		self.pth = pth
 		self.filename = filename
+		self.blacklisted = []
 	
 	def start_spidering(self):
 		for host in self.list_of_hosts:
-			print "Attempting to spider %s. Please wait..." % host
-			for share in self.list_of_shares:
-				if self.skip_host == host:
-					break
+			orig_host = host # ensures that we can check the original host value later on if we need to
+			if "\\\\" in host: # this checks to see if host is in the format of something like \\192.168.0.1\C$
+				host = host[2:]
+				host = host[:host.find("\\")]
+			elif "smb://" in host: # this checks to see if the host contains a format such as smb://192.168.0.1/C$
+				host = host[6:]
+				host = host[:host.find("/")]
+			if self.skip_host == host:
+				self.blacklisted.append(host)
+				continue
+			if ("//" in orig_host or "\\\\" in orig_host) and self.list_of_shares[0] != "profile":
+				print colors.red + " Error: You cannot specify a share if your imported list contains \\\\<ip>\\<share> or //<ip>/<share>\n" + colors.norm
+				exit()
+			if len(self.list_of_shares) == 1 and ("//" in orig_host or "\\\\" in orig_host):
+				if "//" in orig_host:
+					share = orig_host[orig_host.rfind("/")+1:]
+				elif "\\\\" in orig_host:
+					temp = orig_host[:-1]
+					share = temp[temp.rfind("\\")+1:]
 				self.smb_host = host
 				self.smb_share = share
-				self.spider_host()
-			if self.filename != "":
-				print "Finished with %s." % host
+			else:
+				for share in self.list_of_shares:
+					if self.skip_host == host:
+						self.blacklisted.append(host)
+						break
+					self.smb_host = host
+					self.smb_share = share
+			print "Attempting to spider smb://%s/%s. Please wait..." % (host, share)
+			self.spider_host()
+			if self.filename:
+				print "Finished with smb://%s/%s" % (host, share)
 
 	def parse_result(self, result):
 		############################################################
 		# this small section removes all of the unnecessary crap. a bit ugly, i know! :x
-		errors = ["STATUS_NO_SUCH_FILE","STATUS_ACCESS_DENIED",
+		errors = ["STATUS_NO_SUCH_FILE","ACCESS_DEN",
 "STATUS_OBJECT_NAME_INVALID", "STATUS_INVALID_NETWORK_RESPONSE", "OBJECT_NAME_NOT",
 "not present"
 	]
@@ -174,10 +198,12 @@ class spider:
 				if error in filename:
 					fail = 1
 			if fail == 0 and len(filename) > 0:
-				if self.filename == "":
+				if not self.filename:
 					print "Spider\t \\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
 				else:
-					output = open(self.filename, 'a')
+					if not os.path.exists('smbspider'):
+						os.makedirs('smbspider')
+					output = open("smbspider/smbspider_%s_%s_%s.txt" % (self.smb_host, self.smb_share, self.credentials.split()[0]), 'a')
 					output.write("Spider\t \\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename + "\n")
 					output.close()
 
