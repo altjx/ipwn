@@ -6,7 +6,8 @@
 # use this script is when you have admin credentials to tons of 
 # Windows systems, and you want to look for files containing data such 
 # as PII, network password documents, etc. For the most part,
-# this script uses smbclient and parses the results neatly for you.
+# this script uses smbclient, parses the results, and prints
+# out the results in a nice format for you.
 #
 # Author: Alton Johnson
 # Contact: alton.jx@gmail.com
