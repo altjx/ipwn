@@ -10,7 +10,8 @@
 #
 # Author: Alton Johnson
 # Contact: alton.jx@gmail.com
-# Version: 1.0
+# Version: 2.0
+# Updated: 10/12/2013
 #
 
 import commands, time, getopt, re, os
@@ -32,7 +33,7 @@ banner += "\n *	 / __| '_ ` _ \| '_ \  / //  \\\\ \ 		*"
 banner += "\n *	 \__ \ | | | | | |_) |   |\__/|			*"
 banner += "\n *	 |___/_| |_| |_|_.__/				*"
 banner += "\n *							*"
-banner += "\n * SMB Spider v1.0, Alton Johnson (alton.jx@gmail.com) 	*"
+banner += "\n * SMB Spider v2.0, Alton Johnson (alton.jx@gmail.com) 	*"
 banner += "\n " + "*" * 56 + "\n"
 
 def help():
@@ -149,8 +150,9 @@ class spider:
 				if "//" in orig_host:
 					share = orig_host[orig_host.rfind("/")+1:]
 				elif "\\\\" in orig_host:
-					temp = orig_host[:-1]
-					share = temp[temp.rfind("\\")+1:]
+					if orig_host[-1] == "\\"
+						temp = orig_host[:-1]
+						share = temp[temp.rfind("\\")+1:]
 				self.smb_host = host
 				self.smb_share = share
 			else:
