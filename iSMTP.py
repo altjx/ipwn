@@ -297,8 +297,8 @@ def smtp_enumeration(smtp_host,smtp_port,email_list,enum_level):
 						print colors.red + "\n Error: Too many consistent failures. Probably not vulnerable to SMTP VRFY. Skipping... " + colors.normal
 						smtp_elog += colors.red + "\n\n Error: Too many consistent failures. Probably not vulnerable to SMTP VRFY. Skipping... \n" + colors.normal
 						break
-					print colors.red + " [-] %s " % i + "-" * (offset-len(i)) + " [ fail ]" + colors.normal
-					smtp_elog += colors.red + "\n [-] %s " % i + "-" * (offset-len(i)) + " [ fail ]" + colors.normal
+					print colors.red + " [-] %s " % i + "-" * (offset-len(i)) + " [ invalid ]" + colors.normal
+					smtp_elog += colors.red + "\n [-] %s " % i + "-" * (offset-len(i)) + " [ invalid ]" + colors.normal
 					fail+= 1
 #					print colors.red + " Error: %s:%s" % (response[0],response[1]) + colors.normal
 #					smtp_elog += colors.red + "\n Error: %s:%s" % (response[0],response[1]) + colors.normal
