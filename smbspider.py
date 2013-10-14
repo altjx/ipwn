@@ -86,7 +86,7 @@ def start(argv):
 			try:
 				smb_host = open(arg).read().split()
 			except:
-				if "\\\\" in arg and "\\" not in arg[-2:]:
+				if "\\\\" in arg and "\\" not in arg[-1:]:
 					test = arg[2:].replace("\\","\\")
 					smb_host.append("\\\\%s\\" % test)
 				else:
@@ -102,7 +102,6 @@ def start(argv):
 			pth = True
 		elif opt == "-w":
 			filename = True
-	
 	#check options before proceeding
 	if (not smb_user or not smb_pass or not smb_host):
 		print colors.red + "\nError: Please check to ensure that all required options are provided." + colors.norm
@@ -129,6 +128,8 @@ def start(argv):
 				sys = sys[:sys.find("/")]
 			if sys not in unique_systems:
 				unique_systems.append(sys)
+		else:
+			unique_systems.append(system)
 
 	#start spidering
 	print banner
@@ -149,12 +150,15 @@ class spider:
 		self.blacklisted = []
 	
 	def start_spidering(self):
+		empty_share_error = colors.red + " Error: Empty share detected for host %s. Skipping share." + colors.norm
 		for test_host in self.list_of_hosts:
 			temp = test_host
 			if ("//" in temp or "\\\\" in temp) and self.list_of_shares[0] != "profile":
 				print colors.red + " Error: You cannot specify a share if your target(s) contains \\\\<ip>\\<share> or //<ip>/<share>\n" + colors.norm
 				exit()
 		for host in self.list_of_hosts:
+			tmp_share = host.replace("/","")
+			tmp_share = host.replace("\\","")
 			orig_host = host # ensures that we can check the original host value later on if we need to
 			if "\\\\" in host: # this checks to see if host is in the format of something like \\192.168.0.1\C$
 				host = host[2:]
@@ -181,7 +185,11 @@ class spider:
 						break
 					self.smb_host = host
 					self.smb_share = share
-			print "Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share)
+			tmp_share = tmp_share.replace(self.smb_host,"")
+			if len(tmp_share) == 0 and self.smb_share != "profile":
+				print empty_share_error % self.smb_host
+				continue			
+			print "Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 			self.spider_host()
 			if self.filename:
 				print "Finished with smb://%s/%s" % (self.smb_host, self.smb_share)
@@ -220,7 +228,7 @@ class spider:
 					fail = 1
 			if fail == 0 and len(filename) > 0:
 				if not self.filename:
-					print "Spider\t \\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
+					print "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
 				else:
 					if not os.path.exists('smbspider'):
 						os.makedirs('smbspider')
