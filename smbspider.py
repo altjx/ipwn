@@ -42,6 +42,7 @@ def help():
 	print " Usage: %s <OPTIONS>" % argv[0]
 	print colors.red + "\n Target(s) (required): \n" + colors.norm
 	print "\t -h <host>\t Provide IP address or a text file containing IPs."
+	print "\t\t\t Supported formats: IP, smb://ip/share, \\\\ip\\share"
 	print colors.red + "\n Credentials (required): \n" + colors.norm
 	print "\t -u <user>\t Specify a valid username to authenticate to the system(s)."
 	print "\t -p <pass>\t Specify the password which goes with the username."
@@ -51,7 +52,7 @@ def help():
 	print "\t -s <share>\t Specify shares (separate by comma) or specify \"profile\" to spider user profiles."
 	print "\t -f <file>\t Specify a list of shares from a file."
 	print colors.green + "\n Other (optional):\n" + colors.norm
-	print "\t -w \t\t Avoid verbose output. Output successful spider results to smbspider_host_share." + colors.norm
+	print "\t -w \t\t Avoid verbose output. Output successful spider results to smbspider_host_share_user.txt." + colors.norm
 	print
 	exit()
 
@@ -71,6 +72,7 @@ def start(argv):
 	smb_share = ["profile"]
 	pth = False
 	filename = False
+	unique_systems = []
 
 	#parse through arguments
 	for opt, arg in opts:
@@ -84,7 +86,11 @@ def start(argv):
 			try:
 				smb_host = open(arg).read().split()
 			except:
-				smb_host.append(arg)
+				if "\\\\" in arg and "\\" not in arg[-2:]:
+					test = arg[2:].replace("\\","\\")
+					smb_host.append("\\\\%s\\" % test)
+				else:
+					smb_host.append(arg)
 		elif opt == "-f":
 			smb_share = open(arg).read().split()
 		elif opt == "-s":
@@ -96,7 +102,7 @@ def start(argv):
 			pth = True
 		elif opt == "-w":
 			filename = True
-
+	
 	#check options before proceeding
 	if (not smb_user or not smb_pass or not smb_host):
 		print colors.red + "\nError: Please check to ensure that all required options are provided." + colors.norm
@@ -113,10 +119,20 @@ def start(argv):
 		credentials = smb_domain + "\\\\" + smb_user + " " + smb_pass
 	else:
 		credentials = smb_user + " " + smb_pass
+	for system in smb_host:
+		if "\\" in system or "//" in system:
+			if "\\" in system:
+				sys = system[system.find("\\")+2:]
+				sys = sys[:sys.find("\\")]
+			else:
+				sys = system[system.find("/")+2:]
+				sys = sys[:sys.find("/")]
+			if sys not in unique_systems:
+				unique_systems.append(sys)
 
 	#start spidering
 	print banner
-	print "Spidering %s system(s)...\n" % len(smb_host)
+	print "Spidering %s systems(s)...\n" % len(unique_systems)
 	begin = spider(credentials, smb_host, smb_share, pth, filename)
 	begin.start_spidering()
 
@@ -133,6 +149,11 @@ class spider:
 		self.blacklisted = []
 	
 	def start_spidering(self):
+		for test_host in self.list_of_hosts:
+			temp = test_host
+			if ("//" in temp or "\\\\" in temp) and self.list_of_shares[0] != "profile":
+				print colors.red + " Error: You cannot specify a share if your target(s) contains \\\\<ip>\\<share> or //<ip>/<share>\n" + colors.norm
+				exit()
 		for host in self.list_of_hosts:
 			orig_host = host # ensures that we can check the original host value later on if we need to
 			if "\\\\" in host: # this checks to see if host is in the format of something like \\192.168.0.1\C$
@@ -144,14 +165,11 @@ class spider:
 			if self.skip_host == host:
 				self.blacklisted.append(host)
 				continue
-			if ("//" in orig_host or "\\\\" in orig_host) and self.list_of_shares[0] != "profile":
-				print colors.red + " Error: You cannot specify a share if your imported list contains \\\\<ip>\\<share> or //<ip>/<share>\n" + colors.norm
-				exit()
 			if len(self.list_of_shares) == 1 and ("//" in orig_host or "\\\\" in orig_host):
 				if "//" in orig_host:
 					share = orig_host[orig_host.rfind("/")+1:]
 				elif "\\\\" in orig_host:
-					if orig_host[-1] == "\\"
+					if orig_host[-1] == "\\":
 						temp = orig_host[:-1]
 						share = temp[temp.rfind("\\")+1:]
 				self.smb_host = host
@@ -163,10 +181,10 @@ class spider:
 						break
 					self.smb_host = host
 					self.smb_share = share
-			print "Attempting to spider smb://%s/%s. Please wait..." % (host, share)
+			print "Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share)
 			self.spider_host()
 			if self.filename:
-				print "Finished with smb://%s/%s" % (host, share)
+				print "Finished with smb://%s/%s" % (self.smb_host, self.smb_share)
 
 	def parse_result(self, result):
 		############################################################
