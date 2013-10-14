@@ -31,7 +31,7 @@ extractedFrom = 0
 class colors:
 	white = "\033[1;37m"
 	normal = "\033[0;00m"
-	red = "\033[1;31m" 
+	red = "\033[1;31m"
 	blue = "\033[1;34m"
 	green = "\033[1;32m"
 
@@ -39,9 +39,8 @@ try:
 	import pyPdf
 	from pyPdf import PdfFileReader
 except Exception, err:
-	print colors.red + "\n Error: You will need to install the pyPDF module for this script to work properly."
+	print colors.red + " Warning: To obtain maximum data from PDF documents, it's highly recommended that you install the pyPDF python module."
 	print " pyPDF can be downloaded from http://pybrary.net/pyPdf/" + colors.normal
-	exit()
 
 banner = '\n ' + "-" * 79 + colors.white + '\n  pyfoca v1.6 - Document Metadata Extractor, Alton Johnson (alton.jx@gmail.com)\n ' + colors.normal + "-" * 79 + "\n"
 class metaparser:
@@ -316,8 +315,8 @@ class metaparser:
 			self.processFile(self.fileName)
 			totalFiles += 1
 		elif self.domainName != "":
+			print " Domain: %s" % self.domainName
 			print " Attempting to gather links from google searches..."
-			print " Domain name: " + self.domainName
 			conn = httplib.HTTPConnection('www.google.com')
 			total_count = 0
 			for e in self.exts:
@@ -384,6 +383,7 @@ class metaparser:
 							  print colors.red + " [-] " + short_file, "-" * (spaces-len(short_file)), "fail", "[%s of %s]" % (str(files.index(f)+1),str(len(files))) + colors.normal
 					totalFiles -= 1
 					continue
+			print
 			for e in files:
 				pdf_name = e[e.rfind("/")+1:]
 				self.processFile('pyfoca-downloads/%s' % pdf_name)
@@ -466,11 +466,10 @@ class metaparser:
 				print
 
 		print " " + "--" * 5
-		if self.del_files:
-			print " Deleting pyfoca-downloads folder..."
-			commands.getoutput('rm pyfoca-downloads/ -r')
-			commands.getoutput('rm pyfoca-downloads/ -r')
 		if self.report_dir == "":
+			if self.del_files:
+				print " Deleting pyfoca-downloads folder..."
+				commands.getoutput('rm pyfoca-downloads/ -rf')
 			print " Extracted data from %s file(s)." % str(totalFiles)
 		else:
 			print " Extracted data from %s file(s)." % self.foca_files
