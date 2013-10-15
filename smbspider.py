@@ -46,7 +46,7 @@ def help():
 	print colors.red + "\n Credentials (required): \n" + colors.norm
 	print "\t -u <user>\t Specify a valid username to authenticate to the system(s)."
 	print "\t -p <pass>\t Specify the password which goes with the username."
-	print "\t -P <hash>\t Use -P to provide password hash if cleartext pw isn't known."
+	print "\t -P <hash>\t Use -P to provide password hash if cleartext password isn't known."
 	print "\t -d <domain>\t If using a domain account, provide domain name."
 	print colors.green + "\n Shares (optional):\n" + colors.norm
 	print "\t -s <share>\t Specify shares (separate by comma) or specify \"profile\" to spider user profiles."
