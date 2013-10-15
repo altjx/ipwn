@@ -12,7 +12,7 @@
 # Author: Alton Johnson
 # Contact: alton.jx@gmail.com
 # Version: 2.0
-# Updated: 10/12/2013
+# Updated: 10/15/2013
 #
 
 import commands, time, getopt, re, os
@@ -197,8 +197,8 @@ class spider:
 	def parse_result(self, result):
 		############################################################
 		# this small section removes all of the unnecessary crap. a bit ugly, i know! :x
-		errors = ["STATUS_NO_SUCH_FILE","ACCESS_DEN",
-"STATUS_OBJECT_NAME_INVALID", "STATUS_INVALID_NETWORK_RESPONSE", "OBJECT_NAME_NOT",
+		errors = ["O_SUCH_F","ACCESS_DEN",
+"US_OBJECT_NAME_IN", "US_INVALID_NETWORK_RE", "CT_NAME_NOT",
 "not present"
 	]
 		result = result.split('\n')
@@ -266,9 +266,9 @@ class spider:
 	
 	def check_errors(self, result):
 		access_error = {
-"UNREACHABLE":"Error [%s]: Check to ensure that host is online." % self.smb_host,
-"UNSUCCESSFUL":"Error [%s]: Check to ensure that host is online." % self.smb_host,
-"TIMEOUT":"Error [%s]: Check to ensure that host is online." % self.smb_host,
+"UNREACHABLE":"Error [%s]: Check to ensure that host is online and that share is accessible." % self.smb_host,
+"UNSUCCESSFUL":"Error [%s]: Check to ensure that host is online and that share is accessible.." % self.smb_host,
+"TIMEOUT":"Error [%s]: Check to ensure that host is online and that share is accessible.." % self.smb_host,
 }
 		for err in access_error:
 			if err in result:
