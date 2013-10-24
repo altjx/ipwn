@@ -36,7 +36,7 @@ banner += "\n *	 |___/_| |_| |_|_.__/				*"
 banner += "\n *							*"
 banner += "\n * SMB Spider v2.0, Alton Johnson (alton.jx@gmail.com) 	*"
 banner += "\n " + "*" * 56 + "\n"
-
+ 
 def help():
 	print banner
 	print " Usage: %s <OPTIONS>" % argv[0]
