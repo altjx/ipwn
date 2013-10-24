@@ -130,7 +130,6 @@ def start(argv):
 				unique_systems.append(sys)
 		else:
 			unique_systems.append(system)
-
 	#start spidering
 	print banner
 	print "Spidering %s systems(s)...\n" % len(unique_systems)
@@ -150,6 +149,7 @@ class spider:
 		self.blacklisted = []
 	
 	def start_spidering(self):
+		share = ""
 		empty_share_error = colors.red + " Error: Empty share detected for host %s. Skipping share." + colors.norm
 		for test_host in self.list_of_hosts:
 			temp = test_host
@@ -187,11 +187,17 @@ class spider:
 					self.smb_share = share
 			tmp_share = tmp_share.replace(self.smb_host,"")
 			tmp_share = tmp_share.replace("smb:///","")
-			if len(tmp_share) == 0 and (self.smb_share != "profile" or len(self.smb_share) == 0):
+			if len(tmp_share) == 0 and (self.smb_share != "profile" and len(self.smb_share) == 0):
 				print empty_share_error % self.smb_host
-				continue			
-			print "Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
-			self.spider_host()
+				continue
+			if len(self.list_of_shares) > 1:
+				for x in self.list_of_shares:
+					self.smb_share = x
+					print "Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
+					self.spider_host()
+			else:
+				print "Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
+				self.spider_host()
 			if self.filename:
 				print "Finished with smb://%s/%s" % (self.smb_host, self.smb_share)
 
