@@ -36,7 +36,7 @@ banner += "\n *	 |___/_| |_| |_|_.__/				*"
 banner += "\n *							*"
 banner += "\n * SMB Spider v2.0, Alton Johnson (alton.jx@gmail.com) 	*"
 banner += "\n " + "*" * 56 + "\n"
- 
+
 def help():
 	print banner
 	print " Usage: %s <OPTIONS>" % argv[0]
@@ -62,7 +62,7 @@ def start(argv):
 	try:
 		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:P:w")
 	except getopt.GetoptError, err:
-		print colors.red + "\n Error: " + err + colors.normal
+		print colors.red + "\n  [-] Error: " + err + colors.normal
 	
 	# set default variables to prevent errors later in script
 	smb_user = ""
@@ -104,12 +104,12 @@ def start(argv):
 			filename = True
 	#check options before proceeding
 	if (not smb_user or not smb_pass or not smb_host):
-		print colors.red + "\nError: Please check to ensure that all required options are provided." + colors.norm
+		print colors.red + "\n [-] Error: Please check to ensure that all required options are provided." + colors.norm
 		help()
 	if pth:
 		result = commands.getoutput("pth-smbclient")
 		if "not found" in result.lower():
-			print colors.red + "\nError: The passing-the-hash package was not found. Therefore, you cannot pass hashes."
+			print colors.red + "\n [-] Error: The passing-the-hash package was not found. Therefore, you cannot pass hashes."
 			print "Please run \"apt-get install passing-the-hash\" to fix this error and try running the script again.\n" + colors.norm
 			exit()
 
@@ -132,7 +132,7 @@ def start(argv):
 			unique_systems.append(system)
 	#start spidering
 	print banner
-	print "Spidering %s systems(s)...\n" % len(unique_systems)
+	print " [*] Spidering %s systems(s)...\n" % len(unique_systems)
 	begin = spider(credentials, smb_host, smb_share, pth, filename)
 	begin.start_spidering()
 
@@ -150,11 +150,11 @@ class spider:
 	
 	def start_spidering(self):
 		share = ""
-		empty_share_error = colors.red + " Error: Empty share detected for host %s. Skipping share." + colors.norm
+		empty_share_error = colors.red + " [-] Error: Empty share detected for host %s. Skipping share." + colors.norm
 		for test_host in self.list_of_hosts:
 			temp = test_host
 			if ("//" in temp or "\\\\" in temp) and self.list_of_shares[0] != "profile":
-				print colors.red + " Error: You cannot specify a share if your target(s) contains \\\\<ip>\\<share> or //<ip>/<share>\n" + colors.norm
+				print colors.red + " [-] Error: You cannot specify a share if your target(s) contains \\\\<ip>\\<share> or //<ip>/<share>\n" + colors.norm
 				exit()
 		for host in self.list_of_hosts:
 			tmp_share = host.replace("/","")
@@ -193,13 +193,13 @@ class spider:
 			if len(self.list_of_shares) > 1:
 				for x in self.list_of_shares:
 					self.smb_share = x
-					print "Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
+					print " [*] Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 					self.spider_host()
 			else:
-				print "Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
+				print " [*] Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 				self.spider_host()
 			if self.filename:
-				print "Finished with smb://%s/%s" % (self.smb_host, self.smb_share)
+				print " [*] Finished with smb://%s/%s" % (self.smb_host, self.smb_share)
 
 	def parse_result(self, result):
 		############################################################
@@ -235,7 +235,7 @@ class spider:
 					fail = 1
 			if fail == 0 and len(filename) > 0:
 				if not self.filename:
-					print "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
+					print " [*] \\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
 				else:
 					if not os.path.exists('smbspider'):
 						os.makedirs('smbspider')
@@ -273,9 +273,9 @@ class spider:
 	
 	def check_errors(self, result):
 		access_error = {
-"UNREACHABLE":"Error [%s]: Check to ensure that host is online and that share is accessible." % self.smb_host,
-"UNSUCCESSFUL":"Error [%s]: Check to ensure that host is online and that share is accessible.." % self.smb_host,
-"TIMEOUT":"Error [%s]: Check to ensure that host is online and that share is accessible.." % self.smb_host,
+"UNREACHABLE":" [-] Error [%s]: Check to ensure that host is online and that share is accessible." % self.smb_host,
+"UNSUCCESSFUL":" [-] Error [%s]: Check to ensure that host is online and that share is accessible.." % self.smb_host,
+"TIMEOUT":" [-] Error [%s]: Check to ensure that host is online and that share is accessible.." % self.smb_host,
 }
 		for err in access_error:
 			if err in result:
@@ -285,12 +285,12 @@ class spider:
 		
 		
 		if "LOGON_FAIL" in result.split()[-1]:
-			print colors.red + "Error [%s]: Invalid credentials. Please correct credentials and try again." % self.smb_host + colors.norm
+			print colors.red + " [-] Error [%s]: Invalid credentials. Please correct credentials and try again." % self.smb_host + colors.norm
 			exit()
 		elif "ACCESS_DENIED" in result.split()[-1]:
-			print colors.red + "Error [%s]: Valid credentials, but no access. Try another account." % self.smb_host + colors.norm
+			print colors.red + " [-] Error [%s]: Valid credentials, but no access. Try another account." % self.smb_host + colors.norm
 		elif "BAD_NETWORK" in result.split()[-1]:
-			print colors.red + "Error: Invalid share -> smb://%s/%s" % (self.smb_host,self.smb_share) + colors.norm
+			print colors.red + " [-] Error: Invalid share -> smb://%s/%s" % (self.smb_host,self.smb_share) + colors.norm
 			return True
 
 		
