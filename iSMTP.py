@@ -146,10 +146,10 @@ def smtp_spoof(smtp_host,smtp_port,isa_email,sndr_email,rcpt_email,sndr_name,rcp
 			return smtp_slog
 
 	try: 
-		smtp_subj = "Accuvant SMTP Server Test"
-		smtp_msg = "\r\n%s:\r\n\r\nThis message is part of a security assessment, \nperformed by Accuvant.  If this message is received, \nplease take a screenshot and forward it \nto %s.\r\n\r\nThis message was delivered through %s:%s." % (sndr_name, isa_email, smtp_host, str(smtp_port))
+		smtp_subj = "SMTP Server Test"
+		smtp_msg = "\r\n%s:\r\n\r\nThis message is part of a security assessment.  If this message is received, \nplease take a screenshot and forward it \nto %s.\r\n\r\nThis message was delivered through %s:%s." % (sndr_name, isa_email, smtp_host, str(smtp_port))
 		if spoof_attach:
-			smtp_data = "From: %s <%s>\r\nTo: %s <%s>\r\nSubject: %s\r\nMIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary=\"000Message000\"\r\n\r\n--000Message000\r\n%s\r\n\r\n--000Message000\r\nContent-Type: application/octet-stream; name=\"Accuvant Attachment.txt\"\r\n\r\nAccuvant Security Assessment (with attachment).\r\n\r\n--000Message000--\r\n." % (sndr_name, sndr_email, rcpt_name, rcpt_email, smtp_subj,smtp_msg)
+			smtp_data = "From: %s <%s>\r\nTo: %s <%s>\r\nSubject: %s\r\nMIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary=\"000Message000\"\r\n\r\n--000Message000\r\n%s\r\n\r\n--000Message000\r\nContent-Type: application/octet-stream; name=\"Attachment.txt\"\r\n\r\nSecurity Assessment (with attachment).\r\n\r\n--000Message000--\r\n." % (sndr_name, sndr_email, rcpt_name, rcpt_email, smtp_subj,smtp_msg)
 		else:
 			smtp_data = "From: %s <%s>\r\nTo: %s <%s>\r\nSubject: %s\r\n%s\r\n." % (sndr_name, sndr_email, rcpt_name, rcpt_email, smtp_subj,smtp_msg)
 		server = smtplib.SMTP(smtp_host, smtp_port)
@@ -190,7 +190,7 @@ def smtp_spoof(smtp_host,smtp_port,isa_email,sndr_email,rcpt_email,sndr_name,rcp
 			modded_data = smtp_data.split('\n')
 			del modded_data[3:7]
 			del modded_data[12:]
-			modded_data.insert(3, "Attachment: Accuvant Attachment.txt")
+			modded_data.insert(3, "Attachment: Attachment.txt")
 			for i in modded_data:
 				print colors.blue + "   | " + i + colors.normal
 				smtp_slog += colors.blue + "\n   | " + i + colors.normal
@@ -325,7 +325,7 @@ def smtp_enumeration(smtp_host,smtp_port,email_list,enum_level):
 		smtp_elog += "\n Performing SMTP RCPT TO test...\n"
 		
 		try: 
-			response = server.docmd('mail from:', '<pentest@accuvant.com>')
+			response = server.docmd('mail from:', '<pentest@company.com>')
 			if str(response[0])[0] == '5':
 				print colors.red + " Error: %s" % response[1] + colors.normal
 				smtp_elog += colors.red +"\n\n Error: %s" % response[1] + colors.normal
@@ -359,7 +359,7 @@ def smtp_enumeration(smtp_host,smtp_port,email_list,enum_level):
 					try:
 						server = smtplib.SMTP(smtp_host,smtp_port)
 						response = server.docmd('helo',domain)
-						response = server.docmd('mail from:', '<pentest@accuvant.com>')
+						response = server.docmd('mail from:', '<pentest@company.com>')
 						continue
 					except Exception:
 						print colors.red + " Error: Cannot reconnect. Quitting..." + colors.normal
