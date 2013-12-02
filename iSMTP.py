@@ -40,7 +40,7 @@ def help():
 	print "\t-f <import file>\tImports a list of SMTP servers for testing.\n\t\t\t\t(Cannot use with '-h'.)"
 	print "\t-h <host>\t\tThe target IP and port (IP:port).\n\t\t\t\t(Cannot use with '-f'.)"
 	print colors.green + "\n Spoofing:\n" + colors.normal
-	print "\t-i <isa email>\t\tThe ISA's email address."
+	print "\t-i <isa email>\t\tThe consultant's email address."
 	print "\t-s <sndr email>\t\tThe sender's email address."
 	print "\t-r <rcpt email>\t\tThe recipient's email address."
 	print "\t   --sr <email>\t\tSpecifies both the sender's and recipient's email address."
@@ -53,7 +53,7 @@ def help():
 	print "\t-e <file>\tEnable SMTP user enumeration testing and imports email list."
 	print "\t-l <1|2|3>\tSpecifies enumeration type (1 = VRFY, 2 = RCPT TO, 3 = all).\n\t\t\t(Default is 3.)"
 	print colors.green + "\n SMTP relay:\n" + colors.normal
-	print "\t-i <isa email>\t\tThe ISA's email address."
+	print "\t-i <isa email>\t\tThe consultant's email address."
 	print "\t-x\t\t\tEnables SMTP external relay testing."
 	print colors.green + "\n Misc:\n" + colors.normal
 	print "\t-t <secs>\tThe timeout value. (Default is 10.)"
@@ -71,12 +71,12 @@ def output_write(smtp_host,smtp_port,data,output,smtp_test):
 		output_file.close()
 		print " Output file created."
 
-def smtp_relay(smtp_host,smtp_port,isa_email):
+def smtp_relay(smtp_host,smtp_port,consultant_email):
 	print " Testing SMTP server [external relay]: %s:%s\n" % (smtp_host, smtp_port)
 	smtp_rlog = "\n Testing SMTP server [external relay]: %s:%s\n" % (smtp_host, smtp_port)
 
 	#grabs the domain name from isa email
-	isa_domain = isa_email[isa_email.rfind("@")+1:]
+	isa_domain = consultant_email[consultant_email.rfind("@")+1:]
 	
 	try:
 		server = smtplib.SMTP(smtp_host, smtp_port)
@@ -84,12 +84,12 @@ def smtp_relay(smtp_host,smtp_port,isa_email):
 		response = server.docmd("helo",isa_domain)
 		print " - Submitted 'helo %s' : %s" % (isa_domain,str(response[0]))
 		smtp_rlog += "\n - Submitted 'helo example.com' : %s" % str(response[0])
-		response = server.docmd("mail from:","<%s>" % isa_email)
-		print " - Submitted 'mail from: <%s>' : %s" % (isa_email, str(response[0]))
-		smtp_rlog += "\n - Submitted 'mail from: <%s>' : %s" % (isa_email, str(response[0]))
-		response = server.docmd("rcpt to:","<%s>" % isa_email)
-		print " - Submitted 'rcpt to: <%s>' : %s" % (isa_email, response[0])
-		smtp_rlog += "\n - Submitted 'rcpt to: <%s>' : %s" % (isa_email, response[0])
+		response = server.docmd("mail from:","<%s>" % consultant_email)
+		print " - Submitted 'mail from: <%s>' : %s" % (consultant_email, str(response[0]))
+		smtp_rlog += "\n - Submitted 'mail from: <%s>' : %s" % (consultant_email, str(response[0]))
+		response = server.docmd("rcpt to:","<%s>" % consultant_email)
+		print " - Submitted 'rcpt to: <%s>' : %s" % (consultant_email, response[0])
+		smtp_rlog += "\n - Submitted 'rcpt to: <%s>' : %s" % (consultant_email, response[0])
 		if response[0] != 250:
 			print colors.red + "\n External SMTP relay access denied." + colors.normal
 			smtp_rlog += colors.red + "\n\n External SMTP relay access denied." + colors.normal
@@ -117,7 +117,7 @@ def smtp_relay(smtp_host,smtp_port,isa_email):
 	#return log in case output is enabled
 	return smtp_rlog
 
-def smtp_spoof(smtp_host,smtp_port,isa_email,sndr_email,rcpt_email,sndr_name,rcpt_name,spoof_attach):
+def smtp_spoof(smtp_host,smtp_port,consultant_email,sndr_email,rcpt_email,sndr_name,rcpt_name,spoof_attach):
 	print " Testing SMTP server [internal spoof]: %s:%s\n" % (smtp_host, smtp_port)
 	smtp_slog = "\n Testing SMTP server [internal spoof]: %s:%s\n" % (smtp_host, smtp_port)
 	
@@ -147,7 +147,7 @@ def smtp_spoof(smtp_host,smtp_port,isa_email,sndr_email,rcpt_email,sndr_name,rcp
 
 	try: 
 		smtp_subj = "SMTP Server Test"
-		smtp_msg = "\r\n%s:\r\n\r\nThis message is part of a security assessment.  If this message is received, \nplease take a screenshot and forward it \nto %s.\r\n\r\nThis message was delivered through %s:%s." % (sndr_name, isa_email, smtp_host, str(smtp_port))
+		smtp_msg = "\r\n%s:\r\n\r\nThis message is part of a security assessment.  If this message is received, \nplease take a screenshot and forward it \nto %s.\r\n\r\nThis message was delivered through %s:%s." % (sndr_name, consultant_email, smtp_host, str(smtp_port))
 		if spoof_attach:
 			smtp_data = "From: %s <%s>\r\nTo: %s <%s>\r\nSubject: %s\r\nMIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary=\"000Message000\"\r\n\r\n--000Message000\r\n%s\r\n\r\n--000Message000\r\nContent-Type: application/octet-stream; name=\"Attachment.txt\"\r\n\r\nSecurity Assessment (with attachment).\r\n\r\n--000Message000--\r\n." % (sndr_name, sndr_email, rcpt_name, rcpt_email, smtp_subj,smtp_msg)
 		else:
@@ -404,7 +404,7 @@ def start(argv):
 	# set default variables (needed in case if statement isn't met)
 	smtp_host = ''
 	smtp_port = 25
-	isa_email = ''
+	consultant_email = ''
 	sndr_email = ''
 	rcpt_email = ''
 	sndr_name = ''
@@ -422,7 +422,7 @@ def start(argv):
 	# for loop stdin to determine what arguments are provided
 	for opt, arg in opts:
 		if opt == "-i":
-			isa_email = arg
+			consultant_email = arg
 		elif opt == "-s":
 			sndr_email = arg
 		elif opt == "-r":
@@ -481,10 +481,10 @@ def start(argv):
 		elif opt == "-a":
 			spoof_attach = True
 
-	# assign required parameters depending on the test being conducted (for error checking as well)
-	spoof_options = {'SMTP Port':smtp_port,'ISA email address':isa_email,'sender email address':sndr_email,'recipient email address':rcpt_email,'sender name':sndr_name,'recipient name':rcpt_name}
+	#assign required parameters depending on the test being conducted (for error checking as well)
+	spoof_options = {'SMTP Port':smtp_port,'consultant email address':consultant_email,'sender email address':sndr_email,'recipient email address':rcpt_email,'sender name':sndr_name,'recipient name':rcpt_name}
 	enum_options = {'email list':email_list,'SMTP port':smtp_port}
-	relay_options = {'ISA email address':isa_email,'SMTP port':smtp_port}
+	relay_options = {'consultant email address':consultant_email,'SMTP port':smtp_port}
 
 	# checks for errors before processing arguments
 	if smtp_host == "" and smtp_list == False:
@@ -523,11 +523,11 @@ def start(argv):
 			if smtp_file.index(i) > 0:
 				print split_target
 			if spoof_test:
-				output_write(i,smtp_port,smtp_spoof(i,smtp_port,isa_email,sndr_email,rcpt_email,sndr_name,rcpt_name,spoof_attach),output,'smtp_spoof')
+				output_write(i,smtp_port,smtp_spoof(i,smtp_port,consultant_email,sndr_email,rcpt_email,sndr_name,rcpt_name,spoof_attach),output,'smtp_spoof')
 			if relay_test:
 				if spoof_test:
 					print split_service
-				output_write(i,smtp_port,smtp_relay(i,smtp_port,isa_email),output,'smtp_relay')
+				output_write(i,smtp_port,smtp_relay(i,smtp_port,consultant_email),output,'smtp_relay')
 			if smtp_enum:
 				if spoof_test or relay_test:
 					print split_service
@@ -537,11 +537,11 @@ def start(argv):
 			email_file.close()
 	else:
 		if spoof_test:
-			output_write(smtp_host,smtp_port,smtp_spoof(smtp_host,smtp_port,isa_email,sndr_email,rcpt_email,sndr_name,rcpt_name,spoof_attach),output,'smtp_spoof')
+			output_write(smtp_host,smtp_port,smtp_spoof(smtp_host,smtp_port,consultant_email,sndr_email,rcpt_email,sndr_name,rcpt_name,spoof_attach),output,'smtp_spoof')
 		if relay_test:
 			if spoof_test:
 				print split_service
-			output_write(smtp_host,smtp_port,smtp_relay(smtp_host,smtp_port,isa_email),output,'smtp_relay')
+			output_write(smtp_host,smtp_port,smtp_relay(smtp_host,smtp_port,consultant_email),output,'smtp_relay')
 		if smtp_enum:
 			if spoof_test or relay_test:
 				print split_service
