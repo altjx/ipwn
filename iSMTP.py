@@ -40,7 +40,7 @@ def help():
 	print "\t-f <import file>\tImports a list of SMTP servers for testing.\n\t\t\t\t(Cannot use with '-h'.)"
 	print "\t-h <host>\t\tThe target IP and port (IP:port).\n\t\t\t\t(Cannot use with '-f'.)"
 	print colors.green + "\n Spoofing:\n" + colors.normal
-	print "\t-i <isa email>\t\tThe consultant's email address."
+	print "\t-i <consultant email>\tThe consultant's email address."
 	print "\t-s <sndr email>\t\tThe sender's email address."
 	print "\t-r <rcpt email>\t\tThe recipient's email address."
 	print "\t   --sr <email>\t\tSpecifies both the sender's and recipient's email address."
