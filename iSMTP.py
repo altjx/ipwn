@@ -53,7 +53,7 @@ def help():
 	print "\t-e <file>\tEnable SMTP user enumeration testing and imports email list."
 	print "\t-l <1|2|3>\tSpecifies enumeration type (1 = VRFY, 2 = RCPT TO, 3 = all).\n\t\t\t(Default is 3.)"
 	print colors.green + "\n SMTP relay:\n" + colors.normal
-	print "\t-i <isa email>\t\tThe consultant's email address."
+	print "\t-i <consultant email>\tThe consultant's email address."
 	print "\t-x\t\t\tEnables SMTP external relay testing."
 	print colors.green + "\n Misc:\n" + colors.normal
 	print "\t-t <secs>\tThe timeout value. (Default is 10.)"
@@ -75,14 +75,14 @@ def smtp_relay(smtp_host,smtp_port,consultant_email):
 	print " Testing SMTP server [external relay]: %s:%s\n" % (smtp_host, smtp_port)
 	smtp_rlog = "\n Testing SMTP server [external relay]: %s:%s\n" % (smtp_host, smtp_port)
 
-	#grabs the domain name from isa email
-	isa_domain = consultant_email[consultant_email.rfind("@")+1:]
+	#grabs the domain name from consultant email
+	consultant_domain = consultant_email[consultant_email.rfind("@")+1:]
 	
 	try:
 		server = smtplib.SMTP(smtp_host, smtp_port)
 		# server.docmd returns ['status code','message']
-		response = server.docmd("helo",isa_domain)
-		print " - Submitted 'helo %s' : %s" % (isa_domain,str(response[0]))
+		response = server.docmd("helo",consultant_domain)
+		print " - Submitted 'helo %s' : %s" % (consultant_domain,str(response[0]))
 		smtp_rlog += "\n - Submitted 'helo example.com' : %s" % str(response[0])
 		response = server.docmd("mail from:","<%s>" % consultant_email)
 		print " - Submitted 'mail from: <%s>' : %s" % (consultant_email, str(response[0]))
