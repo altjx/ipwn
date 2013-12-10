@@ -133,7 +133,6 @@ class metaparser:
 				#appends each piece of information. output will show ONLY if at least ONE file has data in a column
 				self.container.append([" | " + curr_file,created,author,producer,modded,last_saved])
 			except Exception, err:
-#				print colors.red +  curr_file + " --------------- " + str(err) + colors.normal
 				return
 		else:
 			try:
