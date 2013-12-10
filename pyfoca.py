@@ -358,7 +358,6 @@ class metaparser:
 				print " Please wait..."
 			#download each file that we added to the 'files' variable
 			print " -------------------------------"
-			print
 			for f in files:
 				if "..." in f:
 					del files[files.index(f)]
@@ -377,7 +376,7 @@ class metaparser:
 					else:
 						short_file = pdf_name
 					if self.verbose == True:
-							  print colors.blue + " [+] " + short_file, "-" * (spaces-len(short_file)), "success", "[%s of %s] [size: %s]" % (str(files.index(f)+1),str(len(files)), filesize) + colors.normal
+							  print; print colors.blue + " [+] " + short_file, "-" * (spaces-len(short_file)), "success", "[%s of %s] [size: %s]" % (str(files.index(f)+1),str(len(files)), filesize) + colors.normal
 				except Exception, err:
 					if self.verbose == True:
 							  print colors.red + " [-] " + short_file, "-" * (spaces-len(short_file)), "fail", "[%s of %s]" % (str(files.index(f)+1),str(len(files))) + colors.normal
