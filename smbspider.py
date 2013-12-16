@@ -193,10 +193,10 @@ class spider:
 			if len(self.list_of_shares) > 1:
 				for x in self.list_of_shares:
 					self.smb_share = x
-					print " [*] Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
+					print "\n [*] Attempting to spider smb://%s/%s. Please wait...\n" % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 					self.spider_host()
 			else:
-				print " [*] Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
+				print "\n [*] Attempting to spider smb://%s/%s. Please wait...\n" % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 				self.spider_host()
 			if self.filename:
 				print " [*] Finished with smb://%s/%s" % (self.smb_host, self.smb_share)
@@ -206,7 +206,7 @@ class spider:
 		# this small section removes all of the unnecessary crap. a bit ugly, i know! :x
 		errors = ["O_SUCH_F","ACCESS_DEN",
 "US_OBJECT_NAME_IN", "US_INVALID_NETWORK_RE", "CT_NAME_NOT",
-"not present"
+"not present","CONNECTION_REFUSED"
 	]
 		result = result.split('\n')
 		purge = []
