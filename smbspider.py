@@ -11,7 +11,7 @@
 #
 # Author: Alton Johnson
 # Contact: alton.jx@gmail.com
-# Version: 2.1
+# Version: 2.2
 # Updated: 12/16/2013
 #
 
