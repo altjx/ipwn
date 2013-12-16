@@ -11,8 +11,8 @@
 #
 # Author: Alton Johnson
 # Contact: alton.jx@gmail.com
-# Version: 2.0
-# Updated: 10/15/2013
+# Version: 2.1
+# Updated: 12/16/2013
 #
 
 import commands, time, getopt, re, os
