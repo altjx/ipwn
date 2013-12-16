@@ -52,7 +52,8 @@ def help():
 	print "\t -s <share>\t Specify shares (separate by comma) or specify \"profile\" to spider user profiles."
 	print "\t -f <file>\t Specify a list of shares from a file."
 	print colors.green + "\n Other (optional):\n" + colors.norm
-	print "\t -w \t\t Avoid verbose output. Output successful spider results to smbspider_host_share_user.txt." + colors.norm
+	print "\t -w \t\t Avoid verbose output. Output successful spider results to smbspider_host_share_user.txt."
+	print "\t\t\t This option is HIGHLY recommended if numerous systems are scanned." + colors.norm
 	print
 	exit()
 
