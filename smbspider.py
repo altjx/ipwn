@@ -84,7 +84,7 @@ def start(argv):
 			smb_domain = arg
 		elif opt == "-h":
 			try:
-				smb_host = open(arg).read().split()
+				smb_host = open(arg).read().split('\n')
 			except:
 				if "\\\\" in arg and "\\" not in arg[-1:]:
 					test = arg[2:].replace("\\","\\")
@@ -150,6 +150,7 @@ class spider:
 	
 	def start_spidering(self):
 		share = ""
+		self.total_hosts = 0
 		empty_share_error = colors.red + " [-] Error: Empty share detected for host %s. Skipping share." + colors.norm
 		for test_host in self.list_of_hosts:
 			temp = test_host
@@ -157,6 +158,7 @@ class spider:
 				print colors.red + " [-] Error: You cannot specify a share if your target(s) contains \\\\<ip>\\<share> or //<ip>/<share>\n" + colors.norm
 				exit()
 		for host in self.list_of_hosts:
+			self.total_hosts += 1
 			tmp_share = host.replace("/","")
 			tmp_share = host.replace("\\","")
 			orig_host = host # ensures that we can check the original host value later on if we need to
@@ -199,7 +201,7 @@ class spider:
 				print "\n [*] Attempting to spider smb://%s/%s. Please wait...\n" % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 				self.spider_host()
 			if self.filename:
-				print " [*] Finished with smb://%s/%s" % (self.smb_host, self.smb_share)
+				print " [*] Finished with smb://%s/%s. [Remaining: %s] " % (self.smb_host, self.smb_share, str(len(self.list_of_hosts)-self.total_hosts))
 
 	def parse_result(self, result):
 		############################################################
@@ -327,7 +329,7 @@ class spider:
 						result = commands.getoutput("%s -c \"recurse;ls \\\"Users\\%s\\%s\" //%s/C$ -U %s" % (self.smbclient(), user, folder, self.smb_host, self.credentials))
 						self.parse_result(result)
 		else:
-			result = commands.getoutput("%s -c \"recurse;ls\" //%s/%s -U %s" % (self.smbclient(), self.smb_host, self.smb_share, self.credentials))
+			result = commands.getoutput("%s -c \"recurse;ls\" \"//%s/%s\" -U %s" % (self.smbclient(), self.smb_host, self.smb_share, self.credentials))
 			if self.check_errors(result):
 				return
 			self.parse_result(result)
