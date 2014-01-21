@@ -552,7 +552,7 @@ if __name__ == "__main__":
 	try:
 		start(argv[1:])
 	except KeyboardInterrupt:
-		print "\nExiting. Closed by user (ctrl+c)"
+		print "\nExiting. Closed by user (ctrl-c)"
 		exit()
 
 print "\n" + "-" * 5
