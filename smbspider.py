@@ -53,14 +53,16 @@ def help():
 	print "\t -f <file>\t Specify a list of shares from a file."
 	print colors.green + "\n Other (optional):\n" + colors.norm
 	print "\t -w \t\t Avoid verbose output. Output successful spider results to smbspider_host_share_user.txt."
-	print "\t\t\t This option is HIGHLY recommended if numerous systems are being scanned.\n" + colors.norm
+	print "\t\t\t This option is HIGHLY recommended if numerous systems are being scanned."
+	print "\t -n \t\t Ignore authentication check prior to spidering."
+	print colors.norm
 	exit()
 
 def start(argv):
 	if len(argv) < 1:
 		help()
 	try:
-		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:P:w")
+		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:P:w:n")
 	except getopt.GetoptError, err:
 		print colors.red + "\n  [-] Error: " + err + colors.normal
 	
@@ -73,6 +75,7 @@ def start(argv):
 	pth = False
 	filename = False
 	unique_systems = []
+	ignorecheck = False
 
 	#parse through arguments
 	for opt, arg in opts:
@@ -102,6 +105,9 @@ def start(argv):
 			pth = True
 		elif opt == "-w":
 			filename = True
+		elif opt == "-n":
+			ignorecheck = True
+
 	#check options before proceeding
 	if (not smb_user or not smb_pass or not smb_host):
 		print colors.red + "\n [-] Error: Please check to ensure that all required options are provided." + colors.norm
@@ -133,11 +139,11 @@ def start(argv):
 	#start spidering
 	print banner
 	print " [*] Spidering %s systems(s)...\n" % len(unique_systems)
-	begin = spider(credentials, smb_host, smb_share, pth, filename)
+	begin = spider(credentials, smb_host, smb_share, pth, filename, ignorecheck)
 	begin.start_spidering()
 
 class spider:
-	def __init__(self, credentials, hosts, shares, pth, filename):
+	def __init__(self, credentials, hosts, shares, pth, filename, ignorecheck):
 		self.list_of_hosts = hosts
 		self.list_of_shares = shares
 		self.credentials = credentials
@@ -147,6 +153,7 @@ class spider:
 		self.pth = pth
 		self.filename = filename
 		self.blacklisted = []
+		self.ignorecheck = ignorecheck
 	
 	def start_spidering(self):
 		share = ""
@@ -288,7 +295,7 @@ class spider:
 				return True
 		
 		
-		if "LOGON_FAIL" in result.split()[-1]:
+		if "LOGON_FAIL" in result.split()[-1] and not self.ignorecheck:
 			print colors.red + " [-] Error [%s]: Invalid credentials. Please correct credentials and try again." % self.smb_host + colors.norm
 			exit()
 		elif "ACCESS_DENIED" in result.split()[-1]:
