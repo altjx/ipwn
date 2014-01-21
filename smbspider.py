@@ -201,9 +201,9 @@ class spider:
 				print "\n [*] Attempting to spider smb://%s/%s. Please wait..." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 				self.spider_host()
 			if self.filename and self.list_of_shares[0] != "profile":
-				print " [*] Finished with smb://%s/%s. [Remaining: %s] " % (self.smb_host, self.smb_share, str(len(self.list_of_hosts)-self.total_hosts-1))
+				print " [*] Finished with smb://%s/%s. [Remaining: %s] " % (self.smb_host, self.smb_share, str(len(self.list_of_hosts)-self.total_hosts))
 			else:
-				print " [*] Finished with smb://%s/<user profiles>. [Remaining: %s] " % (self.smb_host, str(len(self.list_of_hosts)-self.total_hosts-1))
+				print " [*] Finished with smb://%s/<user profiles>. [Remaining: %s] " % (self.smb_host, str(len(self.list_of_hosts)-self.total_hosts))
 		
 	def parse_result(self, result):
 		############################################################
