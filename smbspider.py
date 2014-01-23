@@ -42,7 +42,7 @@ def help():
 	print " Usage: %s <OPTIONS>" % argv[0]
 	print colors.red + "\n Target(s) (required): \n" + colors.norm
 	print "\t -h <host>\t Provide IP address or a text file containing IPs."
-	print "\t\t\t Supported formats: IP, smb://ip/share, \\\\ip\\share"
+	print "\t\t\t Supported formats: IP, smb://ip/share, \\\\ip\\share\\"
 	print colors.red + "\n Credentials (required): \n" + colors.norm
 	print "\t -u <user>\t Specify a valid username to authenticate to the system(s)."
 	print "\t -p <pass>\t Specify the password which goes with the username."
