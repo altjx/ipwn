@@ -45,7 +45,7 @@ There's been countless times when I've needed to test for SMTP user enumeration 
  SMTP relay:
 
 	-i <consultant email>	The consultant's email address.
-	-x				Enables SMTP external relay testing.
+	-x						Enables SMTP external relay testing.
 
  Misc:
 
