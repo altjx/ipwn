@@ -26,7 +26,7 @@ There's been countless times when I've needed to test for SMTP user enumeration 
 
  Spoofing:
 
-	-i <consultant email>	The consultant's email address.
+	-i <consultant email>	  The consultant's email address.
 	-s <sndr email>		The sender's email address.
 	-r <rcpt email>		The recipient's email address.
 	   --sr <email>		Specifies both the sender's and recipient's email address.
