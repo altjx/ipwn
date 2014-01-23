@@ -138,7 +138,7 @@ def start(argv):
 			unique_systems.append(system)
 	#start spidering
 	print banner
-	print " [*] Spidering %s systems(s) and/or share(s)...\n" % len(unique_systems)
+	print " [*] Spidering %s systems(s) and/or share(s)..." % len(unique_systems)
 	begin = spider(credentials, smb_host, smb_share, pth, filename, ignorecheck)
 	begin.start_spidering()
 
@@ -203,10 +203,10 @@ class spider:
 			if len(self.list_of_shares) > 1:
 				for x in self.list_of_shares:
 					self.smb_share = x
-					print " [*] Attempting to spider smb://%s/%s." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
+					print "\n [*] Attempting to spider smb://%s/%s." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 					self.spider_host()
 			else:
-				print " [*] Attempting to spider smb://%s/%s. " % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
+				print "\n [*] Attempting to spider smb://%s/%s. " % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 				self.spider_host()
 			if self.list_of_shares[0] != "profile":
 				print colors.blue + " [*] " + colors.norm + "Finished with smb://%s/%s. [Remaining: %s] " % (self.smb_host, self.smb_share, str(len(self.list_of_hosts)-self.total_hosts)-1)
