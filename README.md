@@ -124,7 +124,7 @@ Usage menu:
  Target(s) (required): 
 
     -h &lt;host&gt;   Provide IP address or a text file containing IPs.
-          Supported formats: IP, smb://ip/share, \\ip\share
+ 	         Supported formats: IP, smb://ip/share, \\ip\share\
 
  Credentials (required): 
 
