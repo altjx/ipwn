@@ -55,7 +55,6 @@ Usage menu:
                ismtp-results/smtp_&lt;service&gt;_&lt;ip&gt;(port).txt
 
  Note: Any combination of options is supported (e.g., enumeration, relay, both, all, etc.).
-
 </code></pre>
 <br />
 <b>iWebAudit</b><br />
@@ -144,7 +143,6 @@ Usage menu:
     -w       Avoid verbose output. Output successful spider results to smbspider_host_share_user.txt.
           	 This option is HIGHLY recommended if numerous systems are being scanned.
     -n       Ignore authentication check prior to spidering.
-
 </code></pre>
 <br />
 <b>smsspam</b><br />
@@ -162,19 +160,21 @@ Usage menu:
 		-m: Message to send to user.
 		-s: Subject for the email.
 		-n: How many times you want to send this email.
-
 </code></pre>
-<br />
-<b>pymsf</b><br />
----------- <br />
-My FUD meterpreter payload creator.<br />
-	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/pymsf.png <br />
-<br />
 <b>Nmap Parser</b><br />
 ---------- <br />
 If you have tons of nmap results and want to look at them in a pretty table, check out this nmap result parser. <br />
-	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/nmap_parser.png <br />
 	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/nmap_parser1.png <br />
+Usage menu:
+<pre><code>
+ ------------------------------------------------------------------------
+  nmapparse 1.0 - Nmap Output Parser, Alton Johnson (alton.jx@gmail.com)
+ ------------------------------------------------------------------------
+ 
+ Usage: ./nmapparse.py results.gnmap
+
+ Note: This script must point to a grepable output file from nmap to work properly.
+</code></pre>
 <br />
 <b>Nmap Scrape</b><br />
 ---------- <br />
