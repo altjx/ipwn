@@ -82,6 +82,7 @@ class update:
 		commands.getoutput("tar -xzvf %s" % self.update_fn)
 		commands.getoutput("rm %s" % self.update_fn)
 		print "[*] Extraction complete."
+		commands.getoutput("mv %s /opt/" % foldername)
 		print "[*] Updating alternatives."
 		foldername = commands.getoutput("ls | grep jdk | grep -vi tar")
 		commands.getoutput("update-alternatives --install /usr/bin/java java /opt/%s/bin/java 1" % foldername)
@@ -90,7 +91,7 @@ class update:
 		commands.getoutput("update-alternatives --set java /opt/%s/bin/java" % foldername)
 		commands.getoutput("update-alternatives --set javac /opt/%s/bin/javac" % foldername)
 		commands.getoutput("update-alternatives --set mozilla-javaplugin.so /opt/%s/jre/lib/%s/libnpjp2.so" % (foldername, arch))
-		print "[*] Updated alternatives."
+		print "[*] Alternatives updated."
 		print "[*] Java update complete. Verify with java -version."
 	
 	def checkupdate(self):
