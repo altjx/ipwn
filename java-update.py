@@ -10,7 +10,7 @@
 # Updated: 01/23/2014
 #
 # Credit: https://forums.kali.org/showthread.php?41-Installing-Java-on-Kali-Linux
-# 
+#
 
 import commands, urllib2, re, urllib
 
