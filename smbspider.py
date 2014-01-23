@@ -197,9 +197,6 @@ class spider:
 			tmp_share = tmp_share.replace(self.smb_host,"")
 			tmp_share = tmp_share.replace("smb:///","")
 		
-			if len(tmp_share) > 0 and len(self.smb_share) == 0:
-				self.smb_share = tmp_share
-
 			if len(tmp_share) == 0 and (self.smb_share != "profile" and len(self.smb_share) == 0):
 				print empty_share_error % self.smb_host
 				continue
