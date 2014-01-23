@@ -179,8 +179,15 @@ Usage menu:
 <b>Nmap Scrape</b><br />
 ---------- <br />
 This script will take the nmap grepable output format and create text files (filename = port number) with a list of IP addresses in these text files. For example, it'll create an 80.txt file with all IPs with port 80 open. See screenshots for a better understanding. <br />
-	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/nmapscrape.png <br />
 	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/nmapscrape1.png <br />
+Usage menu:
+<pre><code>
+ ----------------------------------------------------
+ Nmap Parser v1.0, Alton Johnson (alton.jx@gmail.com) 
+ ----------------------------------------------------
+
+ Usage: /root/scripts/ipwn/nmapscrape.py &lt;gnmap file&gt;
+</code></pre>
 <br />
 <b>IOS 7 Backup Parser</b><br />
 ---------- <br />
