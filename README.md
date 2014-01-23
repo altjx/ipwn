@@ -11,15 +11,15 @@ Tools
 There's been countless times when I've needed to test for SMTP user enumeration (RCPT TO and VRFY), internal spoofing, and open relay. I've never found a tool that tested for all three and with great flexibility. iSMTP does just that, making it much easier to knock that process out of the way. <br />
 	- Usage screenshot #1 (user enumeration): https://dl.dropboxusercontent.com/u/2526790/iSMTP/SMTP%20User%20Enumeration.png <br />
 <code>
- Usage: ./iSMTP.py <OPTIONS>
- Required:
+  Usage: ./iSMTP.py <OPTIONS>
+  Required:
 
 	-f <import file>	Imports a list of SMTP servers for testing.
 						(Cannot use with '-h'.)
 	-h <host>			The target IP and port (IP:port).
 						(Cannot use with '-f'.)
 
- Spoofing:
+  Spoofing:
 
 	-i <consultant email>	The consultant's email address.
 	-s <sndr email>			The sender's email address.
@@ -31,24 +31,24 @@ There's been countless times when I've needed to test for SMTP user enumeration 
 	-m						Enables SMTP spoof testing.
 	-a						Includes .txt attachment with spoofed email.
 
- SMTP enumeration:
+  SMTP enumeration:
 
 	-e <file>	Enable SMTP user enumeration testing and imports email list.
 	-l <1|2|3>	Specifies enumeration type (1 = VRFY, 2 = RCPT TO, 3 = all).
 				(Default is 3.)
 
- SMTP relay:
+  SMTP relay:
 
 	-i <consultant email>	The consultant's email address.
 	-x						Enables SMTP external relay testing.
 
- Misc:
+  Misc:
 
 	-t <secs>	The timeout value. (Default is 10.)
 	-o			Creates "ismtp-results" directory and writes output to
 				ismtp-results/smtp_<service>_<ip>(port).txt
 
- Note: Any combination of options is supported (e.g., enumeration, relay, both, all, etc.).
+  Note: Any combination of options is supported (e.g., enumeration, relay, both, all, etc.).
 </code>
 <br />
 <b>iWebAudit</b><br />
