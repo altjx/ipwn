@@ -15,16 +15,16 @@ helpMessages = [
 ]
 
 class bcolors:
-	OKBLUE = '\033[34;1m'
+	OKBLUE = '\033[1;34m'
 	ENDC = '\033[0m'
 
 	def disable(self):
 		self.OKBLUE = '' 
 		self.ENDC = ''
 
-print '\n' + '=' * 60
-print bcolors.OKBLUE + 'This is a SMS spammer created by Alton (alton.jx@gmail.com)' + bcolors.ENDC
-print '=' * 60 + '\n'
+print '\n' + '=' * 51
+print bcolors.OKBLUE + ' SMSpam v1.0 created by Alton (alton.jx@gmail.com)' + bcolors.ENDC
+print '=' * 51 + '\n'
 
 def usage():
 	space = '\t' * 2
