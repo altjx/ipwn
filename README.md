@@ -120,16 +120,6 @@ Smbspider is a pretty smart when it comes to spidering Windows systems on intern
 	- Usage video: http://www.youtube.com/watch?v=skVZwynHECw <br />
 Usage menu:
 <pre><code>
- *******************************************************
- *                  _               						 *
- *                 | |       //  \\       				 * 
- *   ___ _ __ ___ | |__    _\\()//_    				 	 *
- *  / __| '_ ` _ \| '_ \  / //  \\ \     					 *
- *  \__ \ | | | | | |_) |   |\__/|       					 *
- *  |___/_| |_| |_|_.__/            						 *
- *                         									 *
- * SMB Spider v2.0, Alton Johnson (alton.jx@gmail.com) *
- ********************************************************
 
  Usage: /root/scripts/ipwn/smbspider.py &lt;OPTIONS&gt;
 
@@ -143,7 +133,7 @@ Usage menu:
     -u &lt;user&gt;   Specify a valid username to authenticate to the system(s).
     -p &lt;pass&gt;   Specify the password which goes with the username.
     -P &lt;hash&gt;   Use -P to provide password hash if cleartext password isn't known.
-    -d &lt;domain&gt;    If using a domain account, provide domain name.
+    -d &lt;domain&gt; If using a domain account, provide domain name.
 
  Shares (optional):
 
@@ -153,7 +143,7 @@ Usage menu:
  Other (optional):
 
     -w       Avoid verbose output. Output successful spider results to smbspider_host_share_user.txt.
-          This option is HIGHLY recommended if numerous systems are being scanned.
+          	 This option is HIGHLY recommended if numerous systems are being scanned.
     -n       Ignore authentication check prior to spidering.
 
 </code></pre>
