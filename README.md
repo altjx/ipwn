@@ -10,6 +10,7 @@ Tools
 ---------- <br />
 There's been countless times when I've needed to test for SMTP user enumeration (RCPT TO and VRFY), internal spoofing, and open relay. I've never found a tool that tested for all three and with great flexibility. iSMTP does just that, making it much easier to knock that process out of the way. <br />
 	- Usage screenshot #1 (user enumeration): https://dl.dropboxusercontent.com/u/2526790/iSMTP/SMTP%20User%20Enumeration.png <br />
+Usage menu:
 <pre><code>
  ---------------------------------------------------------------------
   SMTP v1.6 - SMTP Server Tester, Alton Johnson (alton.jx@gmail.com)
