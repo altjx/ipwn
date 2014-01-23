@@ -121,14 +121,14 @@ Smbspider is a pretty smart when it comes to spidering Windows systems on intern
 Usage menu:
 <pre><code>
  ********************************************************
- *                  _               *
- *                 | |       //  \\       * 
- *   ___ _ __ ___ | |__    _\\()//_    *
- *  / __| '_ ` _ \| '_ \  / //  \\ \      *
- *  \__ \ | | | | | |_) |   |\__/|        *
- *  |___/_| |_| |_|_.__/            *
- *                   *
- * SMB Spider v2.0, Alton Johnson (alton.jx@gmail.com)   *
+ *                  _               						 *
+ *                 | |       //  \\       				 * 
+ *   ___ _ __ ___ | |__    _\\()//_    				 	 *
+ *  / __| '_ ` _ \| '_ \  / //  \\ \     					 *
+ *  \__ \ | | | | | |_) |   |\__/|       					 *
+ *  |___/_| |_| |_|_.__/            						 *
+ *                         									 *
+ * SMB Spider v2.0, Alton Johnson (alton.jx@gmail.com) *
  ********************************************************
 
  Usage: /root/scripts/ipwn/smbspider.py &lt;OPTIONS&gt;
