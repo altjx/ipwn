@@ -7,7 +7,7 @@
 # at first starting from a nice, formatted list of IPs and page titles
 #
 # Author: Alton Johnson (alton.jx@gmail.com)
-# Updated: 02-01-2013
+# Updated: 01/23/2014
 #
 # Note: Many thanks to Victor M. and Mark T. for assistance
 #
@@ -36,7 +36,7 @@ class colors:
 # Prints out the help function, which guides users how to use the script.
 def help():
 	print "\n", "-" * 78
-	print colors.white, "iWebAudit v1.0 - Web Page Title Analyzer, Alton Johnson (alton.jx@gmail.com) ", colors.normal
+	print colors.white, "iWebAudit v1.5 - Web Page Title Analyzer, Alton Johnson (alton.jx@gmail.com) ", colors.normal
 	print "-" * 78, "\n"
 	print " Usage: iWebAudit -f <file> -o <output_file> -v -h -t 5\n"
 	print "\t-f <file>\tSupports list of IPs and/or http[s]:// formatted IPs."
