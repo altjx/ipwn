@@ -62,9 +62,9 @@ def start(argv):
 	if len(argv) < 1:
 		help()
 	try:
-		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:P:w:n")
+		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:P:wn")
 	except getopt.GetoptError, err:
-		print colors.red + "\n  [-] Error: " + err + colors.normal
+		print colors.red + "\n  [-] Error: " + str(err) + colors.norm
 	
 	# set default variables to prevent errors later in script
 	smb_user = ""
@@ -138,7 +138,7 @@ def start(argv):
 			unique_systems.append(system)
 	#start spidering
 	print banner
-	print " [*] Spidering %s systems(s)...\n" % len(unique_systems)
+	print " [*] Spidering %s systems(s) and/or share(s)...\n" % len(unique_systems)
 	begin = spider(credentials, smb_host, smb_share, pth, filename, ignorecheck)
 	begin.start_spidering()
 
