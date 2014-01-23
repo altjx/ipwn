@@ -69,18 +69,18 @@ class update:
 		
 		url = 'https://edelivery.oracle.com' + self.dl_link[self.dl_link.find("otn")-1:]
 	
-#		request = urllib2.Request(url)
-#		request.add_header("Cookie","s_cc=true; gpw_e24=%s;" % self.link)
-#		response = urllib2.urlopen(request)
+		request = urllib2.Request(url)
+		request.add_header("Cookie","s_cc=true; gpw_e24=%s;" % self.link)
+		response = urllib2.urlopen(request)
 	
-#		f = open("%s" % self.update_fn,"w")
-#		f.write(response.read())
-#		f.close()
+		f = open("%s" % self.update_fn,"w")
+		f.write(response.read())
+		f.close()
 		
 		print "[*] Download complete."
 		print "[*] Extracting archive."
-#		commands.getoutput("tar -xzvf %s" % self.update_fn)
-#		commands.getoutput("rm %s" % self.update_fn)
+		commands.getoutput("tar -xzvf %s" % self.update_fn)
+		commands.getoutput("rm %s" % self.update_fn)
 		print "[*] Extraction complete."
 		print "[*] Updating alternatives."
 		foldername = commands.getoutput("ls | grep jdk | grep -vi tar")
@@ -100,9 +100,8 @@ class update:
 		print "[*] Current version: " + current
 		print "[*] Latest version: " + latest
 		if current == latest:
-			self.run_update()
-#			print "[*] Already up-to-date.\n"
-#			exit()
+			print "[*] Already up-to-date.\n"
+			exit()
 		else:
 			self.run_update()
 		print
