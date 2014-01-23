@@ -89,7 +89,7 @@ Usage menu:
  Domain options:
 
     -d &lt;domain&gt;      Harvests all documents from a domain (saves to pyfoca-downloads/).
-				          Afterwards, extract metadata.
+				       Afterwards, extract metadata.
 
  Parse file/dir:
 
