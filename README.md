@@ -30,7 +30,7 @@ There's been countless times when I've needed to test for SMTP user enumeration 
 	-s <sndr email>			The sender's email address.
 	-r <rcpt email>			The recipient's email address.
 	   --sr <email>			Specifies both the sender's and recipient's email address.
-	-S <sndr name>				The sender's first and last name.
+	-S <sndr name>			The sender's first and last name.
 	-R <rcpt name>			The recipient's first and last name.
 	   --SR <name>			Specifies both the sender's and recipient's first and last name.
 	-m						Enables SMTP spoof testing.
@@ -54,7 +54,6 @@ There's been countless times when I've needed to test for SMTP user enumeration 
 			ismtp-results/smtp_<service>_<ip>(port).txt
 
  Note: Any combination of options is supported (e.g., enumeration, relay, both, all, etc.).
-
 </code>
 <br />
 <b>iWebAudit</b><br />
