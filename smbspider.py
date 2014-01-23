@@ -209,7 +209,7 @@ class spider:
 				print " [*] Attempting to spider smb://%s/%s. " % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 				self.spider_host()
 			if self.filename and self.list_of_shares[0] != "profile":
-				print colors.blue + " [*] " + colors.norm + "Finished with smb://%s/%s. [Remaining: %s] " % (self.smb_host, self.smb_share, str(len(self.list_of_hosts)-self.total_hosts))
+				print colors.blue + " [*] " + colors.norm + "Finished with smb://%s/%s. [Remaining: %s] " % (self.smb_host, self.smb_share, str(len(self.list_of_hosts)-self.total_hosts)-1)
 			else:
 				print colors.blue + " [*] " + colors.norm + "Finished with smb://%s/<user profiles>. [Remaining: %s] " % (self.smb_host, str(len(self.list_of_hosts)-self.total_hosts))
 		
