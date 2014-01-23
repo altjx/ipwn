@@ -145,7 +145,7 @@ Usage menu:
     -n       Ignore authentication check prior to spidering.
 </code></pre>
 <br />
-<b>smsspam</b><br />
+<b>SMSpam</b><br />
 ---------- <br />
 This was my first python script. I created this simple script when someone pissed me off by continuously playing on my phone. They quickly revealed their identity after approximately 50 text messages in about 10 seconds :).<br />
 Usage menu:
@@ -189,12 +189,20 @@ Usage menu:
  Usage: /root/scripts/ipwn/nmapscrape.py &lt;gnmap file&gt;
 </code></pre>
 <br />
-<b>IOS 7 Backup Parser</b><br />
+<b>Java Updater (for Kali Linux)</b><br />
 ---------- <br />
-As of now, this script only parses the contacts and phone numbers from an iOS 7 backup folder. Just happened to stumble upon a tutorial in the Violent Python book that sparked my interest in this. Not a must-have script, but I enjoyed toying with it, so here it is. <br />
-	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/ios_parser1.png <br />
-	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/ios_parser.png <br />
-
+Eventually I just got tired of referring to Google and Kali's forums to update Java within Kali. Decided to just go ahead and play around with a script to do this automatically, and it came out well. Just run the script and Java's updated. Also makes sure it works with Chrome so you don't have to."<br />
+Usage example:
+<pre><code>
+Updating Java.
+[*] Current version: 7.51
+[*] Latest version: 7.51
+[*] Already up-to-date.
+[*] Checking if Google Chrome Exists.
+[*] Fixing Java work with Google Chrome (if not already).
+[*] Updated Google Chrome to work with Java.
+</code></pre>
+<br />
 Credits:
 ===
 Josh Stone - inspiration for writing smbspider <br />
