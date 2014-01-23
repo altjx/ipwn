@@ -72,7 +72,7 @@ class update:
 			print err
 	
 	def check_chrome(self):
-		print "[*] Checking if Google Chrome Exists."
+		print "[*] Checking if Google Chrome exists."
 		result = commands.getoutput("ls /opt/google/chrome") #default folder for Google Chrome installations
 		if "no such file" in result.lower():
 			print "[*] Skipping Java for Google Chrome fix."
