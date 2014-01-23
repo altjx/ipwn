@@ -21,7 +21,7 @@ There's been countless times when I've needed to test for SMTP user enumeration 
 
 	-f <import file>	Imports a list of SMTP servers for testing.
 			(Cannot use with '-h'.)
-	-h <host>		The target IP and port (IP:port).
+	-h <host>  	The target IP and port (IP:port).
 			(Cannot use with '-f'.)
 
  Spoofing:
