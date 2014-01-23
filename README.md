@@ -8,9 +8,9 @@ Tools
 <br />
 <b>iSMTP</b><br />
 ---------- <br />
-There's been countless times when I've needed to test for SMTP user enumeration (RCPT TO and VRFY), internal spoofing, and relay. I've never found a tool that tested for all three and with great flexibility. iSMTP does just that, making it much easier to knock that process out of the way. <br />
+<code>There's been countless times when I've needed to test for SMTP user enumeration (RCPT TO and VRFY), internal spoofing, and relay. I've never found a tool that tested for all three and with great flexibility. iSMTP does just that, making it much easier to knock that process out of the way. <br />
 	- Help menu: https://dl.dropboxusercontent.com/u/2526790/iSMTP/iSMTP.png <br />
-	- Usage screenshot #1 (user enumeration): https://dl.dropboxusercontent.com/u/2526790/iSMTP/SMTP%20User%20Enumeration.png <br />
+	- Usage screenshot #1 (user enumeration): https://dl.dropboxusercontent.com/u/2526790/iSMTP/SMTP%20User%20Enumeration.png <br /></code>
 <br />
 <b>iWebAudit</b><br />
 ---------- <br />
