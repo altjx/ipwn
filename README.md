@@ -40,20 +40,21 @@ There's been countless times when I've needed to test for SMTP user enumeration 
 
 	-e <file>	Enable SMTP user enumeration testing and imports email list.
 	-l <1|2|3>	Specifies enumeration type (1 = VRFY, 2 = RCPT TO, 3 = all).
-			(Default is 3.)
+				(Default is 3.)
 
  SMTP relay:
 
 	-i <consultant email>	The consultant's email address.
-	-x			Enables SMTP external relay testing.
+	-x				Enables SMTP external relay testing.
 
  Misc:
 
 	-t <secs>	The timeout value. (Default is 10.)
-	-o		Creates "ismtp-results" directory and writes output to
-			ismtp-results/smtp_<service>_<ip>(port).txt
+	-o			Creates "ismtp-results" directory and writes output to
+				ismtp-results/smtp_<service>_<ip>(port).txt
 
  Note: Any combination of options is supported (e.g., enumeration, relay, both, all, etc.).
+
 </code>
 <br />
 <b>iWebAudit</b><br />
