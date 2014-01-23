@@ -119,7 +119,7 @@ Smbspider is a pretty smart when it comes to spidering Windows systems on intern
 	- Usage video: http://www.youtube.com/watch?v=skVZwynHECw <br />
 Usage menu:
 <pre><code>
- Usage: /root/scripts/ipwn/smbspider.py &lt;OPTIONS&gt;
+ Usage: smbspider.py &lt;OPTIONS&gt;
 
  Target(s) (required): 
 
@@ -186,7 +186,7 @@ Usage menu:
  Nmap Parser v1.0, Alton Johnson (alton.jx@gmail.com) 
  ----------------------------------------------------
 
- Usage: /root/scripts/ipwn/nmapscrape.py &lt;gnmap file&gt;
+ Usage: nmapscrape.py &lt;gnmap file&gt;
 </code></pre>
 <br />
 <b>Java Updater (for Kali Linux)</b><br />
