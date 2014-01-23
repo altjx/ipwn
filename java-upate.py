@@ -1,4 +1,16 @@
 #!/usr/bin/python
+#
+# This script is simply a Java updater for Kali Linux. In my past experiences doing 
+# internal penetration tests, I've ran into issues sometimes when I can't get Java
+# to work, and can't force it. So considering I update my Kali Linux installation
+# before every engagement, I decided to find a way to automate this process.
+#
+# Author: Alton Johnson (alton.jx@gmail.com)
+# Updated: 01/23/2014
+#
+# Credit: https://forums.kali.org/showthread.php?41-Installing-Java-on-Kali-Linux
+# 
+
 import commands, urllib2, re, urllib
 
 jdkfolder = "/opt" #change this if necessary, but this is the default folder in Kali
@@ -15,7 +27,7 @@ class update:
 		self.dl_link = ""
 		self.link = ""
 		self.update_fn = ""
-		print
+		self.file_size = ""
 
 	def parse_ver(self, version):
 		if "http://" in version:
@@ -38,8 +50,8 @@ class update:
 		try:
 			response = urllib2.urlopen(request).read()
 			secondurl = re.findall(r"/technetwork/java/javase/downloads/jdk(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", response)[0] #grab link for second URL
-
-			self.link = urllib.quote_plus("http://www.oracle.com" + secondurl)
+			
+			self.link = urllib.quote_plus("http://www.oracle.com" + secondurl) #encode secondurl for cookie in next request
 			
 			request2 = urllib2.Request("http://www.oracle.com" + secondurl) #connect to second URL containing packages to download
 			response2 = urllib2.urlopen(request2).read()
@@ -49,16 +61,18 @@ class update:
 
 			if self.arch == "32":
 				self.dl_link = x86
+				self.file_size = re.findall(r"(?<=size\":\")(.*?)(?=\",\"filepath\":\"%s)+" % self.dl_link, response2)[0]
 				return x86ver
 			else:
 				self.dl_link = x64
+				self.file_size = re.findall(r"(?<=size\":\")(.*?)(?=\",\"filepath\":\"%s)+" % self.dl_link, response2)[0]
 				return x64ver	
 		except Exception, err:
 			print err
 	
 	def check_chrome(self):
 		print "[*] Checking if Google Chrome Exists."
-		result = commands.getoutput("ls /opt/google/chrome")
+		result = commands.getoutput("ls /opt/google/chrome") #default folder for Google Chrome installations
 		if "no such file" in result.lower():
 			print "[*] Skipping Java for Google Chrome fix."
 		else:
@@ -76,7 +90,7 @@ class update:
 			arch = "amd64"
 		
 		print "[*] Old version detected. Performing Java update."
-		print "[*] Downloading Java update: %s" %  self.update_fn
+		print "[*] Downloading Java update: %s [size: %s]" %  (self.update_fn, self.file_size)
 		
 		url = 'https://edelivery.oracle.com' + self.dl_link[self.dl_link.find("otn")-1:]
 	
