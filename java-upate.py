@@ -82,9 +82,9 @@ class update:
 		commands.getoutput("tar -xzvf %s" % self.update_fn)
 		commands.getoutput("rm %s" % self.update_fn)
 		print "[*] Extraction complete."
+		foldername = commands.getoutput("ls | grep jdk | grep -vi tar")
 		commands.getoutput("mv %s /opt/" % foldername)
 		print "[*] Updating alternatives."
-		foldername = commands.getoutput("ls | grep jdk | grep -vi tar")
 		commands.getoutput("update-alternatives --install /usr/bin/java java /opt/%s/bin/java 1" % foldername)
 		commands.getoutput("update-alternatives --install /usr/bin/javac javac /opt/%s/bin/javac 1" % foldername)
 		commands.getoutput("update-alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so mozilla-javaplugin.so /opt/%s/jre/lib/%s/libnpjp2.so 1" % (arch,foldername))
