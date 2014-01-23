@@ -120,7 +120,7 @@ Smbspider is a pretty smart when it comes to spidering Windows systems on intern
 	- Usage video: http://www.youtube.com/watch?v=skVZwynHECw <br />
 Usage menu:
 <pre><code>
- ********************************************************
+ *******************************************************
  *                  _               						 *
  *                 | |       //  \\       				 * 
  *   ___ _ __ ___ | |__    _\\()//_    				 	 *
