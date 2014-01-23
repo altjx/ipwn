@@ -11,8 +11,8 @@
 #
 # Author: Alton Johnson
 # Contact: alton.jx@gmail.com
-# Version: 2.2
-# Updated: 12/16/2013
+# Version: 2.3
+# Updated: 01/23/2014
 #
 
 import commands, time, getopt, re, os
@@ -34,7 +34,7 @@ banner += "\n *	 / __| '_ ` _ \| '_ \  / //  \\\\ \ 		*"
 banner += "\n *	 \__ \ | | | | | |_) |   |\__/|			*"
 banner += "\n *	 |___/_| |_| |_|_.__/				*"
 banner += "\n *							*"
-banner += "\n * SMB Spider v2.0, Alton Johnson (alton.jx@gmail.com) 	*"
+banner += "\n * SMB Spider v2.3, Alton Johnson (alton.jx@gmail.com) 	*"
 banner += "\n " + "*" * 56 + "\n"
 
 def help():
@@ -196,6 +196,10 @@ class spider:
 					self.smb_share = share
 			tmp_share = tmp_share.replace(self.smb_host,"")
 			tmp_share = tmp_share.replace("smb:///","")
+		
+			if len(tmp_share) > 0 and len(self.smb_share) == 0:
+				self.smb_share = tmp_share
+
 			if len(tmp_share) == 0 and (self.smb_share != "profile" and len(self.smb_share) == 0):
 				print empty_share_error % self.smb_host
 				continue
