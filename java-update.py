@@ -128,7 +128,7 @@ class update:
 		print colors.blue + "Updating Java." + colors.normal
 		current = self.parse_ver(commands.getoutput("java -version")) #check jdk version
 		latest = str(self.check_web())
-		print "[*] Current version: " + current
+		print "[*] Installed version: " + current
 		print "[*] Latest version: " + latest
 		if current == latest:
 			print "[*] Already up-to-date."
