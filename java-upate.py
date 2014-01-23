@@ -64,8 +64,7 @@ class update:
 		else:
 			print "[*] Fixing Java work with Google Chrome (if not already)."
 			commands.getoutput("mkdir /opt/google/chrome/plugins")
-			commands.getoutput("cd /opt/google/chrome/plugins")
-			commands.getoutput("ln -s /usr/lib/mozilla/plugins/libjavaplugin.so")
+			commands.getoutput("cd /opt/google/chrome/plugings && ln -s /usr/lib/mozilla/plugins/libjavaplugin.so")
 			print "[*] Updated Google Chrome to work with Java."
 	
 	def run_update(self):
