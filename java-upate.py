@@ -116,6 +116,7 @@ class update:
 		if current == latest:
 			print "[*] Already up-to-date.\n"
 			self.check_chrome()
+			print
 			exit()
 		else:
 			self.run_update()
