@@ -56,6 +56,18 @@ class update:
 		except Exception, err:
 			print err
 	
+	def check_chrome():
+		print "[*] Checking if Google Chrome Exists."
+		result = commands.getoutput("ls /opt/google/chrome")
+		if "no such file" in result.lower():
+			print "[*] Skipping Java for Google Chrome fix."
+		else:
+			print "[*] Fixing Java work with Google Chrome (if not already)."
+			commands.getoutput("mkdir /opt/google/chrome/plugins")
+			commands.getoutput("cd /opt/google/chrome/plugins")
+			commands.getoutput("ln -s /usr/lib/mozilla/plugins/libjavaplugin.so")
+			print "[*] Updated Google Chrome to work with Java."
+	
 	def run_update(self):
 		self.update_fn = self.dl_link[self.dl_link.rfind("/")+1:]
 		
@@ -92,6 +104,7 @@ class update:
 		commands.getoutput("update-alternatives --set javac /opt/%s/bin/javac" % foldername)
 		commands.getoutput("update-alternatives --set mozilla-javaplugin.so /opt/%s/jre/lib/%s/libnpjp2.so" % (foldername, arch))
 		print "[*] Alternatives updated."
+		self.check_chrome()
 		print "[*] Java update complete. Verify with java -version."
 	
 	def checkupdate(self):
@@ -102,6 +115,7 @@ class update:
 		print "[*] Latest version: " + latest
 		if current == latest:
 			print "[*] Already up-to-date.\n"
+			self.check_chrome()
 			exit()
 		else:
 			self.run_update()
