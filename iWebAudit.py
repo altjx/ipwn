@@ -67,7 +67,7 @@ def http_method(url):
 	if 'http://' in url:
 		url = url[url.find("http://")+7:]
 	elif 'https://' in url:
-		url = url[url.find("https://")+8:]
+		url = url[url.find("https://")+8:] #this is stupid... need to fix it later
 	connection = httplib.HTTPConnection(url)
 	connection.request('OPTIONS','/')
 	response = connection.getresponse()
