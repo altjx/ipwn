@@ -114,7 +114,7 @@ class update:
 		print "[*] Current version: " + current
 		print "[*] Latest version: " + latest
 		if current == latest:
-			print "[*] Already up-to-date.\n"
+			print "[*] Already up-to-date."
 			self.check_chrome()
 			print
 			exit()
