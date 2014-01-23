@@ -20,21 +20,21 @@ There's been countless times when I've needed to test for SMTP user enumeration 
  Required:
 
 	-f <import file>	Imports a list of SMTP servers for testing.
-				(Cannot use with '-h'.)
-	-h <host>		The target IP and port (IP:port).
-				(Cannot use with '-f'.)
+							(Cannot use with '-h'.)
+	-h <host>			The target IP and port (IP:port).
+							(Cannot use with '-f'.)
 
  Spoofing:
 
 	-i <consultant email>	The consultant's email address.
-	-s <sndr email>		The sender's email address.
-	-r <rcpt email>		The recipient's email address.
-	   --sr <email>		Specifies both the sender's and recipient's email address.
-	-S <sndr name>		The sender's first and last name.
-	-R <rcpt name>		The recipient's first and last name.
-	   --SR <name>		Specifies both the sender's and recipient's first and last name.
-	-m			Enables SMTP spoof testing.
-	-a			Includes .txt attachment with spoofed email.
+	-s <sndr email>			The sender's email address.
+	-r <rcpt email>			The recipient's email address.
+	   --sr <email>			Specifies both the sender's and recipient's email address.
+	-S <sndr name>				The sender's first and last name.
+	-R <rcpt name>				The recipient's first and last name.
+	   --SR <name>				Specifies both the sender's and recipient's first and last name.
+	-m								Enables SMTP spoof testing.
+	-a								Includes .txt attachment with spoofed email.
 
  SMTP enumeration:
 
