@@ -115,10 +115,48 @@ Usage menu:
 <b>smbspider</b><br />
 ---------- <br />
 Smbspider is a pretty smart when it comes to spidering Windows systems on internal networks. Once you get your hands on some credentials, you can pass them around with smbspider to try spidering systems that the user account has access to. In many cases, you'll end up quickly finding all types of sensitive data hanging out on employees' workstations. <br />
-	- Help menu: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider.png <br />
 	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider%201.png <br />
 	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider%202.png <br />
 	- Usage video: http://www.youtube.com/watch?v=skVZwynHECw <br />
+Usage menu:
+<pre><code>
+ ********************************************************
+ *                  _               *
+ *                 | |       //  \\       * 
+ *   ___ _ __ ___ | |__    _\\()//_    *
+ *  / __| '_ ` _ \| '_ \  / //  \\ \      *
+ *  \__ \ | | | | | |_) |   |\__/|        *
+ *  |___/_| |_| |_|_.__/            *
+ *                   *
+ * SMB Spider v2.0, Alton Johnson (alton.jx@gmail.com)   *
+ ********************************************************
+
+ Usage: /root/scripts/ipwn/smbspider.py &lt;OPTIONS&gt;
+
+ Target(s) (required): 
+
+    -h &lt;host&gt;   Provide IP address or a text file containing IPs.
+          Supported formats: IP, smb://ip/share, \\ip\share
+
+ Credentials (required): 
+
+    -u &lt;user&gt;   Specify a valid username to authenticate to the system(s).
+    -p &lt;pass&gt;   Specify the password which goes with the username.
+    -P &lt;hash&gt;   Use -P to provide password hash if cleartext password isn't known.
+    -d &lt;domain&gt;    If using a domain account, provide domain name.
+
+ Shares (optional):
+
+    -s &lt;share&gt;  Specify shares (separate by comma) or specify "profile" to spider user profiles.
+    -f &lt;file&gt;   Specify a list of shares from a file.
+
+ Other (optional):
+
+    -w       Avoid verbose output. Output successful spider results to smbspider_host_share_user.txt.
+          This option is HIGHLY recommended if numerous systems are being scanned.
+    -n       Ignore authentication check prior to spidering.
+
+</code></pre>
 <br />
 <b>smsspam</b><br />
 ---------- <br />
