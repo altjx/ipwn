@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #
 # This script is simply a Java updater for Kali Linux. In my past experiences doing 
-# internal penetration tests, I've ran into issues sometimes when I can't get an application
+# internal penetration tests, I've ran into issues sometimes to where I can't get an application
 # to work because it depends on Java. In some cases I couldn't even ignore the outdated warnings.
 # So considering I update my Kali Linux installation before every engagement, I decided to find a
 # way to automate this process. Obviously, this wasn't hard, but it's very useful.
