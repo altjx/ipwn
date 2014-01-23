@@ -12,6 +12,7 @@ There's been countless times when I've needed to test for SMTP user enumeration 
 	- Usage screenshot #1 (user enumeration): https://dl.dropboxusercontent.com/u/2526790/iSMTP/SMTP%20User%20Enumeration.png <br />
 <code>
 Usage: ./iSMTP.py <OPTIONS>
+
 Required:
 
 	-f <import file>	Imports a list of SMTP servers for testing.
