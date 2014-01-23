@@ -66,7 +66,7 @@ Many times, on an internal penetration test, you run across numerous web servers
  iWebAudit v1.5 - Web Page Title Analyzer, Alton Johnson (alton.jx@gmail.com)  
 ------------------------------------------------------------------------------ 
 
- Usage: iWebAudit -f &lt;file&gt; -o &lt;output%5Ffile&gt; -v -h -t 5
+ Usage: iWebAudit -f &lt;file&gt; -o &lt;output file&gt; -v -h -t 5
 
    -f &lt;file&gt;   Supports list of IPs and/or http[s]:// formatted IPs.
    -o &lt;file&gt;   Outputs the results to a file of your choice.
@@ -80,7 +80,7 @@ Many times, on an internal penetration test, you run across numerous web servers
 If you're familiar with the Windows FOCA application, this is basically a python version of it. Pyfoca will use Google to discover files with extensions such as .pdf, .xls, .doc, etc. and download them. Once downloaded, it will extract all metadata which, in many cases, include usernames you can use for password attacks. <br />
 Usage menu:
 <pre><code>
- -------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
   pyfoca v1.6 - Document Metadata Extractor, Alton Johnson (alton.jx@gmail.com)
  -------------------------------------------------------------------------------
 
@@ -89,7 +89,7 @@ Usage menu:
  Domain options:
 
     -d &lt;domain&gt;      Harvests all documents from a domain (saves to pyfoca-downloads/).
-          			  Afterwards, extract metadata.
+            Afterwards, extract metadata.
 
  Parse file/dir:
 
@@ -102,15 +102,14 @@ Usage menu:
 
  Misc:
 
-    -x         After parsing metadata, delete files downloaded from the domain.
+    -x                     After parsing metadata, delete files downloaded from the domain.
     -e &lt;pdf|doc|xls|all&gt;   Search based on provided extension(s). Separate with comma. (Default is all.)
-    -p &lt;number&gt;      Searches x amount of google pages (per extension). (Default is 2.)
-    -t &lt;secs&gt;     Sets timeout value. (Default is 5.)
-    -v         Prints status messages for files that are downloaded.
+    -p &lt;number&gt;            Searches x amount of google pages (per extension). (Default is 2.)
+    -t &lt;secs&gt;              Sets timeout value. (Default is 5.)
+    -v                     Prints status messages for files that are downloaded.
 
  Supported extensions are: .pdf, .doc, .docx, .xls, .xlsx, and .ppt
  Example: ./pyfoca.py -d www.domain.com -e pdf,doc -p 3
-
 </code></pre>
 <br />
 <b>smbspider</b><br />
