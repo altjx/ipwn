@@ -66,13 +66,13 @@ Many times, on an internal penetration test, you run across numerous web servers
  iWebAudit v1.5 - Web Page Title Analyzer, Alton Johnson (alton.jx@gmail.com)  
 ------------------------------------------------------------------------------ 
 
- Usage: iWebAudit -f &lt;file&gt; -o &lt;output_file&gt; -v -h -t 5
+ Usage: iWebAudit -f &lt;file&gt; -o &lt;output%5Ffile&gt; -v -h -t 5
 
    -f &lt;file&gt;   Supports list of IPs and/or http[s]:// formatted IPs.
    -o &lt;file&gt;   Outputs the results to a file of your choice.
-   -h       Enables HTTP PUT Method Discovery. (optional)
+   -h      				Enables HTTP PUT Method Discovery. (optional)
    -t &lt;secs&gt;   Sets default timeout. Default is 5. (optional)
-   -v       Displays details as script runs. (optional)
+   -v 			      Displays details as script runs. (optional)
 </code></pre>
 <br />
 <b>pyFoca</b><br />
