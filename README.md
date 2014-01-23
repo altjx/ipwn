@@ -49,7 +49,7 @@ Required:
 				ismtp-results/smtp_<service>_<ip>(port).txt
 
   Note: Any combination of options is supported (e.g., enumeration, relay, both, all, etc.).
-</pre></code>
+</code></pre>
 <br />
 <b>iWebAudit</b><br />
 ---------- <br />
