@@ -56,7 +56,7 @@ class update:
 		except Exception, err:
 			print err
 	
-	def check_chrome():
+	def check_chrome(self):
 		print "[*] Checking if Google Chrome Exists."
 		result = commands.getoutput("ls /opt/google/chrome")
 		if "no such file" in result.lower():
