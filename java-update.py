@@ -77,10 +77,13 @@ class update:
 		if "no such file" in result.lower():
 			print "[*] Skipping Java for Google Chrome fix."
 		else:
-			print "[*] Fixing Java work with Google Chrome (if not already)."
-			commands.getoutput("mkdir /opt/google/chrome/plugins")
-			commands.getoutput("cd /opt/google/chrome/plugings && ln -s /usr/lib/mozilla/plugins/libjavaplugin.so")
-			print "[*] Updated Google Chrome to work with Java."
+			if "/opt/google/chrome/plugins/libjavaplugin.so" not in commands.getoutput("ls /opt/google/chrome/plugins/libjavaplugin.so"):
+				print "[*] Fixing Java work with Google Chrome."
+				commands.getoutput("mkdir /opt/google/chrome/plugins")
+				commands.getoutput("cd /opt/google/chrome/plugings && ln -s /usr/lib/mozilla/plugins/libjavaplugin.so")
+				print "[*] Updated Google Chrome to work with Java."
+			else:
+				print "[*] Java already configured to work with Google Chrome."
 	
 	def run_update(self):
 		self.update_fn = self.dl_link[self.dl_link.rfind("/")+1:]
