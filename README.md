@@ -70,7 +70,7 @@ Many times, on an internal penetration test, you run across numerous web servers
 
    -f &lt;file&gt;   Supports list of IPs and/or http[s]:// formatted IPs.
    -o &lt;file&gt;   Outputs the results to a file of your choice.
-   -h      		 Enables HTTP PUT Method Discovery. (optional)
+   -h      		Enables HTTP PUT Method Discovery. (optional)
    -t &lt;secs&gt;   Sets default timeout. Default is 5. (optional)
    -v 	       Displays details as script runs. (optional)
 </code></pre>
