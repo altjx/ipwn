@@ -216,7 +216,7 @@ class spider:
 	def parse_result(self, result):
 		############################################################
 		# this small section removes all of the unnecessary crap. a bit ugly, i know! :x
-		errors = ["O_SUCH_F","ACCESS_DEN",,
+		errors = ["O_SUCH_F","ACCESS_DEN",
 "US_OBJECT_NAME_IN", "US_INVALID_NETWORK_RE", "CT_NAME_NOT",
 "not present","CONNECTION_REFUSED"
 	]
