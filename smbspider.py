@@ -238,7 +238,7 @@ class spider:
 			host = str(host[:host.find("\\")])
 			share = f[len(host)+3:]
 			share = share[:share.find("\\")]
-			full_path = f.replace("\\\\%s\\%s\\" % (host, smb_share), "")
+			full_path = f.replace("\\\\%s\\%s\\" % (host, share), "")
 			file_name = full_path[full_path.rfind("\\")+1:]
 			print full_path; continue
 			for s in self.sensitive_strings:
