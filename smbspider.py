@@ -242,10 +242,10 @@ class spider:
 			file_name = full_path[full_path.rfind("\\")+1:]
 			for s in self.sensitive_strings:
 				if s in file_name:
-					result = commands.getoutput("%s -c \"get \"%s\" \"%s\"\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
-					file_name, host, share, self.credentials))
-					print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
-					commands.getoutput("mv \"%s\" smbspider-downloads/%s_%s" % (file_name, host, file_name))
+					result = commands.getoutput("%s -c \"get \"%s\" \"%s_%s\"\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
+					host,file_name, host, share, self.credentials))
+#					print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
+					commands.getoutput("mv \"%s\" smbspider-downloads/%s" % (file_name, file_name))
 				else:
 					temp_file =  s.split("*")
 					all_match = 0
@@ -256,10 +256,10 @@ class spider:
 							all_match = 0
 							break
 					if all_match == 1:
-						print "%s -c \"get \\\"%s\\\" \\\"%s\\\"\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
-						file_name, host, share, self.credentials)
-						print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
-						commands.getoutput("mv \"%s\" smbspider-downloads/%s_%s" % (file_name, host, file_name))
+						print "%s -c \"get \\\"%s\\\" \\\"%s_%s\\\"\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
+						host, file_name, host, share, self.credentials)
+#						print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
+						commands.getoutput("mv \"%s\" smbspider-downloads/%s" % (file_name, file_name))
 		
 	def parse_result(self, result):
 		############################################################
