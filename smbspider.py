@@ -234,6 +234,7 @@ class spider:
 		if not os.path.exists('smbspider-downloads'):
 			os.makedirs('smbspider-downloads')
 		for f in self.file_locations:
+			print f; continue
 			host = f[2:]
 			host = str(host[:host.find("\\")])
 			share = f[len(host)+3:]
@@ -310,8 +311,7 @@ class spider:
 					output.write(file_complete_path)
 					output.close()
 				if self.smb_download:
-					print file_complete_path[file_complete_path.find("\\\\"):]
-#					self.file_locations.append(file_complete_path[file_complete_path.find("\\\\"):])
+					self.file_locations.append(file_complete_path[file_complete_path.find("\\\\"):])
 
 	def fingerprint_fs(self):
 		result = commands.getoutput("%s -c \"ls Users\\*\" //%s/C$ -U %s" % (self.smbclient(), self.smb_host, self.credentials)).split()
