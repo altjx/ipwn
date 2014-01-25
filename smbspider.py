@@ -247,13 +247,14 @@ class spider:
 					fail = 1
 			if fail == 0 and len(filename) > 0:
 				if not self.filename:
-					file_complete = "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
+					file_complete_path = "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
 					print " [*] " + file_complete
 				else:
 					if not os.path.exists('smbspider'):
 						os.makedirs('smbspider')
 					output = open("smbspider/smbspider_%s_%s_%s.txt" % (self.smb_host, self.smb_share, self.credentials.split()[0]), 'a')
-					output.write("\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename + "\n")
+					file_complete_path = "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename + "\n"
+					output.write(file_complete_path)
 					output.close()
 
 	def fingerprint_fs(self):
