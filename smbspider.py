@@ -259,7 +259,7 @@ class spider:
 						result = commands.getoutput("%s -c \"get \\\"%s\\\" \\\"%s_%s\\\"\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
 						host,file_name, host, share, self.credentials))
 						print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
-						print "mv \"%s_%s\" \"smbspider-downloads/%s_%s\"" % (host, file_name, host, file_name)
+						commands.getoutput("mv \"%s_%s\" \"smbspider-downloads/%s_%s\"" % (host, file_name, host, file_name))
 		
 	def parse_result(self, result):
 		############################################################
