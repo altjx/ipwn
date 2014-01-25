@@ -301,7 +301,7 @@ class spider:
 			if fail == 0 and len(filename) > 0:
 				if not self.outputfile:
 					file_complete_path = "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
-					print colors.blue + " [*] " + colors.norm + file_complete_path
+#					print colors.blue + " [*] " + colors.norm + file_complete_path
 				else:
 					if not os.path.exists('smbspider'):
 						os.makedirs('smbspider')
