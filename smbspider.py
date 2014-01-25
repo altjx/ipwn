@@ -138,7 +138,8 @@ def start(argv):
 			unique_systems.append(system)
 	#start spidering
 	print banner
-	print " [*] Spidering %s systems(s) and/or share(s)..." % len(unique_systems)
+	unique_systems = [i for i in unique_systems if i != ''] #remove blank elements from list
+	print " [*] Spidering %s system(s)..." % len(unique_systems)
 	begin = spider(credentials, smb_host, smb_share, pth, filename, ignorecheck)
 	begin.start_spidering()
 
@@ -208,10 +209,10 @@ class spider:
 			else:
 				print "\n [*] Attempting to spider smb://%s/%s. " % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 				self.spider_host()
-			if self.list_of_shares[0] != "profile":
-				print colors.blue + " [*] " + colors.norm + "Finished with smb://%s/%s. [Remaining: %s] " % (self.smb_host, self.smb_share, str(len(self.list_of_hosts)-self.total_hosts)-1)
+			if self.list_of_shares[0] == "profile":
+				print " [*] Finished with smb://%s/%s. [Remaining: %s] " % (self.smb_host, self.smb_share, str(len(self.list_of_hosts)-self.total_hosts))
 			else:
-				print colors.blue + " [*] " + colors.norm + "Finished with smb://%s/<user profiles>. [Remaining: %s] " % (self.smb_host, str(len(self.list_of_hosts)-self.total_hosts))
+				print " [*] Finished with smb://%s/<user profiles>. [Remaining: %s] " % (self.smb_host, str(len(self.list_of_hosts)-self.total_hosts))
 		
 	def parse_result(self, result):
 		############################################################
@@ -248,12 +249,12 @@ class spider:
 			if fail == 0 and len(filename) > 0:
 				if not self.filename:
 					file_complete_path = "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
-					print " [*] " + file_complete_path
+					print colors.blue + " [*] " + colors.norm + file_complete_path
 				else:
 					if not os.path.exists('smbspider'):
 						os.makedirs('smbspider')
 					output = open("smbspider/smbspider_%s_%s_%s.txt" % (self.smb_host, self.smb_share, self.credentials.split()[0]), 'a')
-					file_complete_path = "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename + "\n"
+					file_complete_path = colors.blue + " [*] " + colors.norm + "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename + "\n"
 					output.write(file_complete_path)
 					output.close()
 
