@@ -242,9 +242,10 @@ class spider:
 			file_name = full_path[full_path.rfind("\\")+1:]
 			for s in self.sensitive_strings:
 				if s in file_name:
-					result = commands.getoutput("echo %s -c \"get \"%s\" %s\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
+					result = commands.getoutput("%s -c \"get \"%s\" %s\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
 					file_name, host, share, self.credentials))
-					print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
+					print result; exit()
+#					print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
 					commands.getoutput("mv %s smbspider-downloads" % file_name)
 				else:
 					temp_file =  s.split("*")
