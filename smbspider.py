@@ -11,7 +11,7 @@
 #
 # Author: Alton Johnson
 # Contact: alton.jx@gmail.com
-# Version: 2.3
+# Version: 2.4
 # Updated: 01/23/2014
 #
 
@@ -34,7 +34,7 @@ banner += "\n *	 / __| '_ ` _ \| '_ \  / //  \\\\ \ 		*"
 banner += "\n *	 \__ \ | | | | | |_) |   |\__/|			*"
 banner += "\n *	 |___/_| |_| |_|_.__/				*"
 banner += "\n *							*"
-banner += "\n * SMB Spider v2.3, Alton Johnson (alton.jx@gmail.com) 	*"
+banner += "\n * SMB Spider v2.4, Alton Johnson (alton.jx@gmail.com) 	*"
 banner += "\n " + "*" * 56 + "\n"
 
 def help():
