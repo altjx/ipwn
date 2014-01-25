@@ -73,9 +73,10 @@ def start(argv):
 	smb_host = []
 	smb_share = ["profile"]
 	pth = False
-	filename = False
+	output = False
 	unique_systems = []
 	ignorecheck = False
+	inputfile = False
 
 	#parse through arguments
 	for opt, arg in opts:
@@ -88,6 +89,7 @@ def start(argv):
 		elif opt == "-h":
 			try:
 				smb_host = open(arg).read().split('\n')
+				inputfile = True
 			except:
 				if "\\\\" in arg and "\\" not in arg[-1:]:
 					test = arg[2:].replace("\\","\\")
@@ -104,7 +106,7 @@ def start(argv):
 			smb_pass = arg
 			pth = True
 		elif opt == "-w":
-			filename = True
+			output = True
 		elif opt == "-n":
 			ignorecheck = True
 
@@ -140,11 +142,11 @@ def start(argv):
 	print banner
 	unique_systems = [i for i in unique_systems if i != ''] #remove blank elements from list
 	print " [*] Spidering %s system(s)..." % len(unique_systems)
-	begin = spider(credentials, smb_host, smb_share, pth, filename, ignorecheck)
+	begin = spider(credentials, smb_host, smb_share, pth, output, ignorecheck, inputfile)
 	begin.start_spidering()
 
 class spider:
-	def __init__(self, credentials, hosts, shares, pth, filename, ignorecheck):
+	def __init__(self, credentials, hosts, shares, pth, output, ignorecheck, inputfile):
 		self.list_of_hosts = hosts
 		self.list_of_shares = shares
 		self.credentials = credentials
@@ -152,9 +154,10 @@ class spider:
 		self.smb_share = ""
 		self.skip_host = ""
 		self.pth = pth
-		self.filename = filename
+		self.outputfile = output
 		self.blacklisted = []
 		self.ignorecheck = ignorecheck
+		self.inputfile = inputfile
 	
 	def start_spidering(self):
 		share = ""
@@ -197,7 +200,6 @@ class spider:
 					self.smb_share = share
 			tmp_share = tmp_share.replace(self.smb_host,"")
 			tmp_share = tmp_share.replace("smb:///","")
-		
 			if len(tmp_share) == 0 and (self.smb_share != "profile" and len(self.smb_share) == 0):
 				print empty_share_error % self.smb_host
 				continue
@@ -210,9 +212,12 @@ class spider:
 				print "\n [*] Attempting to spider smb://%s/%s. " % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 				self.spider_host()
 			if self.list_of_shares[0] == "profile":
-				print " [*] Finished with smb://%s/%s. [Remaining: %s] " % (self.smb_host, self.smb_share, str(len(self.list_of_hosts)-self.total_hosts))
+				if self.inputfile:
+					print " [*] Finished with smb://%s/<user profiles>. [Remaining: %s] " % (self.smb_host, str(len(self.list_of_hosts)-self.total_hosts-1))
+				else:
+					print " [*] Finished with smb://%s/<user profiles>. [Remaining: %s] " % (self.smb_host, str(len(self.list_of_hosts)-self.total_hosts))
 			else:
-				print " [*] Finished with smb://%s/<user profiles>. [Remaining: %s] " % (self.smb_host, str(len(self.list_of_hosts)-self.total_hosts))
+				print " [*] Finished with smb://%s/%s. [Remaining: %s] " % (self.smb_host, self.smb_share, str(len(self.list_of_hosts)-self.total_hosts))
 		
 	def parse_result(self, result):
 		############################################################
@@ -247,7 +252,7 @@ class spider:
 				if error in filename:
 					fail = 1
 			if fail == 0 and len(filename) > 0:
-				if not self.filename:
+				if not self.outputfile:
 					file_complete_path = "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
 					print colors.blue + " [*] " + colors.norm + file_complete_path
 				else:
@@ -305,7 +310,7 @@ class spider:
 			exit()
 		elif "ACCESS_DENIED" in result.split()[-1]:
 			print colors.red + " [-] " + colors.norm + "Error [%s]: Valid credentials, but no access. Try another account." % self.smb_host
-		elif "BAD_NETWORK" in result.split()[-1]:
+		elif "BAD_NETWORK" in result.split()[-1] or "CONNECTION_REFUSED" in result.split()[-1]:
 			print colors.red + " [-] " + colors.norm + "Error: Invalid share -> smb://%s/%s" % (self.smb_host,self.smb_share)
 			return True
 
