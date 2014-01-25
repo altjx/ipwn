@@ -256,8 +256,7 @@ class spider:
 							all_match = 0
 							break
 					if all_match == 1:
-						print "%s -c \"get \\"%s\\" \\"%s\\"\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
-						file_name, host, share, self.credentials)
+						print "%s -c \"get \"%s\" \"%s\"\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), file_name, host, share, self.credentials)
 						print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
 						commands.getoutput("mv %s smbspider-downloads" % file_name)
 		
