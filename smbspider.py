@@ -257,7 +257,7 @@ class spider:
 							break
 					if all_match == 1:
 						print "%s -c \"get \"%s\" %s\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
-						file_name, host, share, self.credentials))
+						file_name, host, share, self.credentials)
 #						result = commands.getoutput("%s -c \"get \"%s\" %s\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
 #						file_name, host, share, self.credentials))
 						print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
