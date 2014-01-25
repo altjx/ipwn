@@ -245,7 +245,7 @@ class spider:
 					result = commands.getoutput("%s -c \"get \"%s\" \"%s\"\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
 					file_name, host, share, self.credentials))
 					print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
-					commands.getoutput("mv \"%s\" smbspider-downloads/%s_%s" % (file_name, file_host, host)
+					commands.getoutput("mv \"%s\" smbspider-downloads/%s_%s" % (file_name, file_host, host))
 				else:
 					temp_file =  s.split("*")
 					all_match = 0
@@ -259,7 +259,7 @@ class spider:
 						result = commands.getoutput("%s -c \"get \\\"%s\\\" \\\"%s\\\"\" //%s/%s -U %s " %  (self.smbclient(), full_path.replace("\\","\\\\"), \
 						file_name, host, share, self.credentials))
 						print colors.blue + " [*] " + colors.norm + "Downloaded: %s from smb://%s/%s" % (file_name, host, share)
-						commands.getoutput("mv \"%s\" smbspider-downloads/%s_%s" % (file_name, file_name, host)
+						commands.getoutput("mv \"%s\" smbspider-downloads/%s_%s" % (file_name, file_name, host))
 		
 	def parse_result(self, result):
 		############################################################
