@@ -216,7 +216,7 @@ class spider:
 	def parse_result(self, result):
 		############################################################
 		# this small section removes all of the unnecessary crap. a bit ugly, i know! :x
-		errors = ["O_SUCH_F","ACCESS_DEN",
+		errors = ["O_SUCH_F","ACCESS_DEN", "LOGON_SERVER",
 "US_OBJECT_NAME_IN", "US_INVALID_NETWORK_RE", "CT_NAME_NOT",
 "not present","CONNECTION_REFUSED"
 	]
@@ -252,7 +252,7 @@ class spider:
 					if not os.path.exists('smbspider'):
 						os.makedirs('smbspider')
 					output = open("smbspider/smbspider_%s_%s_%s.txt" % (self.smb_host, self.smb_share, self.credentials.split()[0]), 'a')
-					output.write("Spider\t \\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename + "\n")
+					output.write("\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename + "\n")
 					output.close()
 
 	def fingerprint_fs(self):
