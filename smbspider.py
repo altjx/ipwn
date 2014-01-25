@@ -247,7 +247,8 @@ class spider:
 					fail = 1
 			if fail == 0 and len(filename) > 0:
 				if not self.filename:
-					print " [*] \\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
+					file_complete = "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename
+					print " [*] " + file_complete
 				else:
 					if not os.path.exists('smbspider'):
 						os.makedirs('smbspider')
@@ -286,8 +287,8 @@ class spider:
 	def check_errors(self, result):
 		access_error = {
 "UNREACHABLE":" [-] Error [%s]: Check to ensure that host is online and that share is accessible." % self.smb_host,
-"UNSUCCESSFUL":" [-] Error [%s]: Check to ensure that host is online and that share is accessible.." % self.smb_host,
-"TIMEOUT":" [-] Error [%s]: Check to ensure that host is online and that share is accessible.." % self.smb_host,
+"UNSUCCESSFUL":" [-] Error [%s]: Check to ensure that host is online and that share is accessible." % self.smb_host,
+"TIMEOUT":" [-] Error [%s]: Check to ensure that host is online and that share is accessible." % self.smb_host,
 "LOGON_SERVER":" [-] Error %s Cannot contact logon server. Skipping host." % self.smb_host
 }
 		for err in access_error:
