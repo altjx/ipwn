@@ -310,7 +310,8 @@ class spider:
 					output.write(file_complete_path)
 					output.close()
 				if self.smb_download:
-					self.file_locations.append(file_complete_path[file_complete_path.find("\\\\"):])
+					print file_complete_path[file_complete_path.find("\\\\"):]
+#					self.file_locations.append(file_complete_path[file_complete_path.find("\\\\"):])
 
 	def fingerprint_fs(self):
 		result = commands.getoutput("%s -c \"ls Users\\*\" //%s/C$ -U %s" % (self.smbclient(), self.smb_host, self.credentials)).split()
