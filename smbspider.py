@@ -216,7 +216,7 @@ class spider:
 	def parse_result(self, result):
 		############################################################
 		# this small section removes all of the unnecessary crap. a bit ugly, i know! :x
-		errors = ["O_SUCH_F","ACCESS_DEN", "LOGON_SERVER",
+		errors = ["O_SUCH_F","ACCESS_DEN",,
 "US_OBJECT_NAME_IN", "US_INVALID_NETWORK_RE", "CT_NAME_NOT",
 "not present","CONNECTION_REFUSED"
 	]
@@ -288,6 +288,7 @@ class spider:
 "UNREACHABLE":" [-] Error [%s]: Check to ensure that host is online and that share is accessible." % self.smb_host,
 "UNSUCCESSFUL":" [-] Error [%s]: Check to ensure that host is online and that share is accessible.." % self.smb_host,
 "TIMEOUT":" [-] Error [%s]: Check to ensure that host is online and that share is accessible.." % self.smb_host,
+"LOGON_SERVER":" [-] Error %s Cannot contact logon server. Skipping host." % self.smb_host,
 }
 		for err in access_error:
 			if err in result:
