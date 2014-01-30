@@ -227,7 +227,3 @@ java version "1.7.0_51"
 Java(TM) SE Runtime Environment (build 1.7.0_51-b13)
 Java HotSpot(TM) Client VM (build 24.51-b03, mixed mode)
 </code></pre>
-Credits:
-===
-Josh Stone - inspiration for writing smbspider <br />
-Victor Mata - inspiration for writing iWebAudit
