@@ -221,6 +221,11 @@ Updating Java.
 [*] Checking if Google Chrome exists.
 [*] Java already configured to work with Google Chrome.
 [*] Java update complete. Verify with java -version. 
+
+root@kali:# java -version
+java version "1.7.0_51"
+Java(TM) SE Runtime Environment (build 1.7.0_51-b13)
+Java HotSpot(TM) Client VM (build 24.51-b03, mixed mode)
 </code></pre>
 Credits:
 ===
