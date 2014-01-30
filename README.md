@@ -191,18 +191,38 @@ Usage menu:
 <br />
 <b>Java Updater (for Kali Linux)</b><br />
 ---------- <br />
-Eventually I just got tired of referring to Google and Kali's forums to update Java within Kali. Decided to just go ahead and play around with a script to do this automatically, and it came out well. Just run the script and Java's updated. Also makes sure it works with Chrome so you don't have to.<br />
-Usage example:
+Eventually I just got tired of referring to Google and Kali's forums to update Java within Kali. Decided to just go ahead and play around with a script to do this automatically, and it came out well. Just run the script and Java's updated. Also makes sure it works with Google Chrome so you don't have to.<br />
+Example of output for already up-to-date java version:
 <pre><code>
+root@kali:# ./java-update.py
+
 Updating Java.
-[*] Current version: 7.51
+[*] Installed version: 7.51
 [*] Latest version: 7.51
 [*] Already up-to-date.
-[*] Checking if Google Chrome Exists.
-[*] Fixing Java work with Google Chrome (if not already).
-[*] Updated Google Chrome to work with Java.
+[*] Checking if Google Chrome exists.
+[*] Java already configured to work with Google Chrome.
 </code></pre>
 <br />
+
+Example of output for outdated java version:
+<pre><code>
+root@kali:# ./java-update.py
+
+Updating Java.
+[*] Installed version: 6.27
+[*] Latest version: 7.51
+[*] Old version detected. Performing Java update.
+[*] Downloading Java update: jdk-7u51-linux-i586.tar.gz [size: 132.98 MB]
+[*] Download complete.
+[*] Extracting archive.
+[*] Extraction complete.
+[*] Updating alternatives.
+[*] Alternatives updated.
+[*] Checking if Google Chrome exists.
+[*] Java already configured to work with Google Chrome.
+[*] Java update complete. Verify with java -version. 
+</code></pre>
 Credits:
 ===
 Josh Stone - inspiration for writing smbspider <br />
