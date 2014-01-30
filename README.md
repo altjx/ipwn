@@ -204,8 +204,6 @@ Updating Java.
 [*] Checking if Google Chrome exists.
 [*] Java already configured to work with Google Chrome.
 </code></pre>
-<br />
-
 Example of output for outdated java version:
 <pre><code>
 root@kali:# ./java-update.py
