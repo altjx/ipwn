@@ -192,6 +192,7 @@ Usage menu:
 <b>Java Updater (for Kali Linux)</b><br />
 ---------- <br />
 Eventually I just got tired of referring to Google and Kali's forums to update Java within Kali. Decided to just go ahead and play around with a script to do this automatically, and it came out well. Just run the script and Java's updated. Also makes sure it works with Google Chrome so you don't have to.<br />
+<br>
 Example of output for already up-to-date java version:
 <pre><code>
 root@kali:# ./java-update.py
