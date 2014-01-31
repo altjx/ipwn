@@ -166,6 +166,7 @@ class spider:
 		self.smb_download = True
 		self.file_locations = []
 		self.sensitive_strings = sensitive_strings
+		self.profile = False
 	
 	def start_spidering(self):
 		share = ""
@@ -305,8 +306,13 @@ class spider:
 				else:
 					if not os.path.exists('smbspider'):
 						os.makedirs('smbspider')
-					output = open("smbspider/smbspider_%s_%s_%s.txt" % (self.smb_host, self.smb_share, self.credentials.split()[0]), 'a')
-					file_complete_path = colors.blue + " [*] " + colors.norm + "\\\\%s\%s" % (self.smb_host,self.smb_share) + directory + "\\" + filename + "\n"
+					
+					if self.profile:
+						lawl_share = "profile"
+					else:
+						lawl_share = self.smb_share
+					output = open("smbspider/smbspider_%s_%s_%s.txt" % (self.smb_host, lawl_share, self.credentials.split()[0]), 'a')
+					file_complete_path = colors.blue + " [*] " + colors.norm + "\\\\%s\%s" % (self.smb_host,lawl_share) + directory + "\\" + filename + "\n"
 					output.write(file_complete_path)
 					output.close()
 				if self.smb_download:
@@ -373,6 +379,7 @@ class spider:
 	def spider_host(self):
 		if self.smb_share.lower() == "profile":
 			self.smb_share = "C$"
+			self.profile = True
 			if self.fingerprint_fs() == "error":
 				return
 			elif self.fingerprint_fs() == "old":
