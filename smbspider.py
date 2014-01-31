@@ -214,10 +214,10 @@ class spider:
 			if len(self.list_of_shares) > 1:
 				for x in self.list_of_shares:
 					self.smb_share = x
-					print "\n [*] Attempting to spider smb://%s/%s." % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
+					print "\n [*] Attempting to spider smb://%s/%s" % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 					self.spider_host()
 			else:
-				print "\n [*] Attempting to spider smb://%s/%s. " % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
+				print "\n [*] Attempting to spider smb://%s/%s " % (self.smb_host, self.smb_share.replace("profile","<user profiles>"))
 				self.spider_host()
 			if self.list_of_shares[0] == "profile":
 				if self.inputfile:
