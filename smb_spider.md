@@ -1,6 +1,6 @@
 <b>smbspider (msf module) </b><br />
 ---------- <br />
-smb_spider is a great tool for spidering systems and shares with the intention of identifying sensitive data. There are several options within this module, and many of them are pretty obvious considering most modules use similar options. However, for further clarification, I've provided some additional information pertaining to each option below:<br>
+smb_spider is a great tool for spidering systems and shares with the intention of identifying sensitive data. There are several options within this module, and many of them are pretty obvious considering most modules use similar options. However, for further clarification, I've provided some additional information pertaining to the unusual options below:<br>
 <br />
 MaxDepth:<br />
 If you'd only like to see what's in the root of the directories you're spidering, you can set this option to 0. If you'd like to spider three subdirectories deep, then you can specify 3 for this option.<br />
