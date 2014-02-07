@@ -7,6 +7,6 @@ If you'd only like to see what's in the root of the directories you're spidering
 <br />RootDir: <br />
 To start spidering off at a particular directory, this option is useful for that. However, it should be noted that this will not work if you specify "profile" for the SMBShare option.<br />
 <br />ShareFile: <br />
-If you provide a text file containing IPs and shares in the format \\IP\Share, then the module will run through the IPs in RHOSTS and spider all the shares that match within the ShareFile. This is necessary due to the way the auxiliary module work from my understanding.<br />
+If you provide a text file containing IPs and shares in the format \\\\IP\Share, then the module will run through the IPs in RHOSTS and spider all the shares that match within the ShareFile. This is necessary due to the way the auxiliary module work from my understanding.<br />
 <br>
 <br />
