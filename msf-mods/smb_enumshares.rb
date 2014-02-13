@@ -45,7 +45,7 @@ class Metasploit3 < Msf::Auxiliary
       [
         OptBool.new('DIR_SHARE',      [true, 'Show all the folders and files', false ]),
 				OptBool.new("SmartOutput",		[false, 'Display results in \\\\IP\\Share format.', true]),
-				OptBool.new("LogShares", 			[false, 'Spits out \\\\IP\\share results to file in local dir.', true]),
+				OptBool.new("LogShares", 			[false, 'Spits out \\\\IP\\share results to file in local dir.', false]),
         OptBool.new('USE_SRVSVC_ONLY', [true, 'List shares only with SRVSVC', false ])
       ], self.class)
 
@@ -378,11 +378,14 @@ class Metasploit3 < Msf::Auxiliary
 							print_status("Enumerated share: \\\\#{ip}\\#{line[0..line.index("-")-2]}")
 						end
 							
-					if datastore['LogData']
-						output = ::File.open("msf_enumshares_output.txt", "ab")
-						output.write("\\\\#{ip}\\#{line[0..line.index("-")-2]}\n")
-						output.close
+					if datastore['LogShares']
+						outputfile = ::File.open("msf_enumshares_output.txt", "ab")
+						shares_info.split(", ").each do |outline|
+							outputfile.write("\\\\#{ip}\\#{outline[0..outline.index("-")-2]}\n")
+						end
+						outputfile.close
 					end
+
 					end
           report_note(
             :host   => ip,
