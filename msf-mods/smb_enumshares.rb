@@ -44,8 +44,8 @@ class Metasploit3 < Msf::Auxiliary
     register_options(
       [
         OptBool.new('DIR_SHARE',      [true, 'Show all the folders and files', false ]),
-				OptBool.new("SmartOutput",		[false, 'Display results in \\\\IP\\Share format.', true]),
-				OptBool.new("LogShares", 			[false, 'Spits out \\\\IP\\share results to file in local dir.', false]),
+				OptBool.new("SmartOutput",		[false, 'Display results in \\\\IP\\Share format', true]),
+				OptBool.new("LogShares", 			[false, 'Spits out \\\\IP\\share results to file in local dir', false]),
         OptBool.new('USE_SRVSVC_ONLY', [true, 'List shares only with SRVSVC', false ])
       ], self.class)
 
