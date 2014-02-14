@@ -44,8 +44,8 @@ class Metasploit3 < Msf::Auxiliary
     register_options(
       [
         OptBool.new('DIR_SHARE',      [true, 'Show all the folders and files', false ]),
-				OptBool.new("SmartOutput",		[false, 'Display results in \\\\IP\\Share format', true]),
-				OptBool.new("LogShares", 			[false, 'Spits out \\\\IP\\share results to file in local dir', false]),
+        OptBool.new("SmartOutput",      [false, 'Display results in \\\\IP\\Share format', true]),
+        OptBool.new("LogShares",          [false, 'Spits out \\\\IP\\share results to file in local dir', false]),
         OptBool.new('USE_SRVSVC_ONLY', [true, 'List shares only with SRVSVC', false ])
       ], self.class)
 
@@ -359,34 +359,34 @@ class Metasploit3 < Msf::Auxiliary
         end
 
         os_info     = get_os_info(ip, rport)
-				if !datastore['SmartOutput']
-	        print_status("#{ip}:#{rport} - #{os_info}")
-				end
+            if !datastore['SmartOutput']
+           print_status("#{ip}:#{rport} - #{os_info}")
+            end
 
-				if os_info
-					test = os_info
-				end
+            if os_info
+               test = os_info
+            end
 
         if shares.empty?
           print_status("#{ip}:#{rport} - No shares collected")
         else
           shares_info = shares.map{|x| "#{x[0]} - #{x[2]} (#{x[1]})" }.join(", ")
-					if !datastore['SmartOutput']
-	          print_status("#{ip}:#{rport} - #{shares_info}")
-					else
-						shares_info.split(", ").each do |line|
-							print_status("Enumerated share: \\\\#{ip}\\#{line[0..line.index("-")-2]}")
-						end
-							
-					if datastore['LogShares']
-						outputfile = ::File.open("msf_enumshares_output.txt", "ab")
-						shares_info.split(", ").each do |outline|
-							outputfile.write("\\\\#{ip}\\#{outline[0..outline.index("-")-2]}\n")
-						end
-						outputfile.close
-					end
+               if !datastore['SmartOutput']
+             print_status("#{ip}:#{rport} - #{shares_info}")
+               else
+                  shares_info.split(", ").each do |line|
+                     print_status("Enumerated share: \\\\#{ip}\\#{line[0..line.index("-")-2]}")
+                  end
+                     
+               if datastore['LogShares']
+                  outputfile = ::File.open("msf_enumshares_output.txt", "ab")
+                  shares_info.split(", ").each do |outline|
+                     outputfile.write("\\\\#{ip}\\#{outline[0..outline.index("-")-2]}\n")
+                  end
+                  outputfile.close
+               end
 
-					end
+               end
           report_note(
             :host   => ip,
             :proto  => 'tcp',
