@@ -55,7 +55,7 @@ def help():
 	print "\t -w \t\t Avoid verbose output. Output successful spider results to smbspider_host_share_user.txt."
 	print "\t\t\t This option is HIGHLY recommended if numerous systems are being scanned."
 	print "\t -n \t\t ** Ignore authentication check prior to spidering."
-	print "\t -g \t\t Grab (download) files that match strings provided in text file. (Case sensitive.)"
+	print "\t -g <file> \t Grab (download) files that match strings provided in text file. (Case sensitive.)"
 	print "\t\t\t ** Examples: *assword.doc, *assw*.doc, pass*.xls, etc."
 	print colors.norm
 	exit()
