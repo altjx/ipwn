@@ -18,9 +18,10 @@ class Metasploit3 < Msf::Auxiliary
   def initialize
     super(
       'Name'        => 'HTTP Title Parser',
-      'Description' => %q{Reports back titles from web page(s). Useful when
-      determining what's running on web servers. Extremely helpful when there's
-      tons of web servers.},
+      'Description' => %q{Reports back web page titles. Very useful for when
+			you have numerous web servers to inspect and need to figure out what's
+			running on them. Other methods exist, such as taking screenshots, but 
+			this may potentially be a slower process.},
       'Author'      => 'Alton Johnson alton.jx[at]gmail.com',
       'License'     => MSF_LICENSE
     )
