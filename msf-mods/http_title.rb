@@ -21,7 +21,7 @@ class Metasploit3 < Msf::Auxiliary
       'Description' => %q{Reports back web page titles. Very useful for when
 			you have numerous web servers to inspect and need to figure out what's
 			running on them. Other methods exist, such as taking screenshots, but 
-			this may potentially be a slower process.},
+			they may potentially be a slower process.},
       'Author'      => 'Alton Johnson alton.jx[at]gmail.com',
       'License'     => MSF_LICENSE
     )
