@@ -318,6 +318,10 @@ class Metasploit3 < Msf::Auxiliary
 	end
 
   def get_files_info(ip, rport, shares, info)
+
+		if not datastore['VERBOSE']
+			print_status("Verbosity disabled. Please wait while spidering share(s).")
+		end
     read  = false
     write = false
 
@@ -340,7 +344,6 @@ class Metasploit3 < Msf::Auxiliary
 
 			while subdirs.length > 0
 				read,write,type,files = eval_host(ip, x, subdirs[0])
-				skip = false
 				if files and (read or write)
 					if files.length < 3
 						subdirs.shift
@@ -381,7 +384,6 @@ class Metasploit3 < Msf::Auxiliary
 							# Add subdirectories to list to use if SpiderShare is enabled.
 							if fa == "DIR"
 								subdirs.push(subdirs[0] + "\\" + fname)
-								fname += "\\"
 							end
 
 							pretty_tbl << [fa || 'Unknown', fname, tcr, tac, twr, tch, sz]
