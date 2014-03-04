@@ -47,7 +47,7 @@ class Metasploit3 < Msf::Auxiliary
         OptBool.new('SpiderShares',      [false, 'Spider shares recursively', false]),
 				OptBool.new('VERBOSE',				[true, 'Show detailed information when spidering', true]),
 				OptBool.new('SpiderProfiles',	[false, 'Spider user profiles when share = C$.', true]),
-				OptInt.new('LogSpider',			[false, '1 = CSV, 2 = table (txt), 3 = one liner (txt)', 0]),
+				OptInt.new('LogSpider',			[false, '1 = CSV, 2 = table (txt), 3 = one liner (txt)', 1]),
         OptBool.new('USE_SRVSVC_ONLY', [true, 'List shares only with SRVSVC', false ])
       ], self.class)
 
@@ -376,15 +376,17 @@ class Metasploit3 < Msf::Auxiliary
 
 							# Filename is too long for the UI table, cut it.
 							fname = "#{fname[0, 35]}..." if fname.length > 35
-							
-							pretty_tbl << [fa || 'Unknown', fname, tcr, tac, twr, tch, sz]
-							detailed_tbl << ["#{ip}", fa || 'Unknown', "#{x}", subdirs[0] + "\\", fname, tcr, tac, twr, tch, sz]
-							logdata << "#{ip}\\#{x.sub("C$","C$\\")}#{subdirs[0]}\\#{fname}\n"
 
 							# Add subdirectories to list to use if SpiderShare is enabled.
 							if fa == "DIR"
 								subdirs.push(subdirs[0] + "\\" + fname)
+								fname += "\\"
 							end
+
+							pretty_tbl << [fa || 'Unknown', fname, tcr, tac, twr, tch, sz]
+							detailed_tbl << ["#{ip}", fa || 'Unknown', "#{x}", subdirs[0] + "\\", fname, tcr, tac, twr, tch, sz]
+							logdata << "#{ip}\\#{x.sub("C$","C$\\")}#{subdirs[0]}\\#{fname}\n"
+
 						end
 					end
 					vprint_good(pretty_tbl.to_s)
