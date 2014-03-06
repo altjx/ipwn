@@ -33,7 +33,7 @@ class Metasploit3 < Msf::Auxiliary
           'hdm',
           'nebulus',
           'sinn3r',
-					'altonj',
+					'altonjx',
           'r3dy'
         ],
       'License'        => MSF_LICENSE,
@@ -47,8 +47,9 @@ class Metasploit3 < Msf::Auxiliary
       [
         OptBool.new('SpiderShares',      [false, 'Spider shares recursively', false]),
 				OptBool.new('VERBOSE',				[true, 'Show detailed information when spidering', true]),
-				OptBool.new('SpiderProfiles',	[false, 'Spider user profiles when share = C$.', true]),
+				OptBool.new('SpiderProfiles',	[false, 'Spider only user profiles when share = C$', true]),
 				OptInt.new('LogSpider',			[false, '1 = CSV, 2 = table (txt), 3 = one liner (txt)', 1]),
+				OptInt.new('MaxDepth',			[true, 'Max number of subdirectories to spider', 999]),
         OptBool.new('USE_SRVSVC_ONLY', [true, 'List shares only with SRVSVC', false ])
       ], self.class)
 
@@ -343,6 +344,18 @@ class Metasploit3 < Msf::Auxiliary
 			end
 
 			while subdirs.length > 0
+				depth = subdirs[0].count("\\")
+				if datastore['SpiderProfiles'] and x == "C$"
+					if depth-2 > datastore['MaxDepth']
+						subdirs.shift
+						next
+					end
+				else
+					if depth > datastore['MaxDepth']
+						subdirs.shift
+						next
+					end
+				end
 				read,write,type,files = eval_host(ip, x, subdirs[0])
 				if files and (read or write)
 					if files.length < 3
