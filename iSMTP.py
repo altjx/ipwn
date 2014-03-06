@@ -383,7 +383,6 @@ def smtp_enumeration(smtp_host,smtp_port,email_list,enum_level):
 	print " Completed SMTP user enumeration test."
 	smtp_elog += "\n Completed SMTP user enumeration test.\n\n"
 	
-	# write to output file if enabled
 	try:
 		server.quit()
 	except Exception, err:
