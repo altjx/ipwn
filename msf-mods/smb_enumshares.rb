@@ -33,7 +33,7 @@ class Metasploit3 < Msf::Auxiliary
           'hdm',
           'nebulus',
           'sinn3r',
-					'altonjx',
+          'altonjx',
           'r3dy'
         ],
       'License'        => MSF_LICENSE,
@@ -46,10 +46,10 @@ class Metasploit3 < Msf::Auxiliary
     register_options(
       [
         OptBool.new('SpiderShares',      [false, 'Spider shares recursively', false]),
-				OptBool.new('VERBOSE',				[true, 'Show detailed information when spidering', true]),
-				OptBool.new('SpiderProfiles',	[false, 'Spider only user profiles when share = C$', true]),
-				OptInt.new('LogSpider',			[false, '1 = CSV, 2 = table (txt), 3 = one liner (txt)', 1]),
-				OptInt.new('MaxDepth',			[true, 'Max number of subdirectories to spider', 999]),
+        OptBool.new('VERBOSE',        [true, 'Show detailed information when spidering', true]),
+        OptBool.new('SpiderProfiles',  [false, 'Spider only user profiles when share = C$', true]),
+        OptInt.new('LogSpider',      [false, '1 = CSV, 2 = table (txt), 3 = one liner (txt)', 1]),
+        OptInt.new('MaxDepth',      [true, 'Max number of subdirectories to spider', 999]),
         OptBool.new('USE_SRVSVC_ONLY', [true, 'List shares only with SRVSVC', false ])
       ], self.class)
 
@@ -281,147 +281,147 @@ class Metasploit3 < Msf::Auxiliary
     shares
   end
 
-	def profile_options(ip, share)
-		usernames = []
-		old_dirs = ['My Documents','Desktop']
-		new_dirs = ['Desktop','Documents','Downloads','Music','Pictures','Videos']
-		subdirs = []
-		begin
-			read,write,type,files = eval_host(ip, share, "Documents and Settings")
-			files.each do |f|
-				if f[0] != "." and f[0] != ".."
-					usernames.push(f[0])
-				end
-			end
+  def profile_options(ip, share)
+    usernames = []
+    old_dirs = ['My Documents','Desktop']
+    new_dirs = ['Desktop','Documents','Downloads','Music','Pictures','Videos']
+    subdirs = []
+    begin
+      read,write,type,files = eval_host(ip, share, "Documents and Settings")
+      files.each do |f|
+        if f[0] != "." and f[0] != ".."
+          usernames.push(f[0])
+        end
+      end
 
-			# Return usernames along with their profile directories.
-			usernames.each do |username|
-				old_dirs.each do |dir|
-					subdirs.push("Documents and Settings\\#{username}\\#{dir}")
-				end
-			end
-		rescue
-			read,write,type,files = eval_host(ip, share, "Users")
-			files.each do |f|
-				if f[0] != "." and f[0] != ".."
-					usernames.push(f[0])
-				end
-			end
+      # Return usernames along with their profile directories.
+      usernames.each do |username|
+        old_dirs.each do |dir|
+          subdirs.push("Documents and Settings\\#{username}\\#{dir}")
+        end
+      end
+    rescue
+      read,write,type,files = eval_host(ip, share, "Users")
+      files.each do |f|
+        if f[0] != "." and f[0] != ".."
+          usernames.push(f[0])
+        end
+      end
 
-			# Return usernames along with their profile directories.
-			usernames.each do |username|
-				new_dirs.each do |dir|
-					subdirs.push("Users\\#{username}\\#{dir}")
-				end
-			end
-		end
-		return subdirs
-	end
+      # Return usernames along with their profile directories.
+      usernames.each do |username|
+        new_dirs.each do |dir|
+          subdirs.push("Users\\#{username}\\#{dir}")
+        end
+      end
+    end
+    return subdirs
+  end
 
   def get_files_info(ip, rport, shares, info)
 
-		if not datastore['VERBOSE']
-			print_status("Verbosity disabled. Please wait while spidering share(s).")
-		end
+    if not datastore['VERBOSE']
+      print_status("Verbosity disabled. Please wait while spidering share(s).")
+    end
     read  = false
     write = false
 
-		# Creating a separate file for each IP address's results.
-		detailed_tbl = Rex::Ui::Text::Table.new(
-			'Header'  => "Spidered results for #{ip}.",
-			'Indent'  => 1,
-			'Columns' => [ 'IP Address', 'Type', 'Share', 'Path', 'Name', 'Created', 'Accessed', 'Written', 'Changed', 'Size' ]
-		)
+    # Creating a separate file for each IP address's results.
+    detailed_tbl = Rex::Ui::Text::Table.new(
+      'Header'  => "Spidered results for #{ip}.",
+      'Indent'  => 1,
+      'Columns' => [ 'IP Address', 'Type', 'Share', 'Path', 'Name', 'Created', 'Accessed', 'Written', 'Changed', 'Size' ]
+    )
 
-		logdata = ""
+    logdata = ""
 
     list = shares.collect {|e| e[0]}
     list.each do |x|
-			subdirs = [""]
-			# Added user profile directories if SmartSpider is enabled.
-			if x.strip() == "C$" and datastore['SpiderProfiles']
-				subdirs = profile_options(ip, x)
-			end
+      subdirs = [""]
+      # Added user profile directories if SmartSpider is enabled.
+      if x.strip() == "C$" and datastore['SpiderProfiles']
+        subdirs = profile_options(ip, x)
+      end
 
-			while subdirs.length > 0
-				depth = subdirs[0].count("\\")
-				if datastore['SpiderProfiles'] and x == "C$"
-					if depth-2 > datastore['MaxDepth']
-						subdirs.shift
-						next
-					end
-				else
-					if depth > datastore['MaxDepth']
-						subdirs.shift
-						next
-					end
-				end
-				read,write,type,files = eval_host(ip, x, subdirs[0])
-				if files and (read or write)
-					if files.length < 3
-						subdirs.shift
-						next
-					end
-					header = "#{ip}:#{rport}"
-					if simple.client.default_domain and simple.client.default_name
-						header << " \\\\#{simple.client.default_domain}"
-					end
-					header << "\\#{x.sub("C$","C$\\")}" if simple.client.default_name
-					header << subdirs[0]
+      while subdirs.length > 0
+        depth = subdirs[0].count("\\")
+        if datastore['SpiderProfiles'] and x == "C$"
+          if depth-2 > datastore['MaxDepth']
+            subdirs.shift
+            next
+          end
+        else
+          if depth > datastore['MaxDepth']
+            subdirs.shift
+            next
+          end
+        end
+        read,write,type,files = eval_host(ip, x, subdirs[0])
+        if files and (read or write)
+          if files.length < 3
+            subdirs.shift
+            next
+          end
+          header = "#{ip}:#{rport}"
+          if simple.client.default_domain and simple.client.default_name
+            header << " \\\\#{simple.client.default_domain}"
+          end
+          header << "\\#{x.sub("C$","C$\\")}" if simple.client.default_name
+          header << subdirs[0]
 
-					pretty_tbl = Rex::Ui::Text::Table.new(
-						'Header'  => header,
-						'Indent'  => 1,
-						'Columns' => [ 'Type', 'Name', 'Created', 'Accessed', 'Written', 'Changed', 'Size' ]
-					)
+          pretty_tbl = Rex::Ui::Text::Table.new(
+            'Header'  => header,
+            'Indent'  => 1,
+            'Columns' => [ 'Type', 'Name', 'Created', 'Accessed', 'Written', 'Changed', 'Size' ]
+          )
 
-					f_types = {
-						1  => 'RO',  2  => 'HIDDEN', 4  => 'SYS', 8   => 'VOL',
-						16 => 'DIR', 32 => 'ARC',    64 => 'DEV', 128 => 'FILE'
-					}
+          f_types = {
+            1  => 'RO',  2  => 'HIDDEN', 4  => 'SYS', 8   => 'VOL',
+            16 => 'DIR', 32 => 'ARC',    64 => 'DEV', 128 => 'FILE'
+          }
 
-					files.each do |file|
-						if file[0] and file[0] != '.' and file[0] != '..'
-							info  = file[1]['info']
-							fa    = f_types[file[1]['attr']]       # Item type
-							fname = file[0]                        # Filename
-							tcr   = to_unix_time(info[3], info[2]) # Created
-							tac   = to_unix_time(info[5], info[4]) # Accessed
-							twr   = to_unix_time(info[7], info[6]) # Written
-							tch   = to_unix_time(info[9], info[8]) # Changed
-							sz    = info[12] + info[13]            # Size
+          files.each do |file|
+            if file[0] and file[0] != '.' and file[0] != '..'
+              info  = file[1]['info']
+              fa    = f_types[file[1]['attr']]       # Item type
+              fname = file[0]                        # Filename
+              tcr   = to_unix_time(info[3], info[2]) # Created
+              tac   = to_unix_time(info[5], info[4]) # Accessed
+              twr   = to_unix_time(info[7], info[6]) # Written
+              tch   = to_unix_time(info[9], info[8]) # Changed
+              sz    = info[12] + info[13]            # Size
 
-							# Filename is too long for the UI table, cut it.
-							fname = "#{fname[0, 35]}..." if fname.length > 35
+              # Filename is too long for the UI table, cut it.
+              fname = "#{fname[0, 35]}..." if fname.length > 35
 
-							# Add subdirectories to list to use if SpiderShare is enabled.
-							if fa == "DIR"
-								subdirs.push(subdirs[0] + "\\" + fname)
-							end
+              # Add subdirectories to list to use if SpiderShare is enabled.
+              if fa == "DIR"
+                subdirs.push(subdirs[0] + "\\" + fname)
+              end
 
-							pretty_tbl << [fa || 'Unknown', fname, tcr, tac, twr, tch, sz]
-							detailed_tbl << ["#{ip}", fa || 'Unknown', "#{x}", subdirs[0] + "\\", fname, tcr, tac, twr, tch, sz]
-							logdata << "#{ip}\\#{x.sub("C$","C$\\")}#{subdirs[0]}\\#{fname}\n"
+              pretty_tbl << [fa || 'Unknown', fname, tcr, tac, twr, tch, sz]
+              detailed_tbl << ["#{ip}", fa || 'Unknown', "#{x}", subdirs[0] + "\\", fname, tcr, tac, twr, tch, sz]
+              logdata << "#{ip}\\#{x.sub("C$","C$\\")}#{subdirs[0]}\\#{fname}\n"
 
-						end
-					end
-					vprint_good(pretty_tbl.to_s)
-				end
-				subdirs.shift
-			end
+            end
+          end
+          vprint_good(pretty_tbl.to_s)
+        end
+        subdirs.shift
+      end
     end
-		unless detailed_tbl.rows.empty?
-			if datastore['LogSpider'] == 1
-				p = store_loot('smb.shares', 'text/csv', ip, detailed_tbl.to_csv)
-				print_good("#{ip} - info saved in: #{p.to_s}")
-			elsif datastore['LogSpider'] == 2
-				p = store_loot('smb.shares', 'text', ip, detailed_tbl)
-				print_good("#{ip} - info saved in: #{p.to_s}")
-			elsif datastore['LogSpider'] == 3
-				p = store_loot('smb.shares', 'text', ip, logdata)
-				print_good("#{ip} - info saved in: #{p.to_s}")
-			end
-		end
+    unless detailed_tbl.rows.empty?
+      if datastore['LogSpider'] == 1
+        p = store_loot('smb.shares', 'text/csv', ip, detailed_tbl.to_csv)
+        print_good("#{ip} - info saved in: #{p.to_s}")
+      elsif datastore['LogSpider'] == 2
+        p = store_loot('smb.shares', 'text', ip, detailed_tbl)
+        print_good("#{ip} - info saved in: #{p.to_s}")
+      elsif datastore['LogSpider'] == 3
+        p = store_loot('smb.shares', 'text', ip, logdata)
+        print_good("#{ip} - info saved in: #{p.to_s}")
+      end
+    end
   end
 
   def cleanup
