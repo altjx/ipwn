@@ -36,6 +36,8 @@ class update:
 			return str(version[0]).replace("u",".")
 		else:
 			version = str(version.split()[2]).replace("\"","").replace("0_","").replace("1.","")
+			if version[version.find("."):] == ".0":
+				version = version[:version.find(".")]
 			return version
 
 	def check_arch(self):
@@ -130,6 +132,7 @@ class update:
 		latest = str(self.check_web())
 		print "[*] Installed version: " + current
 		print "[*] Latest version: " + latest
+
 		if current == latest:
 			print "[*] Already up-to-date."
 			self.check_chrome()
