@@ -134,11 +134,10 @@ class update:
 		print "[*] Latest version: " + latest
 
 		if current == latest:
-			self.run_update()
-#			print "[*] Already up-to-date."
-#			self.check_chrome()
-#			print
-#			exit()
+			print "[*] Already up-to-date."
+			self.check_chrome()
+			print
+			exit()
 		else:
 			self.run_update()
 		print
