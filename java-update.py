@@ -101,13 +101,13 @@ class update:
 		url = 'https://edelivery.oracle.com' + self.dl_link[self.dl_link.find("otn")-1:]
 	
 		request = urllib2.Request(url)
-		request.add_header("Cookie","s_cc=true; gpw_e24=%s;" % self.link)
+		request.add_header("Cookie","s_cc=true; gpw_e24=%s; oraclelicense=accept-securebackup-cookie; " % self.link)
 		response = urllib2.urlopen(request)
 	
 		f = open("%s" % self.update_fn,"w")
 		f.write(response.read())
 		f.close()
-		
+			
 		print "[*] Download complete."
 		print "[*] Extracting archive."
 		commands.getoutput("tar -xzvf %s" % self.update_fn)
@@ -134,10 +134,11 @@ class update:
 		print "[*] Latest version: " + latest
 
 		if current == latest:
-			print "[*] Already up-to-date."
-			self.check_chrome()
-			print
-			exit()
+			self.run_update()
+#			print "[*] Already up-to-date."
+#			self.check_chrome()
+#			print
+#			exit()
 		else:
 			self.run_update()
 		print
