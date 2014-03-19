@@ -46,7 +46,7 @@ class Metasploit3 < Msf::Auxiliary
          'SSL' => datastore['SSL']
          }
 
-      res = send_request_cgi!(opts)
+      res = send_request_cgi(opts)
       return if not res
 
          if datastore['ReadBytes'] == 0
