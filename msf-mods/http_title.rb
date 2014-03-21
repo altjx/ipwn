@@ -74,7 +74,7 @@ class Metasploit3 < Msf::Auxiliary
   end
 
    def print_title(ip, rport, response)
-      title = response.to_s[/<title[^>]*>(.*?)<\/title>/,1]
+      title = response.to_s[/<title[^>]*>(.*?)<\/title>/m,1].strip
       if title.to_s.length == 0
           print_error("#{ip}:#{rport} - <No title found>")
       else
