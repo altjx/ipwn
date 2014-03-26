@@ -409,6 +409,9 @@ class Metasploit3 < Msf::Auxiliary
         end
         subdirs.shift
       end
+		if not datastore['VERBOSE']
+			print_status("[spider complete] - #{ip}:#{rport} - #{x}")
+		end
     end
     unless detailed_tbl.rows.empty?
       if datastore['LogSpider'] == 1
