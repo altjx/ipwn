@@ -19,9 +19,9 @@ class Metasploit3 < Msf::Auxiliary
     super(
       'Name'        => 'HTTP Title Parser',
       'Description' => %q{Reports back web page titles. Very useful for when
-			you have numerous web servers to inspect and need to figure out what's
-			running on them. Other methods exist, such as taking screenshots, but 
-			they may potentially be a slower process.},
+      you have numerous web servers to inspect and need to figure out what's
+      running on them. Other methods exist, such as taking screenshots, but
+      they may potentially be a slower process.},
       'Author'      => 'Alton Johnson alton.jx[at]gmail.com',
       'License'     => MSF_LICENSE
     )
@@ -75,10 +75,10 @@ class Metasploit3 < Msf::Auxiliary
 
    def print_title(ip, rport, response)
       title = response.to_s[/<title[^>]*>(.*?)<\/title>/im,1]
-		begin
-			title = title.strip
-		rescue
-		end
+    begin
+      title = title.strip
+    rescue
+    end
       if title.to_s.length == 0
           print_error("#{ip}:#{rport} - <No title found>")
       else
