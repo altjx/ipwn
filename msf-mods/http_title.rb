@@ -57,15 +57,15 @@ class Metasploit3 < Msf::Auxiliary
 
          # Parse web page response.
          if (res.code >= 300 and res.code < 400) or body.include? "location.replace(\"https:"
-            print_error("#{ip}:#{rport} - 3xx or Java redirect")
+            print_error("#{ip}:#{rport} - #{res.code} - <Redirect>")
          elsif res.code >= 200 and res.code < 300
-            print_title(ip, rport, body)
+            print_title(ip, rport, body, res.code)
          elsif res.code >= 300 and res.code < 400
-            print_error("#{ip}:#{rport} - <#{res.code} HTTP Response>")
+				 		print_title(ip, rport, body, res.code, 0)
          elsif res.code >= 400 and res.code < 500
-            print_error("#{ip}:#{rport} - <#{res.code} HTTP Response>")
+				 		print_title(ip, rport, body, res.code, 0)
          elsif res.code >= 500 and res.code < 600
-            print_error("#{ip}:#{rport} - <#{res.code} HTTP Response>")
+				 		print_title(ip, rport, body, res.code, 0)
          end
 
          disconnect
@@ -73,16 +73,22 @@ class Metasploit3 < Msf::Auxiliary
     end
   end
 
-   def print_title(ip, rport, response)
-      title = response.to_s[/<title[^>]*>(.*?)<\/title>/im,1]
+   def print_title(ip, rport, response, code, status=1)
+      title = response.to_s.scan(/<title[^>]*>(.*?)<\/title>/im)
+			title = title[-1].to_s[2..-3]
     begin
       title = title.strip
     rescue
     end
       if title.to_s.length == 0
-          print_error("#{ip}:#{rport} - <No title found>")
+          print_error("#{ip}:#{rport} - #{code} - <No title found>")
       else
-          print_good("#{ip}:#{rport} - #{title}")
+				if status == 1
+          print_good("#{ip}:#{rport} - #{code} - #{title}")
+				else
+					title = title.gsub("#{code} - ", "")
+					print_error("#{ip}:#{rport} - #{code} - #{title}")
+				end
       end
    end
 
