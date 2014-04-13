@@ -1,4 +1,23 @@
 #!/usr/bin/python
+#
+# This script was designed while I was taking a security course. 
+# Basically, if you have allowed space to put shellcode in an exploit, 
+# but you're limited to certain allowed charcaters, you can use this 
+# sub/push encoder to push the "restricted" characters onto the stack,
+# and # jmp to it.
+#
+# For example, if you need to get an egghunter inside of an exploit, but
+# you can't specifically put the egghunter code in there (\xE7\xFF\xE7\x75, etc)
+# then you can simply provide this script \x75\xE7\xFF\xE7, and it will 
+# use the EAX register to equal E7FFE775 with SUB instructions.
+#
+# A blog post will be created to demonstrate some of these examples soon.
+#
+# Author: Alton Johnson
+# Contact: alton.jx@gmail.com
+# Updated: 04/13/15
+#
+
 import struct, getopt
 from sys import argv
 
