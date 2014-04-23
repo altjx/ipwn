@@ -10,6 +10,13 @@ class colors:
 	white = "\033[1;37m"
 	green = "\033[1;32m"
 
+try:
+	from prettytable import *
+except Exception:
+	print colors.red + " Error: The 'prettytables' python module isn't installed."
+	print " Download prettytables and then run the script again. Link: https://code.google.com/p/prettytable/"
+	exit()
+
 banner = "\n " + "-" * 72 + "\n " + colors.white + " nmapparse 1.0 - Nmap Output Parser, Alton Johnson (alton.jx@gmail.com)\n " + colors.normal + "-" * 72 + "\n "
 
 def help():
@@ -18,7 +25,9 @@ def help():
 	print "\n Note: This script must point to a grepable output file from nmap to work properly.\n"
 	exit()
 
+
 def start(argv):
+	table = PrettyTable(["IP Address","Port","Service","Version"])
 	if len(argv) == 0:
 		help()
 	contents = sorted(open(argv[0]).read().split('\n'))
@@ -49,39 +58,10 @@ def start(argv):
 						version = version[:40]
 					if len(version) == 0:
 						version = "-"
-					data.append([ip_addr, port, service, version])
+					table.add_row([ip_addr, port, service, version])
+	print table
 
 
-	#grab offset
-	offset = [0,0,0,0]
-	for row in data:
-		for num in range(0,len(row)):
-			if len(row[num]) > offset[num]:
-				offset[num] = len(row[num])
-
-	#print pretty lines
-	row_lines = " +" + "-" * (offset[0]+3) + "+" + "-" * (offset[1]+3) + "+" + \
-	"-" * (offset[2]+3) + "+" + "-" * (offset[3]+3) + "+"
-
-	print
-	print row_lines
-	print " | " + colors.blue + "IP Address " + colors.normal + \
-	" " * (offset[0]-9) + "|" + colors.blue + " Port" + colors.normal + \
-	" " * (offset[1]-2) + "|" + colors.blue + " Service" + colors.normal + \
-	" " * (offset[2]-5) + "|" + colors.blue + " Version" + colors.normal + " " * (offset[3]-5) + "|"
-
-	#output
-	ip = ''
-	for line in data:
-		if line[0] != ip:
-			print row_lines
-			ip = line[0]
-		for num in range(0,len(line)):
-			print " | " + line[num] + (" " * (offset[num]-len(line[num]))), 
-		print " |"
-
-	print row_lines
-	print
 try:
 	start(argv[1:])
 except Exception, err:
