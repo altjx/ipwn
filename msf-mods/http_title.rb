@@ -37,11 +37,11 @@ class Metasploit3 < Msf::Auxiliary
       })
   end
 
-  def run_host(ip)
+  def run_host(ip, uri="/")
     begin
       connect
 
-         opts = {'uri' => '/',
+         opts = {'uri' => uri,
          'method' => 'GET',
          'SSL' => datastore['SSL']
          }
@@ -56,16 +56,16 @@ class Metasploit3 < Msf::Auxiliary
          end
 
          # Parse web page response.
-         if (res.code >= 300 and res.code < 400) or body.include? "location.replace(\"https:"
-            print_error("#{ip}:#{rport} - #{res.code} - <Redirect>")
+         if (res.code >= 300 and res.code < 400)
+            print_error("#{ip}:#{rport} - #{res.code} - <Redirect>")            
          elsif res.code >= 200 and res.code < 300
             print_title(ip, rport, body, res.code)
          elsif res.code >= 300 and res.code < 400
-				 		print_title(ip, rport, body, res.code, 0)
+            print_title(ip, rport, body, res.code, 0)
          elsif res.code >= 400 and res.code < 500
-				 		print_title(ip, rport, body, res.code, 0)
+            print_title(ip, rport, body, res.code, 0)
          elsif res.code >= 500 and res.code < 600
-				 		print_title(ip, rport, body, res.code, 0)
+            print_title(ip, rport, body, res.code, 0)
          end
 
          disconnect
@@ -74,22 +74,41 @@ class Metasploit3 < Msf::Auxiliary
   end
 
    def print_title(ip, rport, response, code, status=1)
-      title = response.to_s.scan(/<title[^>]*>(.*?)<\/title>/im)
-			title = title[-1].to_s[2..-3]
+
+    # A little javascript redirect handling.
+    if response.include? "location.replace(\""
+      if response.include? "https:"
+        print_error("#{ip}:#{rport} - #{code} - <Javascript redirect>")
+        return
+      end
+      new_uri = response.to_s.scan(/replace\(\"(.*?)\"/im)[0][0].to_s
+      run_host(ip, new_uri)
+      return
+    end
+
+    # Stripping title from response code.
+    title = response.to_s.scan(/<title[^>]*>(.*?)<\/title>/im)
+    if title.kind_of?(Array)
+      title = title[0][0]
+    else
+      title = title[-1].to_s[2..-3]
+    end
     begin
       title = title.strip
     rescue
     end
-      if title.to_s.length == 0
-          print_error("#{ip}:#{rport} - #{code} - <No title found>")
-      else
-				if status == 1
-          print_good("#{ip}:#{rport} - #{code} - #{title}")
-				else
-					title = title.gsub("#{code} - ", "")
-					print_error("#{ip}:#{rport} - #{code} - #{title}")
-				end
-      end
-   end
+    title = title.inspect.to_s.gsub(/(\\x)+(..)/, "")[1..-2]
 
-end
+    # Printing out the title.
+    if title.to_s.length == 0
+        print_error("#{ip}:#{rport} - #{code} - <No title found>")
+    else
+      if status == 1
+        print_good("#{ip}:#{rport} - #{code} - #{title}")
+      else
+        title = title.gsub("#{code} - ", "")
+        print_error("#{ip}:#{rport} - #{code} - #{title}")
+      end
+    end
+   end
+  end
