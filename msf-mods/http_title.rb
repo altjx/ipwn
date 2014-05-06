@@ -55,6 +55,7 @@ class Metasploit3 < Msf::Auxiliary
             body = res.body.to_s[0..datastore['ReadBytes']]
          end
 
+         return if res.body.length == 0
          # Parse web page response.
          if (res.code >= 300 and res.code < 400)
             print_error("#{ip}:#{rport} - #{res.code} - <Redirect>")            
@@ -74,7 +75,6 @@ class Metasploit3 < Msf::Auxiliary
   end
 
    def print_title(ip, rport, response, code, status=1)
-
     # A little javascript redirect handling.
     if response.include? "location.replace(\""
       if response.include? "https:"
@@ -86,10 +86,10 @@ class Metasploit3 < Msf::Auxiliary
       return
     end
 
-    # Stripping title from response code.
+    # Stripping title from response body.
     title = response.to_s.scan(/<title[^>]*>(.*?)<\/title>/im)
     if title.kind_of?(Array)
-      title = title[0][0]
+      title = title[0][0] if title.length > 0
     else
       title = title[-1].to_s[2..-3]
     end
