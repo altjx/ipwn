@@ -338,7 +338,6 @@ class Metasploit3 < Msf::Auxiliary
     list = shares.collect {|e| e[0]}
     list.each do |x|
       subdirs = [""]
-      # Added user profile directories if SmartSpider is enabled.
       if x.strip() == "C$" and datastore['SpiderProfiles']
         subdirs = profile_options(ip, x)
       end
@@ -409,9 +408,7 @@ class Metasploit3 < Msf::Auxiliary
         end
         subdirs.shift
       end
-		if not datastore['VERBOSE']
-			print_status("[spider complete] - #{ip}:#{rport} - #{x}")
-		end
+    vprint_status("[spider complete] - #{ip}:#{rport} - #{x}")
     end
     unless detailed_tbl.rows.empty?
       if datastore['LogSpider'] == 1
