@@ -68,7 +68,7 @@ class Metasploit3 < Msf::Auxiliary
       [
         OptString.new('SMBPass', [ false, "SMB Password" ]),
         OptString.new('SMBUser', [ false, "SMB Username" ]),
-        OptInt.new('STOP_ON_LOCKOUT', [true, "Stops module when x amount of lockouts are detected.", 3]),
+        OptInt.new('STOP_ON_LOCKOUT', [false, "Quits after x amount of lockouts.", 3]),
         OptString.new('SMBDomain', [ false, "SMB Domain", '']),
         OptBool.new('PRESERVE_DOMAINS', [ false, "Respect a username that contains a domain name.", true]),
         OptBool.new('RECORD_GUEST', [ false, "Record guest-privileged random logins to the database", false])
