@@ -93,16 +93,21 @@ class Metasploit3 < Msf::Auxiliary
     end
 
     begin
-      attempts = 0
+      locked_attempts = 0
+      locked_users = []
       each_user_pass do |user, pass|
         result = try_user_pass(domain, user, pass)
         if result.include? 'STATUS_ACCOUNT_LOCKED_OUT'
-          attempts += 1
+          locked_attempts += 1
+          locked_users.push(user)
         end
-        if datastore['STOP_ON_LOCKOUT'] == attempts
+        if datastore['STOP_ON_LOCKOUT'] == locked_attempts
           vprint_error('Canceling. \'STOP_ON_LOCKOUT\' threshold reached.')
           break
         end
+      end
+      if locked_users.length > 0
+        vprint_status("#{locked_attempts} user(s) were found to be locked: #{locked_users.join(", ")}")
       end
     rescue ::Rex::ConnectionError
       nil
