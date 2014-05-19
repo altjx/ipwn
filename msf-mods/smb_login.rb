@@ -69,7 +69,7 @@ class Metasploit3 < Msf::Auxiliary
       [
         OptString.new('SMBPass', [ false, "SMB Password" ]),
         OptString.new('SMBUser', [ false, "SMB Username" ]),
-        OptInt.new('STOP_ON_LOCKOUT', [false, "Quits after x amount of lockouts.", 3]),
+        OptInt.new('MAX_LOCKOUTS', [false, "Quits after x amount of lockouts.", 3]),
         OptString.new('SMBDomain', [ false, "SMB Domain", '']),
         OptBool.new('PRESERVE_DOMAINS', [ false, "Respect a username that contains a domain name.", true]),
         OptBool.new('RECORD_GUEST', [ false, "Record guest-privileged random logins to the database", false])
@@ -102,8 +102,8 @@ class Metasploit3 < Msf::Auxiliary
           locked_attempts += 1
           locked_users.push(user)
         end
-        if datastore['STOP_ON_LOCKOUT'] == locked_attempts
-          vprint_error('Canceling. \'STOP_ON_LOCKOUT\' threshold reached.')
+        if datastore['MAX_LOCKOUTS'] == locked_attempts
+          vprint_error('Canceling. \'MAX_LOCKOUTS\' threshold reached.')
           break
         end
       end
