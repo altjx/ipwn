@@ -33,6 +33,7 @@ class Metasploit3 < Msf::Auxiliary
         [
           'tebo <tebo [at] attackresearch [dot] com>', # Original
           'Ben Campbell' # Refactoring
+          'Alton Johnson'
         ],
       'References'     =>
         [
