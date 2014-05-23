@@ -32,7 +32,8 @@ class Metasploit3 < Msf::Auxiliary
       'Author'         =>
         [
           'tebo <tebo [at] attackresearch [dot] com>', # Original
-          'Ben Campbell' # Refactoring
+          'Ben Campbell', # Refactoring
+          'Alton Johnson'
         ],
       'References'     =>
         [
@@ -97,11 +98,11 @@ class Metasploit3 < Msf::Auxiliary
       locked_users = []
       each_user_pass do |user, pass|
         result = try_user_pass(domain, user, pass)
-        if result.include? 'STATUS_ACCOUNT_LOCKED_OUT'
+        if result.to_s.include? 'STATUS_ACCOUNT_LOCKED_OUT'
           locked_attempts += 1
           locked_users.push(user)
         end
-        if datastore['STOP_ON_LOCKOUT'] == locked_attempts
+        if datastore['STOP_ON_LOCKOUT'] == locked_attempts and datastore['STOP_ON_LOCKOUT'] != 0
           vprint_error('Canceling. \'STOP_ON_LOCKOUT\' threshold reached.')
           break
         end

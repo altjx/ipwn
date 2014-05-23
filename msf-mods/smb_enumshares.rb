@@ -48,7 +48,7 @@ class Metasploit3 < Msf::Auxiliary
         OptBool.new('SpiderShares',      [false, 'Spider shares recursively', false]),
         OptBool.new('VERBOSE',        [true, 'Show detailed information when spidering', true]),
         OptBool.new('SpiderProfiles',  [false, 'Spider only user profiles when share = C$', true]),
-        OptInt.new('LogSpider',      [false, '1 = CSV, 2 = table (txt), 3 = one liner (txt)', 1]),
+        OptInt.new('LogSpider',      [false, '1 = CSV, 2 = table (txt), 3 = one liner (txt)', 3]),
         OptInt.new('MaxDepth',      [true, 'Max number of subdirectories to spider', 999]),
         OptBool.new('USE_SRVSVC_ONLY', [true, 'List shares only with SRVSVC', false ])
       ], self.class)
@@ -321,7 +321,7 @@ class Metasploit3 < Msf::Auxiliary
   def get_files_info(ip, rport, shares, info)
 
     if not datastore['VERBOSE']
-      print_status("Verbosity disabled. Please wait while spidering share(s).")
+      print_status("#{ip}:#{rport} - Verbosity disabled. Please wait while spidering share(s).")
     end
     read  = false
     write = false
@@ -337,6 +337,12 @@ class Metasploit3 < Msf::Auxiliary
 
     list = shares.collect {|e| e[0]}
     list.each do |x|
+      if x.strip == "ADMIN$"
+        next
+      end
+      if not datastore['VERBOSE']
+        print_status("#{ip}:#{rport} - Spidering #{x}.")
+      end
       subdirs = [""]
       if x.strip() == "C$" and datastore['SpiderProfiles']
         subdirs = profile_options(ip, x)
@@ -408,17 +414,17 @@ class Metasploit3 < Msf::Auxiliary
         end
         subdirs.shift
       end
-    vprint_status("[spider complete] - #{ip}:#{rport} - #{x}")
+    vprint_status("#{ip}:#{rport} - Spider complete [#{x}].")
     end
     unless detailed_tbl.rows.empty?
       if datastore['LogSpider'] == 1
-        p = store_loot('smb.shares', 'text/csv', ip, detailed_tbl.to_csv)
+        p = store_loot('smb.enumshares', 'text/csv', ip, detailed_tbl.to_csv)
         print_good("#{ip} - info saved in: #{p.to_s}")
       elsif datastore['LogSpider'] == 2
-        p = store_loot('smb.shares', 'text', ip, detailed_tbl)
+        p = store_loot('smb.enumshares', 'text', ip, detailed_tbl)
         print_good("#{ip} - info saved in: #{p.to_s}")
       elsif datastore['LogSpider'] == 3
-        p = store_loot('smb.shares', 'text', ip, logdata)
+        p = store_loot('smb.enumshares', 'text', ip, logdata)
         print_good("#{ip} - info saved in: #{p.to_s}")
       end
     end

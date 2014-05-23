@@ -27,7 +27,9 @@ class Metasploit3 < Msf::Auxiliary
     )
 
       register_options([
-            OptInt.new('ReadBytes', [false, "Specify # of bytes to parse. 0 to parse entire pages", 0]),
+            OptInt.new('ReadBytes', [false, "Specify # of bytes to parse. 0 to parse entire pages.", 0]),
+            OptString.new('URI_Path', [true, "Specify the URI path that should be followed on targets.", "/"]),
+            OptBool.new('Follow_Redirects', [false, "Attempts to follow redirects.", true]),
             OptBool.new('SSL', [false, "Negotiate SSL connection", false])
          ], self.class)
 
@@ -37,7 +39,7 @@ class Metasploit3 < Msf::Auxiliary
       })
   end
 
-  def run_host(ip, uri="/")
+  def run_host(ip, uri=datastore['URI_Path'])
     begin
       connect
 
@@ -58,15 +60,16 @@ class Metasploit3 < Msf::Auxiliary
          return if res.body.length == 0
          # Parse web page response.
          if (res.code >= 300 and res.code < 400)
-            print_error("#{ip}:#{rport} - #{res.code} - <Redirect>")            
+           print_title(ip, rport, body, res.code, 0, res.headers['Location'])
+           # print_error("#{ip}:#{rport} - #{res.code} - <Redirect>")
          elsif res.code >= 200 and res.code < 300
-            print_title(ip, rport, body, res.code)
+            print_title(ip, rport, body, res.code, 1, res.headers['Location'])
          elsif res.code >= 300 and res.code < 400
-            print_title(ip, rport, body, res.code, 0)
+            print_title(ip, rport, body, res.code)
          elsif res.code >= 400 and res.code < 500
-            print_title(ip, rport, body, res.code, 0)
+            print_title(ip, rport, body, res.code)
          elsif res.code >= 500 and res.code < 600
-            print_title(ip, rport, body, res.code, 0)
+            print_title(ip, rport, body, res.code)
          end
 
          disconnect
@@ -74,16 +77,30 @@ class Metasploit3 < Msf::Auxiliary
     end
   end
 
-   def print_title(ip, rport, response, code, status=1)
-    # A little javascript redirect handling.
-    if response.include? "location.replace(\""
-      if response.include? "https:"
-        print_error("#{ip}:#{rport} - #{code} - <Javascript redirect>")
+   def print_title(ip, rport, response, code, status=0, header="")
+    # A little redirect handling.
+    if datastore['Follow_Redirects']
+      if header.to_s.include? "(http://|https://)"
+        print_error("#{ip}:#{rport} - #{code} - <302 HTTPS/HTTP redirect>")
         return
+      else
+        if code == 302
+          new_uri = header
+          run_host(ip, new_uri)
+          return
+        end
       end
-      new_uri = response.to_s.scan(/replace\(\"(.*?)\"/im)[0][0].to_s
-      run_host(ip, new_uri)
-      return
+      unless response.downcase.include? "<title>" and response.downcase.include? "</title>"
+        if response.include? "location.replace(\"" 
+          if response.include? "https:"
+            print_error("#{ip}:#{rport} - #{code} - <Javascript redirect>")
+            return
+          end
+          new_uri = response.to_s.scan(/replace\(\"(.*?)\"/im)[0][0].to_s
+          run_host(ip, new_uri)
+          return
+        end
+      end
     end
 
     # Stripping title from response body.
@@ -99,11 +116,16 @@ class Metasploit3 < Msf::Auxiliary
     end
     title = title.inspect.to_s.gsub(/(\\x)+(..)/, "")[1..-2]
 
+    if code == 302
+      status = 1
+      title = "<302 HTTPS/HTTP Redirect>"
+    end
+
     # Printing out the title.
     if title.to_s.length == 0
         print_error("#{ip}:#{rport} - #{code} - <No title found>")
     else
-      if status == 1
+      if status == 0
         print_good("#{ip}:#{rport} - #{code} - #{title}")
       else
         title = title.gsub("#{code} - ", "")
