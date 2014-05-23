@@ -2,13 +2,12 @@
 
 msf_rc = File.open('http_title.rc','w')
 msf_rc.write("use auxiliary/scanner/http/http_title\n")
+if ARGV[-1] == "ssl"
+  msf_rc.write("set SSL true")
+else
 
 ARGV.each do |file|
-  if ARGV[-1] == "ssl"
-    msf_rc.write("set SSL true")
-  else
-    port = file[0..file.index(".")-1]
-  end
+  port = file[0..file.index(".")-1] unless file == ARGV[-1]
   msf_rc.write("set RHOSTS file:#{file}\n")
   msf_rc.write("set RPORT #{port}\n")
   msf_rc.write("spool http_title_#{port}.txt\n")
