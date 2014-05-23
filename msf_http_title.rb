@@ -8,6 +8,7 @@ else
 
 ARGV.each do |file|
   port = file[0..file.index(".")-1] unless file == ARGV[-1]
+  end
   msf_rc.write("set RHOSTS file:#{file}\n")
   msf_rc.write("set RPORT #{port}\n")
   msf_rc.write("spool http_title_#{port}.txt\n")
