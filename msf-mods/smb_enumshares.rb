@@ -414,7 +414,7 @@ class Metasploit3 < Msf::Auxiliary
         end
         subdirs.shift
       end
-    vprint_status("#{ip}:#{rport} - Spider complete [#{x}].")
+    print_status("#{ip}:#{rport} - Spider complete [#{x}].") unless datastore['VERBOSE'] == true
     end
     unless detailed_tbl.rows.empty?
       if datastore['LogSpider'] == 1
