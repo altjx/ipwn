@@ -320,9 +320,6 @@ class Metasploit3 < Msf::Auxiliary
 
   def get_files_info(ip, rport, shares, info)
 
-    if not datastore['VERBOSE']
-      print_status("#{ip}:#{rport} - Verbosity disabled. Please wait while spidering share(s).")
-    end
     read  = false
     write = false
 
