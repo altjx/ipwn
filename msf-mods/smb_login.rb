@@ -102,13 +102,11 @@ class Metasploit3 < Msf::Auxiliary
           locked_attempts += 1
           locked_users.push(user)
         end
-<<<<<<< HEAD
         if datastore['STOP_ON_LOCKOUT'] == locked_attempts and datastore['STOP_ON_LOCKOUT'] != 0
           vprint_error('Canceling. \'STOP_ON_LOCKOUT\' threshold reached.')
-=======
+        end
         if datastore['MAX_LOCKOUTS'] == locked_attempts
           vprint_error('Canceling. \'MAX_LOCKOUTS\' threshold reached.')
->>>>>>> 0bcdacfcd5ec3df3486501970703ecd9a566d0ee
           break
         end
       end
