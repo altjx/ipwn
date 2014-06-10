@@ -400,7 +400,7 @@ class Metasploit3 < Msf::Auxiliary
               fname = "#{fname[0, 35]}..." if fname.length > 35
 
               # Add subdirectories to list to use if SpiderShare is enabled.
-              if fa == "DIR"
+              if fa == "DIR" or (fa == nil and sz == 0)
                 subdirs.push(subdirs[0] + "\\" + fname)
               end
 
@@ -414,7 +414,7 @@ class Metasploit3 < Msf::Auxiliary
         end
         subdirs.shift
       end
-    print_status("#{ip}:#{rport} - Spider complete [#{x}].") unless datastore['VERBOSE'] == true
+    print_status("#{ip}:#{rport} - Spider #{x} complete.") unless datastore['VERBOSE'] == true
     end
     unless detailed_tbl.rows.empty?
       if datastore['LogSpider'] == 1
