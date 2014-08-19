@@ -36,6 +36,7 @@ def start(filename, domain, username, password)
     iplist.each do |ip|
       separate = 0
       users = []
+      excluded_users = ["SYSTEM","IUSR"]
 
       # Prints status.
       puts " [*] Extracting users from #{ip}"
@@ -45,7 +46,7 @@ def start(filename, domain, username, password)
         user_domain = row.scan(/Domain="(.*?)"/im)[0]
         user = row.scan(/Name="(.*?)"/im)[0]
         unless user_domain.nil? or user.nil?
-          t << [ip, user_domain[0], user[0]] unless users.include? user
+          t << [ip, user_domain[0], user[0]] unless users.include? user or excluded_users.include? user
           users << user
           separate = 1
         end
