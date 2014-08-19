@@ -46,7 +46,7 @@ def start(filename, domain, username, password)
         user_domain = row.scan(/Domain="(.*?)"/im)[0]
         user = row.scan(/Name="(.*?)"/im)[0]
         unless user_domain.nil? or user.nil?
-          t << [ip, user_domain[0], user[0]] unless users.include? user or excluded_users.include? user
+          t << [ip, user_domain[0], user[0]] unless users.include? user or excluded_users.include? user[0]
           users << user
           separate = 1
         end
