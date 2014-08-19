@@ -43,7 +43,7 @@ def start(argv):
       for i in find_pattern:
         if i in find_tcpwrapped:
           continue
-        tcp_file = open('open-ports/%s_%s.txt' % (i[0], i[1]),'a')
+        tcp_file = open('open-ports/%s.txt' % i[0],'a')
         tcp_file.write("%s\n" % ip_address)
         tcp_file.close()
   target_file.close()
