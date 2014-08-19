@@ -21,7 +21,6 @@ def help_menu
  \t-d\tDomain used for the valid account.
  \t-u\tAdministrator account that will be used for logging in.
  \t-p\tPassword for the administrator account.
-
  }
  exit 
 end
