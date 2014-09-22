@@ -5,7 +5,8 @@ begin
   require 'getopt/std'
 rescue Exception => e
   puts "\n Error loading required gems."
-  puts " Install required gems using the following commands:\n\n\tgem install terminal-table\n\tgem install getopt\n\n"
+  puts " Install required gems using the following commands:\n
+        gem install terminal-table\n\tgem install getopt\n\n"
   exit
 end
 

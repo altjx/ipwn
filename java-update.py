@@ -6,11 +6,12 @@
 # So considering I update my Kali Linux installation before every engagement, I decided to find a
 # way to automate this process. Obviously, this wasn't hard, but it's very useful.
 #
+# Contact me for any questions or any errors.
+#
 # Author: Alton Johnson (alton.jx@gmail.com)
 # Updated: 01/23/2014
 #
 # Credit: https://forums.kali.org/showthread.php?41-Installing-Java-on-Kali-Linux
-#
 
 import commands, urllib2, re, urllib
 
