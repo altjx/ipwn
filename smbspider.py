@@ -231,7 +231,7 @@ class spider:
 	
 	def start_downloading(self):
 		if len(self.sensitive_strings) == 0: return
-		print "\n [*] Attempting to download files that were deemed sensitive."
+		print "\n" + colors.blue + " [*] " + colors.norm + "Attempting to download files that were deemed sensitive."
 		if not os.path.exists('smbspider-downloads'):
 			os.makedirs('smbspider-downloads')
 		for f in self.file_locations:
