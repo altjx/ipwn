@@ -114,8 +114,8 @@ Usage menu:
 <b>smbspider</b><br />
 ---------- <br />
 Smbspider is a pretty smart when it comes to spidering Windows systems on internal networks. Once you get your hands on some credentials, you can pass them around with smbspider to try spidering systems that the user account has access to. In many cases, you'll end up quickly finding all types of sensitive data hanging out on employees' workstations. <br />
-	- Usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider%201.png <br />
-	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspider%202.png <br />
+	- Menu: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspiderpy.png <br />
+	- Script usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/smbspider/whole_output.png <br />
 	- Usage video: http://www.youtube.com/watch?v=skVZwynHECw <br />
 Usage menu:
 <pre><code>
