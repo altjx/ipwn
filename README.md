@@ -119,30 +119,44 @@ Smbspider is a pretty smart when it comes to spidering Windows systems on intern
 	- Usage video: http://www.youtube.com/watch?v=skVZwynHECw <br />
 Usage menu:
 <pre><code>
- Usage: smbspider.py &lt;OPTIONS&gt;
+ ----------------------------------------------------------
+ *                _             *
+ *               | |       //  \\     * 
+ *    ___ _ __ ___ | |__    _\\()//_    *
+ *   / __| '_ ` _ \| '_ \  / //  \\ \     *
+ *   \__ \ | | | | | |_) |   |\__/|     *
+ *   |___/_| |_| |_|_.__/       *
+ *              *
+ * SMB Spider v2.4, Alton Johnson (alton.jx@gmail.com)  *
+ ----------------------------------------------------------
+
+ Usage: /root/scripts/ipwn/smbspider.py <OPTIONS>
 
  Target(s) (required): 
 
-    -h &lt;host&gt;   Provide IP address or a text file containing IPs.
- 		        Supported formats: IP, smb://ip/share, \\ip\share\
+   -h <host>   Provide IP address or a text file containing IPs.
+       Supported formats: IP, smb://ip/share, \\ip\share\
 
  Credentials (required): 
 
-    -u &lt;user&gt;   Specify a valid username to authenticate to the system(s).
-    -p &lt;pass&gt;   Specify the password which goes with the username.
-    -P &lt;hash&gt;   Use -P to provide password hash if cleartext password isn't known.
-    -d &lt;domain&gt; If using a domain account, provide domain name.
+   -u <user>   Specify a valid username to authenticate to the system(s).
+   -p <pass>   Specify the password which goes with the username.
+   -P <hash>   Use -P to provide password hash if cleartext password isn't known.
+   -d <domain>   If using a domain account, provide domain name.
 
  Shares (optional):
 
-    -s &lt;share&gt;  Specify shares (separate by comma) or specify "profile" to spider user profiles.
-    -f &lt;file&gt;   Specify a list of shares from a file.
+   -s <share>  Specify shares (separate by comma) or specify "profile" to spider user profiles.
+   -f <file>   Specify a list of shares from a file.
 
  Other (optional):
 
-    -w       Avoid verbose output. Output successful spider results to smbspider_host_share_user.txt.
-          	 This option is HIGHLY recommended if numerous systems are being scanned.
-    -n       Ignore authentication check prior to spidering.
+   -w      Avoid verbose output. Output successful spider results to smbspider_host_share_user.txt.
+       This option is HIGHLY recommended if numerous systems are being scanned.
+   -n      ** Ignore authentication check prior to spidering.
+   -g <file>   Grab (download) files that match strings provided in text file. (Case sensitive.)
+       ** Examples: *assword.doc, *assw*.doc, pass*.xls, etc.
+
 </code></pre>
 <br />
 <b>SMSpam</b><br />
