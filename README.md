@@ -169,7 +169,7 @@ Usage menu:
 ===================================================
 
 		-r: Recipient to send an email to.
-		-u: Gmail username (include @gmail.com)
+		-u: Gmail username (include @gmail.com).
 		-p: Password to login to gmail with.
 		-m: Message to send to user.
 		-s: Subject for the email.
