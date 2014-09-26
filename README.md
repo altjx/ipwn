@@ -120,8 +120,8 @@ Smbspider is a pretty smart when it comes to spidering Windows systems on intern
 Usage menu:
 <pre><code>
  ************************************************************
- *                _                                         *
- *               | |       //  \\                           *
+ *                  _                                         *
+ *                 | |       //  \\                           *
  *    ___ _ __ ___ | |__    _\\()//_                        *
  *   / __| '_ ` _ \| '_ \  / //  \\ \                       *
  *   \__ \ | | | | | |_) |   |\__/|                         *
