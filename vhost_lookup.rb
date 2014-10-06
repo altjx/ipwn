@@ -9,16 +9,24 @@
 # domains. For further reference, research Apache VirtualHosts. #
 #                                                               #
 #################################################################
+$banner = %Q{
+ ---------------------------------------------------
+  VHost Lookup - Alton Johnson (alton.jx@gmail.com)
+ ---------------------------------------------------
+ 
+}
 
 class VHostLookup
-  def initialize(ipaddr, pages)
+  def initialize(ipaddr, strict, pages)
     @ipaddr = ipaddr
     @pages = pages
     @domains = []
+    @strict = strict
   end
 
   # Submit the bing request and obtain all domains associated with IP.
   def begin
+    puts $banner
     cookies = ''
     url = URI("http://www.bing.com/search?q=ip:#{@ipaddr}")
     res = Net::HTTP.get_response(url)
@@ -53,7 +61,11 @@ class VHostLookup
           a = result[0].split(" ")[0][0..-2]
           b = result[-2].split(" ")[-1] # DNS record.
           c = result[-1] # DNS entry.
-          @domain_matchings << [domain, a, b, c]
+          if @strict == 1
+            @domain_matchings << [domain, a, b, c] if c == @ipaddr
+          else
+            @domain_matchings << [domain, a, b, c]
+          end
         end
       end
     end
@@ -70,18 +82,16 @@ class VHostLookup
       end
     end
     puts table
+    puts 
   end
 end
 
 def help_menu
-  puts %Q{
- ---------------------------------------------------
-  VHost Lookup - Alton Johnson (alton.jx@gmail.com)
- ---------------------------------------------------
 
- Usage: #{$0} -i 199.83.134.95
+ puts %Q{#{$banner} Usage: #{$0} -i 199.83.134.95
 
  \t-i\tIP address to look up other domains (virtualhosts) for.
+ \t-s\tOnly show domains associated with IP address provided.
   }
   exit
 end
@@ -92,8 +102,14 @@ if $0 == __FILE__
     help_menu
   end
 
-  opt = Getopt::Std.getopts("i:")
+  opt = Getopt::Std.getopts("i:s")
+  strict = ''
   fail "You forgot to provide an IP address." unless opt['i']
-  s = VHostLookup.new(opt['i'], 5)
+  if opt['s']
+    strict = 1
+  else
+    strict = 0
+  end
+  s = VHostLookup.new(opt['i'], strict, 5)
   s.begin
 end
