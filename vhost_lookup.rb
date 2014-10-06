@@ -41,7 +41,7 @@ class VHostLookup
   end
   
   def parse_body(domains)
-    puts " [*] #{domains.length} domain(s) identified. Parsing results."
+    puts " [*] #{domains.length} domain(s) identified to match IP. Parsing results."
     domains.each {|domain|
       @domains << domain[0].gsub("<strong>","").gsub("</strong>","").gsub("https://", "").split("/")[0]
     }
