@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
-require 'terminal-table'
-require 'net/http'
-require 'getopt/std'
+['terminal-table', 'net/http', 'getopt/std'].each(&method(:require))
 
 #################################################################
 #                                                               #
