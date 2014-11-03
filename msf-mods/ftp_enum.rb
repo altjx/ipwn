@@ -179,11 +179,13 @@ class Metasploit3 < Msf::Auxiliary
     if response[1].nil?
       return directories
     else
+			puts response
       response[1].split("\r\n").each do |resp|
         # if its a directory store it in array
-        if resp[0] == "d"
+        if resp[0] == "d" or resp.include? "<DIR>"
           # considers whatever is after the current time (12:12) as directories
-          directories << resp[resp.index(/[0-9][0-9]:[0-9][0-9]/)+6..-1]
+          directories << resp[resp.index(/[0-9][0-9]:[0-9][0-9]/)+6..-1] if resp[0] == "d"
+					directories << resp[39..-1]
         end
       end
       return directories
