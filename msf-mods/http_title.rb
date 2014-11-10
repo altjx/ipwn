@@ -63,7 +63,7 @@ class Metasploit3 < Msf::Auxiliary
            print_title(ip, rport, body, res.code, 0, res.headers['Location'])
            # print_error("#{ip}:#{rport} - #{res.code} - <Redirect>")
          elsif res.code >= 200 and res.code < 300
-            print_title(ip, rport, body, res.code, 1, res.headers['Location'])
+            print_title(ip, rport, body, res.code, 0, res.headers['Location'])
          elsif res.code >= 300 and res.code < 400
             print_title(ip, rport, body, res.code)
          elsif res.code >= 400 and res.code < 500
