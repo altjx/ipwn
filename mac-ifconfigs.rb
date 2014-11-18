@@ -28,7 +28,7 @@ table = Terminal::Table.new do |t|
 
   ifconfig.each do |line|
     # Regex used to grab for specific information.
-    int = line.scan(/(en[0-9]|ham[0-9]|vmnet[0-9]|p2p[0-9]|bridge[0-9]|lo[0-9]|tun[0-9]):/)
+    int = line.scan(/(.*?): flags=/)
     ipaddr = line.scan(/inet \b(?:\d{1,3}\.){3}\d{1,3}\b/)
     netmask = line.scan(/0x\h\h\h\h\h\h\h\h/)
     broadcast = line.scan(/broadcast \b(?:\d{1,3}\.){3}\d{1,3}\b/)
