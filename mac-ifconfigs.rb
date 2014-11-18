@@ -72,5 +72,5 @@ table = Terminal::Table.new do |t|
     t << entry
   end
 end
-table.title = "1337 H4x0Rz Unix Ifconfig Parser - Alton Johnson (alton.jx@gmail.com)"
+table.title = "1337 H4x0Rz Mac OS Ifconfig Parser - Alton Johnson (alton.jx@gmail.com)"
 puts table
