@@ -26,8 +26,8 @@ class VHostLookup
 
   # Submit the bing request and obtain all domains associated with IP.
   def begin
-    puts " [*] Finding virtualhosts for: #{@ipaddr}"
     puts $banner
+    puts " [*] Finding virtualhosts for: #{@ipaddr}"
     cookies = ''
     url = URI("http://www.bing.com/search?q=ip:#{@ipaddr}")
     res = Net::HTTP.get_response(url)
