@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-['terminal-table', 'net/http', 'getopt/std'].each(&method(:require))
+['pry','terminal-table', 'net/http', 'getopt/std'].each(&method(:require))
 
 #################################################################
 #                                                               #
@@ -26,6 +26,7 @@ class VHostLookup
 
   # Submit the bing request and obtain all domains associated with IP.
   def begin
+    puts " [*] Finding virtualhosts for: #{@ipaddr}"
     puts $banner
     cookies = ''
     url = URI("http://www.bing.com/search?q=ip:#{@ipaddr}")
@@ -58,8 +59,12 @@ class VHostLookup
         results = output[hash[';; ANSWER SECTION:']+1..-6]
         results.each do |result|
           result = result.split("\t")
-          a = result[0].split(" ")[0][0..-2]
-          b = result[-2].split(" ")[-1] # DNS record.
+          a = result[0].split(" ")[0][0..-2] # DNS name.
+          begin
+            b = result[-2].split(" ")[-1] # DNS record.
+          rescue
+            next
+          end
           c = result[-1] # DNS entry.
           if @strict == 1
             @domain_matchings << [domain, a, b, c] if c == @ipaddr
@@ -104,7 +109,7 @@ if $0 == __FILE__
 
   opt = Getopt::Std.getopts("i:s")
   strict = ''
-  fail "You forgot to provide an IP address." unless opt['i']
+  fail "You forgot to provide an IP address with -i." unless opt['i']
   if opt['s']
     strict = 1
   else
