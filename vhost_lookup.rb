@@ -78,16 +78,21 @@ class VHostLookup
   end
 
   def stdout
-    puts " [*] Complete! Printing table.\n\n"
-    table = Terminal::Table.new do |t|
-      t << ['Query','Additional DNS Name','DNS Record Type','DNS Entry']
-      t.add_separator
-      @domain_matchings.each do |entry|
-        t << entry
+    if @domain_matchings.length == 0
+      puts " [*] No results matches specific criteria."
+      puts
+    else
+      puts " [*] Complete! Printing table.\n\n"
+      table = Terminal::Table.new do |t|
+        t << ['Query','Additional DNS Name','DNS Record Type','DNS Entry']
+        t.add_separator
+        @domain_matchings.each do |entry|
+          t << entry
+        end
       end
+      puts table
+      puts 
     end
-    puts table
-    puts 
   end
 end
 
