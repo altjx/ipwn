@@ -147,7 +147,7 @@ def smtp_spoof(smtp_host,smtp_port,consultant_email,sndr_email,rcpt_email,sndr_n
 
 	try: 
 		smtp_subj = "SMTP Server Test"
-		smtp_msg = "\r\n%s:\r\n\r\nThis message is part of a security assessment.  If this message is received, \nplease take a screenshot and forward it \nto %s.\r\n\r\nThis message was delivered through %s:%s." % (sndr_name, consultant_email, smtp_host, str(smtp_port))
+		smtp_msg = "\r\n%s:\r\n\r\nThis message is part of a security assessment.  If this message is received, \nplease take a screenshot and forward it \nto %s.\r\n\r\nThis message was delivered through %s:%s." % (rcpt_name, consultant_email, smtp_host, str(smtp_port))
 		if spoof_attach:
 			smtp_data = "From: %s <%s>\r\nTo: %s <%s>\r\nSubject: %s\r\nMIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary=\"000Message000\"\r\n\r\n--000Message000\r\n%s\r\n\r\n--000Message000\r\nContent-Type: application/octet-stream; name=\"Attachment.txt\"\r\n\r\nSecurity Assessment (with attachment).\r\n\r\n--000Message000--\r\n." % (sndr_name, sndr_email, rcpt_name, rcpt_email, smtp_subj,smtp_msg)
 		else:
