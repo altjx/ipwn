@@ -1,5 +1,13 @@
 #!/usr/bin/env ruby
-['pry','terminal-table', 'net/http', 'getopt/std'].each(&method(:require))
+
+begin
+  ['terminal-table', 'net/http', 'getopt/std'].each(&method(:require))
+rescue
+  puts " Error: Apparently, you're missing a gem. Install required gems using the following commands:"
+  puts "\t gem install terminal-table"
+  puts "\t gem install getopt"
+  puts
+end
 
 #################################################################
 #                                                               #
