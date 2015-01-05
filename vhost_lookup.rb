@@ -42,7 +42,7 @@ class VHostLookup
   end
   
   def parse_body(domains)
-    puts " [*] #{domains.length} domain(s) identified to match IP. Parsing results."
+    puts " [*] #{domains.length} potential domain(s) identified to match IP. Parsing results."
     domains.each {|domain|
       @domains << domain[0].gsub("<strong>","").gsub("</strong>","").gsub("https://", "").split("/")[0]
     }
@@ -78,9 +78,15 @@ class VHostLookup
   end
 
   def stdout
-    if @domain_matchings.length == 0
+    if @domain_matchings.length == 0 and @domains.uniq.length == 0
       puts " [*] No results matches specific criteria."
       puts
+    elsif @domains.uniq.length != 0 and @domain_matchings.length == 0
+      puts " [*] Printing out domains that were found associated with IP address."
+      puts
+      @domains.uniq.each do |domain|
+        puts " [*] #{domain}"
+      end
     else
       puts " [*] Complete! Printing table.\n\n"
       table = Terminal::Table.new do |t|
