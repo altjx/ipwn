@@ -95,6 +95,7 @@ class VHostLookup
       @domains.uniq.each do |domain|
         puts " [*] #{domain}"
       end
+      puts
     else
       puts " [*] Complete! Printing table.\n\n"
       table = Terminal::Table.new do |t|
