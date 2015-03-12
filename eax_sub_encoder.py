@@ -108,7 +108,7 @@ def help():
   print "\n -s <string>\tEncode bytes from stdin (\\x00 format)."
   print " -f <file>\tEncodes shellcode from a file (\\x00 format)."
   print " -g <file>\tOptional parameter that restricts encoder to goodbytes.  (\\x00 format)."
-  print "\n Usage example: %s -s \"\\x75\\xE7\\xFF\\xE7\"t" % argv[0]
+  print "\n Usage example: %s -s \"\\x75\\xE7\\xFF\\xE7\"" % argv[0]
   print " Usage example: %s -f shellcode.txt -g good_chars.txt\n" % argv[0]
   exit()
 
