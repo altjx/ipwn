@@ -20,7 +20,6 @@ from random import choice
 from sys import argv
 
 total_length = 0
-### CHARACTERS THAT ARE ALLOWED ###
 
 code = ''
 goodchars = []
