@@ -71,7 +71,6 @@ def encode(x):
         final += "\t# SUB EAX," + plain[3] + plain[2] + plain[1] + plain[0]
         output = ''
         plain = []
-
     code += "\n# Encoded: " + x
     code += "\n\"" + r"\x25\x41\x41\x41\x41" + "\"\t# SUB EAX,41414141"
     code += "\n\"" + r"\x25\x3E\x3E\x3E\x3E" + "\"\t# SUB EAX,3E3E3E3E"
@@ -103,7 +102,7 @@ def help():
   print "\n Usage: %s <OPTIONS>" % argv[0]
   print "\n -s <string>\tEncode bytes from stdin (\\x00 format)."
   print " -f <file>\tEncodes shellcode from a file (\\x00 format)."
-  print " -g <file>\tOptional parameter that restricts encoder to goodbytes.  (\\x00 format)."
+  print " -g <file>\tOptional parameter that restricts encoder to goodbytes (\\x00 format)."
   print "\n Usage example: %s -s \"\\x75\\xE7\\xFF\\xE7\"t" % argv[0]
   print " Usage example: %s -f shellcode.txt -g good_chars.txt\n" % argv[0]
   exit()
@@ -119,24 +118,23 @@ def start(argv):
     print "\n Error: %s" % err
     help()
 
+  buf = ""
   for opt, arg in opts:
     if opt == "-s":
       buf = arg
       buf = buf.replace("\\x","").replace("x","")
       main(buf)
     elif opt == "-g":
-      good_file = open(arg).read().replace("\\x", "")
+      good_file = open(arg).read().replace("\\x", "").replace("\"","")
       goodchars = [good_file[i:i+2] for i in range(0, len(good_file), 2)][:-1]
-      print goodchars
-      exit()
-    elif opt == "-f":
+    if opt == "-f":
       try:
         buf = open(arg).read().replace("\\x","").replace("\n","").replace("\"","")
-        main(buf)
       except Exception, err:
         print "\n Error: %s" % err
         exit()
-
+  
+  main(buf)
   code = code[:-1]
   print "\nencoded_shellcode = (", code + "\n)"
 
