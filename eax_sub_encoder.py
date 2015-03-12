@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# The following Python code will take shellcode (buf variable) 
+# The following Python code will take shellcode (provided with -f or -s) 
 # and create SUB instructions that will generate shellcode four
 # bytes at a time and push them to the stack.
 # 
