@@ -25,6 +25,10 @@ total_length = 0
 code = ''
 goodchars = []
 
+# Add all characters to the "good character" list. Replaced with -g
+for i in range(0, 256):
+  goodchars.append(format(i, "#04x").replace("0x", ""))
+
 def compl(hexvalue):
     return int("FFFFFFFF",16) - int(hexvalue,16)+1
 
