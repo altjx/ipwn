@@ -46,7 +46,7 @@ def findvalues(code, carry, last):
     return (a,b,c,0)
 
 def encode(x):
-    global code,total_length
+    global code, total_length
     y = x
     endian  = (y[6] + y[7]) + (y[4] + y[5]) + (y[2] + y[3]) + (y[0] + y[1])
     twocompl = compl(endian)
