@@ -124,7 +124,7 @@ def start(argv):
       buf = arg
       buf = buf.replace("\\x","").replace("x","")
     elif opt == "-g":
-      good_file = open(arg).read().replace("\\x", "").replace("\"", "")
+      good_file = open(arg).read().replace("\n", "").replace("\\x", "").replace("\"", "")
       goodchars = [good_file[i:i+2] for i in range(0, len(good_file), 2)][:-1]
     elif opt == "-f":
       try:
@@ -132,7 +132,7 @@ def start(argv):
       except Exception, err:
         print "\n Error: %s" % err
         exit()
-
+  
   main(buf)
   code = code[:-1]
   print "\nencoded_shellcode = (", code + "\n)"
