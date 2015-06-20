@@ -1,5 +1,17 @@
 #!/usr/bin/env ruby
 
+#
+# This script simply scans a list of systems to determine if IKE Aggressive Mode
+# is supported. If so, it writes the hashed PSK value to a file.
+#
+# I simply stumbled upon like 20 systems with port 500/UDP opened, and didn't feel 
+# like doing it manually, so that's where this came from.
+#
+# Author: Alton Johnson
+# Contact: alton.jx@gmail.com
+# Date: 06/29/2015
+#
+
 begin
   require 'terminal-table'
   require 'getopt/std'
