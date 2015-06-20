@@ -53,7 +53,7 @@ def start_scanning(filename)
   end
 
   # Stdout.
-  table = Terminal::Table.new :title => "IKE Aggressive Mode Scanner - Alton Johnson (alton.xj@gmail.com)",
+  table = Terminal::Table.new :title => "IKE Aggressive Mode Scanner - Alton Johnson (alton.jx@gmail.com)",
     :headings => ['IP Address','Status', 'Saved file to'], :rows => results
 
   puts table
