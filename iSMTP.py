@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 #
 #################################################################################################################
-#														#
-#	 This script was designed to be seemingly easy if you're used to ispoof by Stone.			#
-#	 This script supports a variety of things that we typically test for during an external pentest.	#
-#	 Overall, you can automate the process of SMTP User Enumeration, SMTP Spoofing, and/or SMTP relay.	#
-#	 Any combination of the techniques can be used -- in other words, it's as flexible as you need it to be.#
-#														#
-#	 Author: Alton Johnson 											#
-#	 Contact: alton.jx@gmail.com										#
-#	 Updated: 05-24-2013											#
-#	 Version: 1.6												#
-#														#
-#	 While this tool supports a variety of options, there is still a lot of room for improvement.		#
-#	 Please report any bugs and/or suggestions to me.							#
-#														#
+#	                                                                                    													#
+#	 This script was designed to be seemingly easy if you're used to ispoof by Stone.		                        	#
+#	 This script supports a variety of things that we typically test for during an external pentest.            	#
+#	 Overall, you can automate the process of SMTP User Enumeration, SMTP Spoofing, and/or SMTP relay.	          #
+#	 Any combination of the techniques can be used -- in other words, it's as flexible as you need it to be.      #
+#														                                                                                    #
+#	 Author: Alton Johnson 											                                                                  #
+#	 Contact: alton.jx@gmail.com                                                              										#
+#	 Updated: 05-24-2013								                                                                     			#
+#	 Version: 1.6												                                                                          #
+#														                                                                                    #
+#	 While this tool supports a variety of options, there is still a lot of room for improvement.		              #
+#	 Please report any bugs and/or suggestions to me.							                                                #
+#														                                                                                     #
 #################################################################################################################
 
 from sys import argv
