@@ -42,7 +42,7 @@ def start(filename, domain, username, password)
       # Prints status.
       puts " [*] Extracting users from #{ip}"
 
-      data = `pth-wmic -U #{domain}/#{username}%#{password} //#{ip} "select * from Win32_LoggedOnUser"`.split
+      data = `wmic -U #{domain}/#{username}%#{password} //#{ip} "select * from Win32_LoggedOnUser"`.split
       for row in data
         user_domain = row.scan(/Domain="(.*?)"/im)[0]
         user = row.scan(/Name="(.*?)"/im)[0]
