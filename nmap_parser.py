@@ -21,7 +21,7 @@ banner = "\n " + "-" * 72 + "\n " + colors.white + " nmapparse 1.0 - Nmap Output
 
 def help():
   print banner
-  print " Usage: ./nmapparse.py results.gnmap"
+  print " Usage: %s results.gnmap" % argv[0]
   print "\n Note: This script must point to a grepable output file from nmap to work properly.\n"
   exit()
 
