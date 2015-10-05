@@ -420,7 +420,7 @@ class metaparser:
 		#states that no data exists if nothing really does. this prevents the output of self.top_row from showing with nothing in the table.
 		if len(self.container) == 0:
 			print colors.red + " Either no data was found on Google, or there were issues opening the documents." 
-      print " Ensure that the 'extract' tool is installed by running 'sudo apt-get install extract'\n" + colors.normal
+			print colors.red + " Ensure that the 'extract' tool is installed by running 'sudo apt-get install extract'\n" + colors.normal 
 			exit()
 
 		#goes through each item in container and make sure max spaces are correct
