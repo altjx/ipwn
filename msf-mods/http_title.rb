@@ -39,7 +39,7 @@ class Metasploit3 < Msf::Auxiliary
       })
   end
 
-  def run_host(ip, uri=datastore['URI_Path'])
+  def run_host(ip, uri=datastore['URI_Path'], attempt=0)
     begin
       connect
 
@@ -47,7 +47,6 @@ class Metasploit3 < Msf::Auxiliary
          'method' => 'GET',
          'SSL' => datastore['SSL']
          }
-
       res = send_request_cgi(opts)
       return if not res
 
@@ -60,10 +59,10 @@ class Metasploit3 < Msf::Auxiliary
          return if res.body.length == 0
          # Parse web page response.
          if (res.code >= 300 and res.code < 400)
-           print_title(ip, rport, body, res.code, 0, res.headers['Location'])
+           print_title(ip, rport, body, res.code, 0, res.headers['Location'], attempt)
            # print_error("#{ip}:#{rport} - #{res.code} - <Redirect>")
          elsif res.code >= 200 and res.code < 300
-            print_title(ip, rport, body, res.code, 0, res.headers['Location'])
+            print_title(ip, rport, body, res.code, 0, res.headers['Location'], attempt)
          elsif res.code >= 300 and res.code < 400
             print_title(ip, rport, body, res.code)
          elsif res.code >= 400 and res.code < 500
@@ -77,16 +76,16 @@ class Metasploit3 < Msf::Auxiliary
     end
   end
 
-   def print_title(ip, rport, response, code, status=0, header="")
+   def print_title(ip, rport, response, code, status=0, header="", attempt=0)
     # A little redirect handling.
     if datastore['Follow_Redirects']
       if header.to_s.include? "(http://|https://)"
-        print_error("#{ip}:#{rport} - #{code} - <302 HTTPS/HTTP redirect>")
+        print_error("#{ip}:#{rport} - #{code} - <Unhandled 302 HTTPS/HTTP redirect>")
         return
       else
-        if code == 302
+        if code == 302 and attempt != 3
           new_uri = header
-          run_host(ip, new_uri)
+          run_host(ip, new_uri, attempt+=1)
           return
         end
       end
