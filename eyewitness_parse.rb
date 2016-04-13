@@ -12,6 +12,7 @@ report_files = Dir.glob("./report*.html")
 table = Terminal::Table.new do |t|
 	t.headings = ['url','response code', 'title', 'powered by','server', 'report']
 	report_files.each do |report_name|
+		t.add_separator
 		report = Nokogiri::HTML(File.open(report_name))
 		report.xpath('//td[contains(., "http://")]').each do |data|
 			data = data.to_s.split ("\n")
@@ -26,7 +27,6 @@ table = Terminal::Table.new do |t|
 			end
 			t.add_row [url, response, title[0..40], powered_by, server[0..20], report_name]
 		end
-		t.add_separator
 	end
 
 end
