@@ -12,9 +12,9 @@ report_files = Dir.glob("./report*.html")
 table = Terminal::Table.new do |t|
 	t.headings = ['url','response code', 'title', 'powered by','server', 'report']
 	report_files.each do |report_name|
-		t.add_separator
+		t.add_separator 
 		report = Nokogiri::HTML(File.open(report_name))
-		report.xpath('//td[contains(., "http://")]').each do |data|
+		report.xpath('//td[contains(., "http://")] | //td[contains(., "https://")]').each do |data|
 			data = data.to_s.split ("\n")
 			url = title = response = powered_by = server = ""
 			data.each do |d|
@@ -25,10 +25,9 @@ table = Terminal::Table.new do |t|
 				server = d.gsub("server: ", "") if server.empty? and d.include? "server: "
 				response = d.gsub("Response Code: ", "") if response.empty? and d.include? "Response Code: "
 			end
-			t.add_row [url, response, title[0..40], powered_by, server[0..20], report_name]
+			t.add_row [url, response, title[0..40], powered_by[0..20], server[0..20], report_name]
 		end
 	end
-
 end
 
 puts table

@@ -2,7 +2,7 @@
 require 'terminal-table'
 require 'ipaddr'
 
-ifconfig = `ifconfig`.split("\n")
+ifconfig = `ifconfig`.split("\n\n")
 
 oint = ''
 int = ''
@@ -15,8 +15,11 @@ table = Terminal::Table.new do |t|
   t.add_separator
 
   ifconfig.each do |line|
+  	int = ""
     # Regex used to grab for specific information.
-    int = line.scan(/(eth[0-9]|lo|wlan[0-9])/)
+    unless !int.empty?
+    	int = line.split(" ")[0]
+    end
     ipaddr = line.scan(/addr:\b(?:\d{1,3}\.){3}\d{1,3}\b/)
     netmask = line.scan(/Mask:\b(?:\d{1,3}\.){3}\d{1,3}\b/)
     broadcast = line.scan(/Bcast:\b(?:\d{1,3}\.){3}\d{1,3}\b/)
@@ -30,7 +33,6 @@ table = Terminal::Table.new do |t|
     omac = mac[0] unless mac.empty?
 
     # Clean up some stuff
-    int = int[0][0] unless int.empty?
     oint = int unless int.empty?
     broadcast = '' if broadcast.empty?
     
