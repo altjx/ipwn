@@ -23,5 +23,5 @@ File.open(ARGV.first) { |f|
 		end
 	end
 	port_files.values.each {|pf| pf.close}
-	puts "\n Completed. Check the 'open-ports' folder.\n"
+	puts "\n [Nmap Port Parser] Completed. Check the 'open-ports' folder.\n\n"
 }
