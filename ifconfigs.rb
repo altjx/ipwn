@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 require 'terminal-table'
 require 'ipaddr'
+<<<<<<< HEAD
+=======
+require 'pry'
+>>>>>>> d2ba0c76abfaab0f6e5e283c770fbc86583f1ca3
 
 ifconfig = `ifconfig`.split("\n\n")
 

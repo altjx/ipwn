@@ -5,8 +5,21 @@ Unfortunately, I wasn't able to capture screenshots of me using some of these to
 
 Tools
 ===
+<<<<<<< HEAD
 <br />
 <b>iSMTP</b><br />
+=======
+* [iSMTP](#user-content-ismtp)
+* [iWebAudit](#user-content-iwebaudit)
+* [pyFoca](#user-content-pyfoca)
+* [smbspider](#user-content-smbspider)
+* [SMSpam](#user-content-smsspam)
+* [Nmap Parser](#user-content-nmapparser)
+* [Nmap Scrape](#user-content-nmapscrape)
+
+<br />
+<b><a name="ismtp">iSMTP</a></b><br />
+>>>>>>> d2ba0c76abfaab0f6e5e283c770fbc86583f1ca3
 ---------- <br />
 There's been countless times when I've needed to test for SMTP user enumeration (RCPT TO and VRFY), internal spoofing, and open relay. I've never found a tool that tested for all three and with great flexibility. iSMTP does just that, making it much easier to knock that process out of the way. <br />
 	- Usage screenshot #1 (user enumeration): https://dl.dropboxusercontent.com/u/2526790/iSMTP/SMTP%20User%20Enumeration.png <br />
@@ -57,7 +70,11 @@ Usage menu:
  Note: Any combination of options is supported (e.g., enumeration, relay, both, all, etc.).
 </code></pre>
 <br />
+<<<<<<< HEAD
 <b>iWebAudit</b><br />
+=======
+<b><a name="iwebaudit">iWebAudit</a></b><br />
+>>>>>>> d2ba0c76abfaab0f6e5e283c770fbc86583f1ca3
 ---------- <br />
 Many times, on an internal penetration test, you run across numerous web servers that you don't care about. As opposed to opening up every web server to see what they are, iWebAudit will scan a list of web servers and grab all their titles. By only reading a little bit from each server's response, this makes reporting only the titles much faster. <br />Usage menu:
 <pre><code>
@@ -74,7 +91,11 @@ Many times, on an internal penetration test, you run across numerous web servers
    -v 	       Displays details as script runs. (optional)
 </code></pre>
 <br />
+<<<<<<< HEAD
 <b>pyFoca</b><br />
+=======
+<b><a name="pyfoca">pyFoca</a></b><br />
+>>>>>>> d2ba0c76abfaab0f6e5e283c770fbc86583f1ca3
 ---------- <br />
 If you're familiar with the Windows FOCA application, this is basically a python version of it. Pyfoca will use Google to discover files with extensions such as .pdf, .xls, .doc, etc. and download them. Once downloaded, it will extract all metadata which, in many cases, include usernames you can use for password attacks. <br />
 Usage menu:
@@ -111,7 +132,11 @@ Usage menu:
  Example: ./pyfoca.py -d www.domain.com -e pdf,doc -p 3
 </code></pre>
 <br />
+<<<<<<< HEAD
 <b>smbspider</b><br />
+=======
+<b><a name="smbspider">smbspider</a></b><br />
+>>>>>>> d2ba0c76abfaab0f6e5e283c770fbc86583f1ca3
 ---------- <br />
 Smbspider is a pretty smart when it comes to spidering Windows systems on internal networks. Once you get your hands on some credentials, you can pass them around with smbspider to try spidering systems that the user account has access to. In many cases, you'll end up quickly finding all types of sensitive data hanging out on employees' workstations. <br />
 	- Menu: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspiderpy.png <br />
@@ -159,7 +184,11 @@ Usage menu:
 
 </code></pre>
 <br />
+<<<<<<< HEAD
 <b>SMSpam</b><br />
+=======
+<b><a name="smsspam">SMSpam</a></b><br />
+>>>>>>> d2ba0c76abfaab0f6e5e283c770fbc86583f1ca3
 ---------- <br />
 This was my first python script. I created this simple script when someone pissed me off by continuously playing on my phone. They quickly revealed their identity after approximately 50 text messages in about 10 seconds :).<br />
 Usage menu:
@@ -175,7 +204,11 @@ Usage menu:
 		-s: Subject for the email.
 		-n: How many times you want to send this email.
 </code></pre>
+<<<<<<< HEAD
 <b>Nmap Parser</b><br />
+=======
+<b><a name="nmapparser">Nmap Parser</a></b><br />
+>>>>>>> d2ba0c76abfaab0f6e5e283c770fbc86583f1ca3
 ---------- <br />
 If you have tons of nmap results and want to look at them in a pretty table, check out this nmap result parser. <br />
 	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/nmap_parser1.png <br />
@@ -190,13 +223,18 @@ Usage menu:
  Note: This script must point to a grepable output file from nmap to work properly.
 </code></pre>
 <br />
+<<<<<<< HEAD
 <b>Nmap Scrape</b><br />
+=======
+<b><a name="nmapscrape">Nmap Scrape</a></b><br />
+>>>>>>> d2ba0c76abfaab0f6e5e283c770fbc86583f1ca3
 ---------- <br />
 This script will take the nmap grepable output format and create text files (filename = port number) with a list of IP addresses in these text files. For example, it'll create an 80.txt file with all IPs with port 80 open. See screenshots for a better understanding. <br />
 	- Usage screenshot #2: https://dl.dropboxusercontent.com/u/2526790/nmapscrape1.png <br />
 Usage menu:
 <pre><code>
  ----------------------------------------------------
+<<<<<<< HEAD
  Nmap Parser v1.0, Alton Johnson (alton.jx@gmail.com) 
  ----------------------------------------------------
 
@@ -241,3 +279,10 @@ java version "1.7.0_51"
 Java(TM) SE Runtime Environment (build 1.7.0_51-b13)
 Java HotSpot(TM) Client VM (build 24.51-b03, mixed mode)
 </code></pre>
+=======
+ Nmap Parser v2.0, Alton Johnson (alton.jx@gmail.com) 
+ ----------------------------------------------------
+
+ Usage: nmapscrape.rb &lt;gnmap file&gt;
+</code></pre>
+>>>>>>> d2ba0c76abfaab0f6e5e283c770fbc86583f1ca3
