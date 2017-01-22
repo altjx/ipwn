@@ -77,8 +77,8 @@ def encode(x):
         plain = []
 
     code += "\n# Encoded: " + x
-    code += "\n\"" + r"\x25\x41\x41\x41\x41" + "\"\t# SUB EAX,41414141"
-    code += "\n\"" + r"\x25\x3E\x3E\x3E\x3E" + "\"\t# SUB EAX,3E3E3E3E"
+    code += "\n\"" + r"\x25\x41\x41\x41\x41" + "\"\t# ADD EAX,41414141"
+    code += "\n\"" + r"\x25\x3E\x3E\x3E\x3E" + "\"\t# ADD EAX,3E3E3E3E"
     code += final
     code += "\n\"" + r"\x50" + "\"\t\t\t# PUSH EAX\n"
     total_length += 11
