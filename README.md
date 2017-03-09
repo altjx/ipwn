@@ -123,7 +123,6 @@ Usage menu:
  Example: ./pyfoca.py -d www.domain.com -e pdf,doc -p 3
 </code></pre>
 <br />
-<<<<<<< HEAD
 <b>smbspider</b><br />
 =======
 <b><a name="smbspider">smbspider</a></b><br />
@@ -206,7 +205,6 @@ Usage menu:
  Note: This script must point to a grepable output file from nmap to work properly.
 </code></pre>
 <br />
-<<<<<<< HEAD
 <b>Nmap Scrape</b><br />
 =======
 <b><a name="nmapscrape">Nmap Scrape</a></b><br />
@@ -215,7 +213,6 @@ This script will take the nmap grepable output format and create text files (fil
 Usage menu:
 <pre><code>
  ----------------------------------------------------
-<<<<<<< HEAD
  Nmap Parser v1.0, Alton Johnson (alton.jx@gmail.com) 
  ----------------------------------------------------
 
