@@ -220,7 +220,7 @@ Usage menu:
 <br />
 =======
 <b>Java Updater (for Kali Linux)</b><br />
----------- <br />
+=======
 Eventually I just got tired of referring to Google and Kali's forums to update Java within Kali. Decided to just go ahead and play around with a script to do this automatically, and it came out well. Just run the script and Java's updated. Also makes sure it works with Google Chrome so you don't have to.<br />
 <br>
 Example of output for already up-to-date java version:
@@ -257,7 +257,7 @@ java version "1.7.0_51"
 Java(TM) SE Runtime Environment (build 1.7.0_51-b13)
 Java HotSpot(TM) Client VM (build 24.51-b03, mixed mode)
 </code></pre>
-=======
+Nmap Parser
  Nmap Parser v2.0, Alton Johnson (alton.jx@gmail.com) 
 
 <pre><code>
