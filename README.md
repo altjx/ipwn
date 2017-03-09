@@ -5,7 +5,6 @@ Unfortunately, I wasn't able to capture screenshots of me using some of these to
 
 Tools
 ===
-<<<<<<< HEAD
 <br />
 <b>iSMTP</b><br />
 =======
@@ -19,8 +18,6 @@ Tools
 
 <br />
 <b><a name="ismtp">iSMTP</a></b><br />
->>>>>>> d2ba0c76abfaab0f6e5e283c770fbc86583f1ca3
----------- <br />
 There's been countless times when I've needed to test for SMTP user enumeration (RCPT TO and VRFY), internal spoofing, and open relay. I've never found a tool that tested for all three and with great flexibility. iSMTP does just that, making it much easier to knock that process out of the way. <br />
 	- Usage screenshot #1 (user enumeration): https://dl.dropboxusercontent.com/u/2526790/iSMTP/SMTP%20User%20Enumeration.png <br />
 Usage menu:
