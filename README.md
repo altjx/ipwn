@@ -5,7 +5,6 @@ Unfortunately, I wasn't able to capture screenshots of me using some of these to
 
 Tools
 ===
-<br />
 <b>iSMTP</b><br />
 =======
 * [iSMTP](#user-content-ismtp)
