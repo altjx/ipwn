@@ -28,9 +28,10 @@ table = Terminal::Table.new do |t|
 
     # Clean up some stuff
     oint = int unless int.empty?
+    ipaddr = '' if ipaddr.nil?
     broadcast = '' if broadcast.nil?
     omac = mac unless mac.nil?
-    
+
     # Add the data to a table.
     unless oint.empty? and ipaddr.empty? and netmask.empty? and broadcast.empty? and omac.empty?
       unless ipaddr.empty? or netmask.empty?
