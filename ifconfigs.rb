@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 require 'terminal-table'
 require 'ipaddr'
-require 'pry'
 
 ifconfig = `ifconfig`.split("\n\n")
 
@@ -19,7 +18,7 @@ table = Terminal::Table.new do |t|
   	int = ""
     # Regex used to grab for specific information.
     unless !int.empty?
-    	int = line.split(" ")[0][0..-2]
+    	int = line.split(" ")[0]
     end
     ipaddr = line.scan(/\b(?:\d{1,3}\.){3}\d{1,3}\b/)[0]
     netmask = line.scan(/\b(?:\d{1,3}\.){3}\d{1,3}\b/)[1]
