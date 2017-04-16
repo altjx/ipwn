@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 require 'terminal-table'
 require 'ipaddr'
-require 'pry'
 
 ifconfig = `ifconfig`.split("\n\n")
 
@@ -34,13 +33,15 @@ table = Terminal::Table.new do |t|
 
     # Add the data to a table.
     unless oint.empty? and ipaddr.empty? and netmask.empty? and broadcast.empty? and omac.empty?
-      unless ipaddr.empty? or netmask.empty?
-        cidr = IPAddr.new(netmask).to_i.to_s(2).count("1")
-        t << [oint, ipaddr, "#{netmask} (/#{cidr})", broadcast, omac]
-        omac = ''
-      end
+    	ipaddr = '' if ipaddr.nil?
+    	netmask = '' if netmask.nil?
+    	unless ipaddr.empty? or netmask.empty?
+    		cidr = IPAddr.new(netmask).to_i.to_s(2).count("1")
+    		t << [oint, ipaddr, "#{netmask} (/#{cidr})", broadcast, omac]
+    		omac = ''
+    	end
     end
-  end
+end
 end
 
 table.title = "1337 H4x0Rz Linux Ifconfig Parser - Alton Johnson (alton.jx@gmail.com)"
