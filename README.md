@@ -5,8 +5,6 @@ Unfortunately, I wasn't able to capture screenshots of me using some of these to
 
 Tools
 ===
-<b>iSMTP</b><br />
-=======
 * [iSMTP](#user-content-ismtp)
 * [iWebAudit](#user-content-iwebaudit)
 * [pyFoca](#user-content-pyfoca)
