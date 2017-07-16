@@ -1,7 +1,6 @@
 Introduction
 ===
-Here you will find some tools that I've created which may help you out on your next pentest. Nothing major as of yet, but there are a few cool things you might find to be pretty useful.<br /><br>
-Unfortunately, I wasn't able to capture screenshots of me using some of these tools in networks other than my home. However, I've tried to demonstrate how they're used via screenshots and videos as much as I can.
+Just a random list of tools that you may or may not find useful :)
 
 Tools
 ===
