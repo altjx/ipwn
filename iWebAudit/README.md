@@ -6,6 +6,8 @@ Instructions
 ===
 Usage menu:
 <pre><code>
+[07.22.2017/21:34:09] root@box $ ./iWebAudit.py
+
 ------------------------------------------------------------------------------
  iWebAudit v1.5 - Web Page Title Analyzer, Alton Johnson (alton.jx@gmail.com)  
 ------------------------------------------------------------------------------ 

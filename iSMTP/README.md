@@ -1,12 +1,15 @@
 Introduction
 ===
-There's been countless times when I've needed to test for SMTP user enumeration (RCPT TO and VRFY), internal spoofing, and open relay. I've never found a tool that tested for all three and with great flexibility. iSMTP does just that, making it much easier to knock that process out of the way. <br />
-  - Usage screenshot #1 (user enumeration): https://dl.dropboxusercontent.com/u/2526790/iSMTP/SMTP%20User%20Enumeration.png
+There's been countless times when I've needed to test for SMTP user enumeration (RCPT TO and VRFY), internal spoofing, and open relay. I've never found a tool that tested for all three and with great flexibility. iSMTP does just that, making it much easier to knock that process out of the way.
 
 Instructions
 ===
 Usage menu:
+- Usage screenshot (user enumeration): https://dl.dropboxusercontent.com/u/2526790/iSMTP/SMTP%20User%20Enumeration.png
+
 <pre><code>
+[07.22.2017/21:34:09] root@box $ ./iSMTP.py
+
  ---------------------------------------------------------------------
   SMTP v1.6 - SMTP Server Tester, Alton Johnson (alton.jx@gmail.com)
  ---------------------------------------------------------------------

@@ -6,5 +6,5 @@ Instructions
 ===
 Simply run the command:
 <pre><code>
-./eax_sub_encoder.py
+[07.22.2017/21:34:09] root@box $ ./eax_sub_encoder.py
 </code></pre>

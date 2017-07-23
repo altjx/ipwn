@@ -6,5 +6,5 @@ Instructions
 ===
 Place this ruby file in the directory that contains the HTML reports, and simply run it afterwards:
 <pre><code>
-./eyewitness_parse.rb
+[07.22.2017/21:34:09] root@box $ ./eyewitness_parse.rb
 </code></pre>
