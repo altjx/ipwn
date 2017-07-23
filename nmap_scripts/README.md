@@ -8,8 +8,6 @@ Instructions
 ===
 With regards to the Nmap parser script, here's an example of the usage menu:
 
-  - Usage screenshot: https://dl.dropboxusercontent.com/u/2526790/nmap_parser1.png
-
 <pre><code>
  ------------------------------------------------------------------------
   nmapparse 1.0 - Nmap Output Parser, Alton Johnson (alton.jx@gmail.com)
@@ -21,8 +19,6 @@ With regards to the Nmap parser script, here's an example of the usage menu:
 </code></pre>
 
 With regards to the Nmap scrape script, here's an example of the usage menu:
-
-  - Usage screenshot: https://dl.dropboxusercontent.com/u/2526790/nmapscrape1.png
 
 <pre><code>
  ----------------------------------------------------

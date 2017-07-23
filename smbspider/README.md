@@ -4,11 +4,8 @@ Smbspider is a pretty smart when it comes to spidering Windows systems on intern
 
 Instructions
 ===
+Usage video: http://www.youtube.com/watch?v=skVZwynHECw
 Usage menu:
-
-  - Menu: https://dl.dropboxusercontent.com/u/2526790/smbspider/smbspiderpy.png
-  - Script usage screenshot #1: https://dl.dropboxusercontent.com/u/2526790/smbspider/whole_output.png
-  - Usage video: http://www.youtube.com/watch?v=skVZwynHECw
 
 <pre><code>
  ************************************************************

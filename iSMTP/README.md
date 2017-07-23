@@ -5,8 +5,6 @@ There's been countless times when I've needed to test for SMTP user enumeration 
 Instructions
 ===
 Usage menu:
-- Usage screenshot (user enumeration): https://dl.dropboxusercontent.com/u/2526790/iSMTP/SMTP%20User%20Enumeration.png
-
 <pre><code>
 [07.22.2017/21:34:09] root@box $ ./iSMTP.py
 
