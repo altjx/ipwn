@@ -4,7 +4,7 @@ Just a random list of tools that you may or may not find helpful during penetrat
 
 Contact information
 ===
-Facebook: www.facebook.com/altonjx
-Twitter: @altjx
-Instagram: @altjx
-LinkedIn: www.linkedin.com/in/altonjx
+Facebook: www.facebook.com/altonjx <br />
+Twitter: @altjx <br />
+Instagram: @altjx <br />
+LinkedIn: www.linkedin.com/in/altonjx <br />
