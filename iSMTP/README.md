@@ -5,9 +5,6 @@ There's been countless times when I've needed to test for SMTP user enumeration 
 Instructions
 ===
 Usage menu:
-<br />
-<b><a name="ismtp">iSMTP</a></b><br />
-
 <pre><code>
  ---------------------------------------------------------------------
   SMTP v1.6 - SMTP Server Tester, Alton Johnson (alton.jx@gmail.com)
