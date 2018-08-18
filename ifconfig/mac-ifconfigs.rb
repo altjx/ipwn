@@ -71,6 +71,12 @@ table = Terminal::Table.new do |t|
   data.each do |entry|
     t << entry
   end
+
+  # Grab public IP address
+  public_ip = `curl "https://api.ipify.org"`
+  t.add_separator
+  t.add_row ["Public IP Address", public_ip, "", "", ""]
+  
 end
 table.title = "1337 H4x0Rz Mac OS Ifconfig Parser - Alton Johnson (alton.jx@gmail.com)"
 puts table
