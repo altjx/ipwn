@@ -252,7 +252,7 @@ def smtp_enumeration(smtp_host,smtp_port,email_list,enum_level):
 			return smtp_elog
 	try:
 		server = smtplib.SMTP(smtp_host,smtp_port)
-		response = server.docmd('helo',domain)
+		response = server.docmd('helo',domain.strip())
 	except Exception, err:
 		if "421" in str(err):
 			print colors.red + " Error: Service rejected connection attempt." + colors.normal
