@@ -36,8 +36,8 @@ class colors:
    green = "\033[1;32m"
 
 try:
-   import pyPdf
-   from pyPdf import PdfFileReader
+   import PyPDF2 as pyPdf
+   from PyPDF2 import PdfFileReader
 except Exception, err:
    print colors.red + " Warning: To obtain maximum data from PDF documents, it's highly recommended that you install the pyPDF python module."
    print " pyPDF can be downloaded from http://pybrary.net/pyPdf/" + colors.normal
