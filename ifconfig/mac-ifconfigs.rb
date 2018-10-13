@@ -73,7 +73,7 @@ table = Terminal::Table.new do |t|
   end
 
   # Grab public IP address
-  public_ip = `curl "https://api.ipify.org"`
+  public_ip = `curl "https://api.ipify.org" -s`
   t.add_separator
   t.add_row ["Public IP Address", public_ip, "", "", ""]
   
