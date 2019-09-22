@@ -125,7 +125,7 @@ def smtp_spoof(smtp_host,smtp_port,consultant_email,sndr_email,rcpt_email,sndr_n
 	try:
 		s = socket.socket()
 		s.connect((smtp_host,smtp_port))
-		response = s.recv(1024).decode("utf-8") 
+		response = s.recv(1024).decode("utf-8")
 		domain = response.split(' ')[1].split('.')[-2] + "." + response.split(' ')[1].split('.')[-1]
 		s.close()
 	except socket.timeout:
