@@ -5,6 +5,6 @@ Just a random list of tools that you may or may not find helpful during penetrat
 Contact information
 ===
 Facebook: www.facebook.com/altonjx <br />
-Twitter: @altjx <br />
+Twitter: @altonjx <br />
 Instagram: @altjx <br />
 LinkedIn: www.linkedin.com/in/altonjx <br />
